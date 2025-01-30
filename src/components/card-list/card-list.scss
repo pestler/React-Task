@@ -1,0 +1,15 @@
+.card_list {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
+.card_list-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;    
+}
+.title_box{
+display: flex;    
+gap: 100px;
+}
