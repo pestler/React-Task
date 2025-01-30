@@ -1,15 +1,17 @@
-import React, { Component, FormEvent } from 'react';
+import React, { Component, FormEvent, InputHTMLAttributes } from 'react';
+import { localStorageService } from '../../service/localStorage.service';
 import './search-input.scss';
-
-interface SearchInputState {
+interface SearchInputState extends InputHTMLAttributes<HTMLInputElement> {
   inputValue: string;
 }
 
 class SearchInput extends Component<object, SearchInputState> {
   constructor(props: object) {
     super(props);
+    let inputValue = localStorage.getItem('key') || '';
+    inputValue = inputValue.replace(/['"]+/g, '');
     this.state = {
-      inputValue: '',
+      inputValue,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -22,7 +24,7 @@ class SearchInput extends Component<object, SearchInputState> {
 
   handleSubmit(event: FormEvent) {
     event.preventDefault();
-    alert(`Form submitted with input: ${this.state.inputValue}`);
+    localStorageService.set('key', this.state.inputValue.trim());
   }
 
   render() {
@@ -37,7 +39,7 @@ class SearchInput extends Component<object, SearchInputState> {
           />
         </label>
         <button type="submit" className="btn">
-          Button
+          Search
         </button>
       </form>
     );
