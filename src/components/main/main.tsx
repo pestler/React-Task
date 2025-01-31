@@ -5,9 +5,9 @@ import './main.scss';
 class Main extends Component {
   render() {
     return (
-      <div className="search-box">
+      <main className="main-box">
         <SearchInput />
-      </div>
+      </main>
     );
   }
 }

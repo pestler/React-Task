@@ -36,7 +36,7 @@ class SearchInput extends Component<object, SearchInputState> {
         `https://swapi.dev/api/people/?search=${query}`
       );
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
       }
       const data = await response.json();
       this.setState({ data: data.results, loading: false });

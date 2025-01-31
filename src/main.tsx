@@ -2,6 +2,7 @@ import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app';
 import './index.scss';
+import ErrorBoundary from './components/error/error';
 
 class CreateRoot {
   private body: HTMLElement | null;
@@ -19,9 +20,11 @@ class CreateRoot {
 
   private mount(): void {
     this.root.render(
-      <StrictMode>
-        <App />
-      </StrictMode>
+      <ErrorBoundary>
+        <StrictMode>
+          <App />
+        </StrictMode>
+      </ErrorBoundary>
     );
   }
 }

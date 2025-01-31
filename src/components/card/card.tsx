@@ -8,7 +8,7 @@ interface ChildProps {
 class Card extends Component<ChildProps> {
   render() {
     return (
-      <div className="card_box">
+      <div className="card-box">
         <div className="title">
           <h4>{this.props.person.name}</h4>
         </div>
