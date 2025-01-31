@@ -1,4 +1,13 @@
-.card_box{
+.card_box {
     display: flex;
-    gap: 150px;
+    gap: 30px;
+    text-align: left;
+    border: black 1px solid;
+}
+
+.description {}
+
+.title {
+    width: 150px;
+    border: black 1px solid;
 }

@@ -1,15 +1,16 @@
 .card_list {
     display: flex;
     flex-direction: column;
-    width: 90%;
+    padding: 10px;
+    border: black 1px solid;
 }
 
-.card_list-box{
+.title_box {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;    
+    gap: 100px;
 }
-.title_box{
-display: flex;    
-gap: 100px;
+
+h3 {
+    text-align: center;
+    padding: 5px 0;
 }

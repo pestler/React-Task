@@ -2,6 +2,8 @@ import React, { Component, FormEvent, InputHTMLAttributes } from 'react';
 import { localStorageService } from '../../service/localStorage.service';
 import './search-input.scss';
 import Person from '../../types/types';
+import CardList from '../card-list/card-list';
+import Card from '../card/card';
 
 interface SearchInputState extends InputHTMLAttributes<HTMLInputElement> {
   inputValue: string;
@@ -73,18 +75,12 @@ class SearchInput extends Component<object, SearchInputState> {
 
         {loading && <div>Loading...</div>}
         {error && <div>{error}</div>}
+        <CardList />
         {data.length > 0 && (
-          <div>
+          <div className="item-box">
             {data.map((person, index) => (
               <div key={index}>
-                <h2>{person.name}</h2>
-                <p>Height: {person.height}</p>
-                <p>Mass: {person.mass}</p>
-                <p>Hair Color: {person.hair_color}</p>
-                <p>Skin Color: {person.skin_color}</p>
-                <p>Eye Color: {person.eye_color}</p>
-                <p>Birth Year: {person.birth_year}</p>
-                <p>Gender: {person.gender}</p>
+                <Card person={person} />
               </div>
             ))}
           </div>
