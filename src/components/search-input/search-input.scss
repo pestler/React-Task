@@ -23,3 +23,11 @@
 .btn:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+.result-error-description {
+  border: 1px solid black;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

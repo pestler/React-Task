@@ -75,16 +75,25 @@ class SearchInput extends Component<object, SearchInputState> {
 
         {loading && <div>Loading...</div>}
         {error && <div>{error}</div>}
-        <CardList />
-        {data.length > 0 && (
-          <div className="item-box">
-            {data.map((person, index) => (
-              <div key={index}>
-                <Card person={person} />
+        <div className="result-box">
+          <h3>Results</h3>
+          {data.length > 0 ? (
+            <div className="result-box-items">
+              <CardList />
+              <div className="item-box">
+                {data.map((person, index) => (
+                  <div key={index}>
+                    <Card person={person} />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        )}
+            </div>
+          ) : (
+            <div className="result-error-description">
+              <h3>Error description</h3>
+            </div>
+          )}
+        </div>
       </div>
     );
   }
