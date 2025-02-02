@@ -1,17 +1,4 @@
-/* import { Component } from 'react';
-import './error.scss';
-
-class Error extends Component {
-  render() {
-    return (
-      <div className="error_box">
-        <h4> Error description</h4>
-      </div>
-    );
-  }
-}
-export default Error; */
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { Component, ErrorInfo, ReactNode } from 'react';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
