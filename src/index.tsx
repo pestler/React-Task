@@ -20,11 +20,11 @@ class CreateRoot {
 
   private mount(): void {
     this.root.render(
-      <ErrorBoundary>
-        <StrictMode>
+      <StrictMode>
+        <ErrorBoundary>
           <App />
-        </StrictMode>
-      </ErrorBoundary>
+        </ErrorBoundary>
+      </StrictMode>
     );
   }
 }
