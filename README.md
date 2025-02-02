@@ -1,2 +1,2 @@
-# class-components
-course React class-components
+# React + TypeScript + Vite
+
