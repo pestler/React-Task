@@ -1,17 +1,5 @@
-/* import { Component } from 'react';
-import './error.scss';
-
-class Error extends Component {
-  render() {
-    return (
-      <div className="error_box">
-        <h4> Error description</h4>
-      </div>
-    );
-  }
-}
-export default Error; */
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { Component, ErrorInfo, ReactNode } from 'react';
+import './error-boundary.scss';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -25,11 +13,18 @@ interface ErrorBoundaryState {
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { hasError: false, error: null };
+
+    this.state = {
+      hasError: false,
+      error: null,
+    };
   }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    return { hasError: true, error };
+    return {
+      hasError: true,
+      error,
+    };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {

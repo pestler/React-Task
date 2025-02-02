@@ -1,8 +1,8 @@
-import React, { StrictMode } from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app';
 import './index.scss';
-import ErrorBoundary from './components/error/error';
+import ErrorBoundary from './components/error-boundary/error-boundary';
 
 class CreateRoot {
   private body: HTMLElement | null;
