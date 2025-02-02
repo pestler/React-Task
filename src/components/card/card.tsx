@@ -2,10 +2,10 @@ import { Component } from 'react';
 import './card.scss';
 import Person from '../../types/types';
 
-interface ChildProps {
+interface CardProps {
   person: Person;
 }
-class Card extends Component<ChildProps> {
+class Card extends Component<CardProps> {
   render() {
     return (
       <div className="card-box">
