@@ -1,0 +1,32 @@
+{
+    "editor.formatOnSave": true, // Автоматическое форматирование при сохранении
+    "editor.tabSize": 2, // Размер табуляции
+    "editor.insertSpaces": true, // Использовать пробелы вместо табуляции
+    "files.autoSave": "onFocusChange", // Автосохранение при смене фокуса
+    "files.eol": "\n", // Конец строки - \n
+    // Настройки для Prettier
+    "prettier.singleQuote": true, // Использовать одинарные кавычки
+    "prettier.semi": true, // Заканчивать строки точкой с запятой
+    "prettier.printWidth": 80, // Ширина строки - 80 символов
+    "prettier.tabWidth": 2, // Ширина табуляции - 2 пробела
+    // Настройки для конкретных языков
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode" // Форматирование с помощью Prettier
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode" // Форматирование с помощью Prettier
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode" // Форматирование с помощью Prettier
+    },
+    // Настройки для работы с линтерами
+    "eslint.enable": true, // Включение ESLint
+    "eslint.packageManager": "npm", // Менеджер пакетов - npm
+    "eslint.autoFixOnSave": true, // Автоисправление при сохранении
+    // Прочие настройки
+    "editor.minimap.enabled": true, // Включение миникарты кода
+    "workbench.iconTheme": "vscode-icons",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    }, // Иконки для файлов    
+}
