@@ -1,12 +1,26 @@
 import { Component } from 'react';
-import SearchInput from '../search-input/search-input';
+
 import './main.scss';
 
-class Main extends Component {
+import Person from '../../types/types';
+import CardList from '../card-list/card-list';
+
+interface MainProps {
+  data: Person[];
+  loading: boolean;
+  error: string | null;
+}
+
+type MainState = unknown;
+class Main extends Component<MainProps, MainState> {
   render() {
     return (
       <main className="main-box">
-        <SearchInput />
+        <CardList
+          data={this.props.data}
+          loading={this.props.loading}
+          error={this.props.error}
+        />
       </main>
     );
   }
