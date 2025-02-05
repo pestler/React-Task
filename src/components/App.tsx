@@ -2,7 +2,6 @@ import { Component, FormEvent } from 'react';
 import './app.scss';
 import Person from '../types/types';
 import { localStorageService } from '../service/localStorage.service';
-import ErrorButton from './error-button/Error-button';
 import Header from './header/Header';
 import Main from './main/Main';
 
@@ -69,7 +68,6 @@ class App extends Component<AppProps, AppState> {
           loading={this.state.loading}
           error={this.state.error}
         />
-        <ErrorButton />
       </div>
     );
   }

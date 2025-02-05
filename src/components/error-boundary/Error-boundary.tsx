@@ -18,6 +18,8 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
       hasError: false,
       error: null,
     };
+
+    this.handleSimulateError = this.handleSimulateError.bind(this);
   }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
@@ -31,12 +33,39 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     console.error('Uncaught error:', error, errorInfo);
   }
 
+  handleSimulateError() {
+    this.setState({
+      hasError: true,
+      error: new Error('This is a simulated error'),
+    });
+  }
+
   render() {
     if (this.state.hasError) {
-      return <h1>spare UI Error</h1>;
+      return (
+        <div className="container error-container">
+          <h1>Oops! Something went wrong.</h1>
+          <p>{this.state.error?.message}</p>
+          <button
+            className="btn error-button"
+            onClick={() => window.location.reload()}
+          >
+            Reload Page
+          </button>
+        </div>
+      );
     }
 
-    return this.props.children;
+    return (
+      <div>
+        {this.props.children}
+        <div className="btn-box container">
+          <button className="btn" onClick={this.handleSimulateError}>
+            Error Button
+          </button>
+        </div>
+      </div>
+    );
   }
 }
 
