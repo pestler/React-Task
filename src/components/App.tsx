@@ -1,76 +1,54 @@
-import { Component, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import './app.scss';
 import Person from '../types/types';
 import { localStorageService } from '../service/localStorage.service';
 import Header from './header/Header';
 import Main from './main/Main';
 
-interface AppState {
-  value: string;
-  data: Person[];
-  loading: boolean;
-  error: string | null;
-}
+const App: React.FC = () => {
+  const [value, setValue] = useState<string>(
+    localStorageService.get('key') || ''
+  );
+  const [data, setData] = useState<Person[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-type AppProps = unknown;
+  useEffect(() => {
+    fetchData(value);
+  }, [value]);
 
-class App extends Component<AppProps, AppState> {
-  constructor(props: AppProps) {
-    super(props);
-    this.state = {
-      value: localStorageService.get('key') || '',
-      data: [],
-      loading: false,
-      error: null,
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.fetchData = this.fetchData.bind(this);
-  }
-
-  componentDidMount() {
-    if (this.state.value) {
-      this.fetchData(this.state.value);
-    } else {
-      this.fetchData('');
-    }
-  }
-
-  handleSubmit(event: FormEvent, value: string) {
+  const handleSubmit = (event: FormEvent, value: string) => {
     event.preventDefault();
-    this.setState({ value }, () => {
-      localStorageService.set('key', value);
-      this.fetchData(value);
-    });
-  }
+    setValue(value);
+    localStorageService.set('key', value);
+  };
 
-  async fetchData(query: string) {
-    this.setState({ loading: true, error: null });
+  const fetchData = async (query: string) => {
+    setLoading(true);
+    setError(null);
+
     try {
       const response = await fetch(
         `https://swapi.dev/api/people/?search=${query}`
       );
-      if (!response.ok) {
+      if (!response.ok)
         throw new Error(`Error: ${response.status} ${response.statusText}`);
-      }
-      const data = await response.json();
-      this.setState({ data: data.results, loading: false });
-    } catch (error) {
-      this.setState({ error: (error as Error).message, loading: false });
-    }
-  }
 
-  render() {
-    return (
-      <div className="container">
-        <Header onFormSubmit={this.handleSubmit} value={this.state.value} />
-        <Main
-          data={this.state.data}
-          loading={this.state.loading}
-          error={this.state.error}
-        />
-      </div>
-    );
-  }
-}
+      const data = await response.json();
+      setData(data.results);
+    } catch (error) {
+      setError((error as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="container">
+      <Header onFormSubmit={handleSubmit} value={value} />
+      <Main data={data} loading={loading} error={error} />
+    </div>
+  );
+};
 
 export default App;

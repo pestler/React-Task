@@ -1,62 +1,48 @@
-import React, { Component, FormEvent } from 'react';
+import React, { FormEvent } from 'react';
 import './header.scss';
 
 interface Props {
   onFormSubmit: (event: FormEvent, value: string) => void;
   value: string;
 }
-interface HeaderState {
-  value: string;
-}
 
-class Header extends Component<Props, HeaderState> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      value: props.value,
-    };
+const Header: React.FC<Props> = ({ onFormSubmit, value }) => {
+  const [inputValue, setInputValue] = React.useState<string>(value);
 
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
 
-  handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({ value: event.target.value });
-  }
-
-  handleSubmit(event: FormEvent) {
+  const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    this.props.onFormSubmit(event, this.state.value);
-  }
+    onFormSubmit(event, inputValue);
+  };
 
-  render() {
-    return (
-      <>
-        <header>
-          <h3>Top controls</h3>
-        </header>
-        <div>
-          <form onSubmit={this.handleSubmit} className="form">
-            <label>
-              Name:
-              <input
-                type="text"
-                value={this.state.value}
-                onChange={this.handleInputChange}
-                placeholder="Enter name"
-                className="input"
-                autoFocus
-                maxLength={20}
-              />
-            </label>
-            <button type="submit" className="btn">
-              Search
-            </button>
-          </form>
-        </div>
-      </>
-    );
-  }
-}
-
+  return (
+    <>
+      <header>
+        <h3>Top controls</h3>
+      </header>
+      <div>
+        <form onSubmit={handleSubmit} className="form">
+          <label>
+            Name:
+            <input
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+              placeholder="Enter name"
+              className="input"
+              autoFocus
+              maxLength={20}
+            />
+          </label>
+          <button type="submit" className="btn">
+            Search
+          </button>
+        </form>
+      </div>
+    </>
+  );
+};
 export default Header;
