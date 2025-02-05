@@ -26,7 +26,14 @@ class App extends Component<AppProps, AppState> {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.fetchData = this.fetchData.bind(this);
-    this.fetchData(this.state.value);
+  }
+
+  componentDidMount() {
+    if (this.state.value) {
+      this.fetchData(this.state.value);
+    } else {
+      this.fetchData('');
+    }
   }
 
   handleSubmit(event: FormEvent, value: string) {
