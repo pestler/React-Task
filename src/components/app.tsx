@@ -1,11 +1,10 @@
 import { Component, FormEvent } from 'react';
 import './app.scss';
-
 import Person from '../types/types';
 import { localStorageService } from '../service/localStorage.service';
-import Header from './header/header';
-import Main from './main/main';
-import ErrorButton from './error-button/error-button';
+import ErrorButton from './error-button/Error-button';
+import Header from './header/Header';
+import Main from './main/Main';
 
 interface AppState {
   value: string;
@@ -26,6 +25,8 @@ class App extends Component<AppProps, AppState> {
       error: null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.fetchData = this.fetchData.bind(this);
+    this.fetchData('');
   }
 
   handleSubmit(event: FormEvent, value: string) {

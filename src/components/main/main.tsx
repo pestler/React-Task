@@ -3,7 +3,7 @@ import { Component } from 'react';
 import './main.scss';
 
 import Person from '../../types/types';
-import CardList from '../card-list/card-list';
+import CardList from '../card-list/Card-list';
 
 interface MainProps {
   data: Person[];
