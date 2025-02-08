@@ -2,11 +2,11 @@ import React from 'react';
 
 import './main.scss';
 
-import Person from '../../types/types';
 import CardList from '../card-list/Card-list';
+import { Person } from '../../types/types';
 
 interface MainProps {
-  data: any;
+  data: Person[];
   loading: boolean;
   error: string | null;
 }

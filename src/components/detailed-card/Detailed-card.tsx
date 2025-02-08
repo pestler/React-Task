@@ -5,7 +5,6 @@ const DetailedCard = () => {
   const { id } = useParams();
 
   const getData = (id: string) => {
-    
     return {
       title: `Детальная карточка #${id}`,
       description: 'Описание карточки',

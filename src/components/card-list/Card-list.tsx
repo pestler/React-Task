@@ -1,7 +1,8 @@
 import React from 'react';
 import './card-list.scss';
-import Person from '../../types/types';
+
 import Card from '../card/Card';
+import { Person } from '../../types/types';
 
 interface CardProps {
   data: Person[];

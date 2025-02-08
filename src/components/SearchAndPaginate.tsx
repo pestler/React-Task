@@ -1,14 +1,12 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { Person, StarWarsAPIResponse } from '../types/types';
 import Pagination from './Pagination';
-import Card from './card/Card';
-import { data } from 'react-router-dom';
 import Header from './header/Header';
 import Main from './main/Main';
 import { localStorageService } from '../service/localStorage.service';
 
 const SearchAndPaginate: React.FC = () => {
-  const [query, setQuery] = useState('');
+  const [query] = useState('');
   const [people, setPeople] = useState<Person[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -17,8 +15,8 @@ const SearchAndPaginate: React.FC = () => {
     localStorageService.get('key') || ''
   );
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [loading] = useState<boolean>(false);
+  const [error] = useState<string | null>(null);
 
   /* const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -43,10 +41,10 @@ const SearchAndPaginate: React.FC = () => {
     fetchPeople();
   }, [query, currentPage]);
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+  /*  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
     setCurrentPage(1);
-  };
+  }; */
 
   return (
     <div className="search-and-paginate">
