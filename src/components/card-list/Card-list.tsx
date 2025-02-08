@@ -26,7 +26,8 @@ const CardList: React.FC<CardProps> = ({ data, loading, error }) => {
             <div className="item-box">
               {data.map((person, index) => (
                 <div key={index}>
-                  <Card person={person} />
+                  {/* <Card person={person} /> */}
+                  <Card key={person.name} person={person} />
                 </div>
               ))}
             </div>

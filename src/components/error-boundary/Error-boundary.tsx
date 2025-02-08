@@ -56,16 +56,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
       );
     }
 
-    return (
-      <div>
-        {this.props.children}
-        <div className="btn-box container">
-          <button className="btn" onClick={this.handleSimulateError}>
-            Error Button
-          </button>
-        </div>
-      </div>
-    );
+    return <div>{this.props.children}</div>;
   }
 }
 
