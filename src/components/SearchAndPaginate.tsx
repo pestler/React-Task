@@ -3,15 +3,16 @@ import { Person, StarWarsAPIResponse } from '../types/types';
 import Pagination from './pagination/Pagination';
 import Search from './search/Search';
 import Main from './main/Main';
-import { localStorageService } from '../service/localStorage.service';
+import useLocalStorage from '../service/localStorage.service';
 
 const SearchAndPaginate: React.FC = () => {
   const [people, setPeople] = useState<Person[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const [query, setQuery] = useState<string>(
-    localStorageService.get('key') || ''
+  const [query, setQuery] = useLocalStorage<string>(
+    'search_query-star wars ',
+    ''
   );
 
   const [loading] = useState<boolean>(false);
@@ -20,7 +21,6 @@ const SearchAndPaginate: React.FC = () => {
   const handleSubmit = (event: FormEvent, query: string) => {
     event.preventDefault();
     setQuery(query);
-    localStorageService.set('key', query);
   };
 
   useEffect(() => {

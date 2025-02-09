@@ -12,35 +12,20 @@ const Pagination: React.FC<PaginationProps> = ({
   totalPages,
   onPageChange,
 }) => {
-  const handlePrevious = () => {
-    if (currentPage > 1) {
-      onPageChange(currentPage - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentPage < totalPages) {
-      onPageChange(currentPage + 1);
-    }
-  };
+  const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   return (
     <div className="pagination">
-      <button
-        onClick={handlePrevious}
-        disabled={currentPage === 1}
-        className="btn"
-      >
-        Назад
-      </button>
-      <span>Текущая: {currentPage}</span>
-      <button
-        onClick={handleNext}
-        disabled={currentPage === totalPages}
-        className="btn"
-      >
-        Вперед
-      </button>
+      {pages.map((page) => (
+        <button
+          className="btn"
+          key={page}
+          onClick={() => onPageChange(page)}
+          disabled={page === currentPage}
+        >
+          {page}
+        </button>
+      ))}
     </div>
   );
 };
