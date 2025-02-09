@@ -1,4 +1,5 @@
 import React from 'react';
+import './pagination.scss';
 
 interface PaginationProps {
   currentPage: number;
@@ -25,11 +26,19 @@ const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <div className="pagination">
-      <button onClick={handlePrevious} disabled={currentPage === 1}>
+      <button
+        onClick={handlePrevious}
+        disabled={currentPage === 1}
+        className="btn"
+      >
         Назад
       </button>
       <span>Текущая: {currentPage}</span>
-      <button onClick={handleNext} disabled={currentPage === totalPages}>
+      <button
+        onClick={handleNext}
+        disabled={currentPage === totalPages}
+        className="btn"
+      >
         Вперед
       </button>
     </div>

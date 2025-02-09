@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { Person, StarWarsAPIResponse } from '../types/types';
-import Pagination from './Pagination';
+import Pagination from './pagination/Pagination';
 import Search from './search/Search';
 import Main from './main/Main';
 import { localStorageService } from '../service/localStorage.service';
@@ -50,8 +50,12 @@ const SearchAndPaginate: React.FC = () => {
         ))}
       </div> */}
       <div className="container">
+        <section>
         <Search onFormSubmit={handleSubmit} value={query} />
         <Main data={people} loading={loading} error={error} />
+        </section>
+        <section>
+        </section>
       </div>
     </div>
   );

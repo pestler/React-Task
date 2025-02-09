@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Person } from '../types/types';
-import DetailedCard from '../components/card-details/CardDetails';
+import { Person } from '../../types/types';
+import DetailedCard from '../../components/card-details/CardDetails';
 
 const DetailedPage: React.FC = () => {
   const { name } = useParams<{ name: string }>();

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Person } from '../../types/types';
+import './card-details.scss';
 
 interface CardDetailsProps {
   person: Person;
