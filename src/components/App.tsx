@@ -1,20 +1,25 @@
 import React from 'react';
 import './app.scss';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HomePage from '../pages/home-page/HomePage';
 import NotFoundPage from '../pages/NotFoundPage';
 import DetailedPage from '../pages/detailed-page/DetailedPage';
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <HomePage />,
+    errorElement: <NotFoundPage />,
+    children: [
+      { path: 'details/:name', element: <DetailedPage /> },
+      { path: ':id', element: <DetailedPage /> },
+    ],
+  },
+  { path: '*', element: <NotFoundPage /> },
+]);
+
 const App: React.FC = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/details/:name" element={<DetailedPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;
