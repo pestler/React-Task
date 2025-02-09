@@ -11,7 +11,7 @@ const SearchAndPaginate: React.FC = () => {
   const [totalPages, setTotalPages] = useState(1);
 
   const [query, setQuery] = useLocalStorage<string>(
-    'search_query-star wars ',
+    'search_query-star-wars ',
     ''
   );
 
@@ -43,12 +43,6 @@ const SearchAndPaginate: React.FC = () => {
         totalPages={totalPages}
         onPageChange={setCurrentPage}
       />
-      {/*
-      <div className="cards-container">
-        {people.map((person) => (
-          <Card key={person.name} person={person} />
-        ))}
-      </div> */}
       <div className="container">
         <section>
           <Search onFormSubmit={handleSubmit} value={query} />
