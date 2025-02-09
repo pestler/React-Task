@@ -5,7 +5,12 @@ import Search from './search/Search';
 import Main from './main/Main';
 import useLocalStorage from '../service/localStorage.service';
 
-const SearchAndPaginate: React.FC = () => {
+interface SearchAndPaginateProps {
+  currentPage: number;
+  onPageChange: (newPage: number) => void;
+}
+
+const SearchAndPaginate: React.FC<SearchAndPaginateProps> = () => {
   const [people, setPeople] = useState<Person[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
