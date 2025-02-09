@@ -51,11 +51,10 @@ const SearchAndPaginate: React.FC = () => {
       </div> */}
       <div className="container">
         <section>
-        <Search onFormSubmit={handleSubmit} value={query} />
-        <Main data={people} loading={loading} error={error} />
+          <Search onFormSubmit={handleSubmit} value={query} />
+          <Main data={people} loading={loading} error={error} />
         </section>
-        <section>
-        </section>
+        <section></section>
       </div>
     </div>
   );
