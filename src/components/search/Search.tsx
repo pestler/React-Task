@@ -1,12 +1,12 @@
 import React, { FormEvent } from 'react';
-import './header.scss';
+import './search.scss';
 
 interface Props {
   onFormSubmit: (event: FormEvent, value: string) => void;
   value: string;
 }
 
-const Header: React.FC<Props> = ({ onFormSubmit, value }) => {
+const Search: React.FC<Props> = ({ onFormSubmit, value }) => {
   const [inputValue, setInputValue] = React.useState<string>(value);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,4 +45,4 @@ const Header: React.FC<Props> = ({ onFormSubmit, value }) => {
     </>
   );
 };
-export default Header;
+export default Search;

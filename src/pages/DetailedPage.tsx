@@ -1,7 +1,8 @@
-/* import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import CardDetails from '../components/CardDetails';
+
 import { Person } from '../types/types';
+import DetailedCard from '../components/card-details/CardDetails';
 
 const DetailedPage: React.FC = () => {
   const { name } = useParams<{ name: string }>();
@@ -23,10 +24,9 @@ const DetailedPage: React.FC = () => {
 
   return (
     <div className="detailed-page">
-      {person ? <CardDetails person={person} /> : <p>Loading...</p>}
+      {person ? <DetailedCard person={person} /> : <p>Loading...</p>}
     </div>
   );
 };
 
 export default DetailedPage;
- */

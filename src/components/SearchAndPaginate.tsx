@@ -1,31 +1,26 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { Person, StarWarsAPIResponse } from '../types/types';
 import Pagination from './Pagination';
-import Header from './header/Header';
+import Search from './search/Search';
 import Main from './main/Main';
 import { localStorageService } from '../service/localStorage.service';
 
 const SearchAndPaginate: React.FC = () => {
-  const [query] = useState('');
   const [people, setPeople] = useState<Person[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const [value, setValue] = useState<string>(
+  const [query, setQuery] = useState<string>(
     localStorageService.get('key') || ''
   );
 
   const [loading] = useState<boolean>(false);
   const [error] = useState<string | null>(null);
 
-  /* const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-  };
- */
-  const handleSubmit = (event: FormEvent, value: string) => {
+  const handleSubmit = (event: FormEvent, query: string) => {
     event.preventDefault();
-    setValue(value);
-    localStorageService.set('key', value);
+    setQuery(query);
+    localStorageService.set('key', query);
   };
 
   useEffect(() => {
@@ -41,11 +36,6 @@ const SearchAndPaginate: React.FC = () => {
     fetchPeople();
   }, [query, currentPage]);
 
-  /*  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
-    setCurrentPage(1);
-  }; */
-
   return (
     <div className="search-and-paginate">
       <Pagination
@@ -53,23 +43,14 @@ const SearchAndPaginate: React.FC = () => {
         totalPages={totalPages}
         onPageChange={setCurrentPage}
       />
-      {/*     <input
-        type="text"
-        placeholder="Search for a character..."
-        value={query}
-        onChange={handleSearch}
-      />
+      {/*
       <div className="cards-container">
         {people.map((person) => (
           <Card key={person.name} person={person} />
         ))}
       </div> */}
       <div className="container">
-        <Header
-          onFormSubmit={handleSubmit}
-          value={value}
-          /* onChange={handleInputChange} */
-        />
+        <Search onFormSubmit={handleSubmit} value={query} />
         <Main data={people} loading={loading} error={error} />
       </div>
     </div>
