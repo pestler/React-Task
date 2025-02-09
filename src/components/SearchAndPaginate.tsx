@@ -7,25 +7,26 @@ import useLocalStorage from '../service/localStorage.service';
 
 interface SearchAndPaginateProps {
   currentPage: number;
-  onPageChange: (newPage: number) => void;
+  onPageChange: (page: number) => void;
 }
 
-const SearchAndPaginate: React.FC<SearchAndPaginateProps> = () => {
+const SearchAndPaginate: React.FC<SearchAndPaginateProps> = ({
+  currentPage,
+  onPageChange,
+}) => {
   const [people, setPeople] = useState<Person[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
   const [query, setQuery] = useLocalStorage<string>(
-    'search_query-star-wars ',
+    'search_query-star-wars',
     ''
   );
-
   const [loading] = useState<boolean>(false);
   const [error] = useState<string | null>(null);
 
   const handleSubmit = (event: FormEvent, query: string) => {
     event.preventDefault();
     setQuery(query);
+    onPageChange(1);
   };
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const SearchAndPaginate: React.FC<SearchAndPaginateProps> = () => {
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
-        onPageChange={setCurrentPage}
+        onPageChange={onPageChange}
       />
       <div className="container">
         <section>

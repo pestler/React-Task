@@ -1,18 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import SearchAndPaginate from '../../components/SearchAndPaginate';
 import './home-page.scss';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 interface HomePageProps {
   currentPage: number;
-  onPageChange: (newPage: number) => void;
+  onPageChange: (page: number) => void;
 }
 
-const HomePage: React.FC<HomePageProps> = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+const HomePage: React.FC<HomePageProps> = ({ currentPage, onPageChange }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const handlePageChange = (newPage: number) => {
-    setCurrentPage(newPage);
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const page = parseInt(searchParams.get('page') || '1', 10);
+    onPageChange(page);
+  }, [location.search, onPageChange]);
+
+  const handlePageChange = (page: number) => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set('page', page.toString());
+    navigate(`${location.pathname}?${searchParams.toString()}`);
   };
 
   return (
