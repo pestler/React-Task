@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
@@ -28,13 +29,16 @@ describe('Search Component', () => {
     const inputElement = screen.getByPlaceholderText('Enter name');
     const formElement = inputElement.closest('form');
 
-    fireEvent.change(inputElement, { target: { value: 'submitted value' } });
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    fireEvent.submit(formElement!);
+    if (formElement) {
+      fireEvent.change(inputElement, { target: { value: 'submitted value' } });
+      fireEvent.submit(formElement);
 
-    expect(mockOnFormSubmit).toHaveBeenCalledWith(
-      expect.any(Object),
-      'submitted value'
-    );
+      expect(mockOnFormSubmit).toHaveBeenCalledWith(
+        expect.any(Object),
+        'submitted value'
+      );
+    } else {
+      throw new Error('Form element not found');
+    }
   });
 });
