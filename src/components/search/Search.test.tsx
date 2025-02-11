@@ -29,6 +29,7 @@ describe('Search Component', () => {
     const formElement = inputElement.closest('form');
 
     fireEvent.change(inputElement, { target: { value: 'submitted value' } });
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     fireEvent.submit(formElement!);
 
     expect(mockOnFormSubmit).toHaveBeenCalledWith(
