@@ -1,7 +1,7 @@
 import React from 'react';
 import { Person } from '../../types/types';
 import './card-details.scss';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 interface CardDetailsProps {
   person: Person;
@@ -25,11 +25,6 @@ const CardDetails: React.FC<CardDetailsProps> = ({ person }) => {
       <p>Eye Color: {person.eye_color}</p>
       <p>Birth Year: {person.birth_year}</p>
       <p>Gender: {person.gender}</p>
-      <p>Homeworld: {person.homeworld}</p>
-      <p>Films: {person.films.join(', ')}</p>
-      <p>Species: {person.species.join(', ')}</p>
-      <p>Vehicles: {person.vehicles.join(', ')}</p>
-      <p>Starships: {person.starships.join(', ')}</p>
       <p>Created: {person.created}</p>
       <p>Edited: {person.edited}</p>
     </div>

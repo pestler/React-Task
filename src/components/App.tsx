@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './app.scss';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router';
 import HomePage from '../pages/home-page/HomePage';
 import NotFoundPage from '../pages/NotFoundPage';
 import DetailedPage from '../pages/detailed-page/DetailedPage';

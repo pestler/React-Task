@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import SearchAndPaginate from '../../components/SearchAndPaginate';
 import './home-page.scss';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router';
 
 interface HomePageProps {
   currentPage: number;

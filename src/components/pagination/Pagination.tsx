@@ -1,6 +1,6 @@
 import React from 'react';
 import './pagination.scss';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 interface PaginationProps {
   currentPage: number;
