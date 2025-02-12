@@ -1,0 +1,16 @@
+.card-details {
+  width: 300px;
+  border: 1px solid black;
+  margin: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background-color: #f5f5f5;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.close-button {
+  padding: 10px;
+  margin-bottom: 10px;
+}

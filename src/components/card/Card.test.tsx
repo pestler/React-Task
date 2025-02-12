@@ -1,0 +1,75 @@
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import '@testing-library/jest-dom';
+import { MemoryRouter, useNavigate, useLocation } from 'react-router';
+import Card from './Card';
+import { Person } from '../../types/types';
+
+vi.mock('react-router', async (importOriginal) => {
+  const actual = (await importOriginal()) as typeof import('react-router');
+  return {
+    ...actual,
+    useNavigate: vi.fn(),
+    useLocation: vi.fn().mockReturnValue({
+      pathname: '/',
+    }),
+  };
+});
+
+const mockPerson: Person = {
+  name: 'Luke Skywalker',
+  gender: 'male',
+  url: 'https://swapi.dev/api/people/1/',
+  birth_year: '19BBY',
+  height: '172',
+  mass: '77',
+  hair_color: 'blond',
+  skin_color: 'fair',
+  eye_color: 'blue',
+  created: '2023-01-01T00:00:00.000Z',
+  edited: '2023-01-02T00:00:00.000Z',
+};
+
+describe('Card Component', () => {
+  it('renders correctly with given person data', () => {
+    render(
+      <MemoryRouter>
+        <Card person={mockPerson} />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText('Luke Skywalker')).toBeInTheDocument();
+    expect(screen.getByText('Gender: male')).toBeInTheDocument();
+  });
+
+  it('navigates to the details page when clicked', () => {
+    const mockNavigate = vi.fn();
+    (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
+
+    render(
+      <MemoryRouter>
+        <Card person={mockPerson} />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getByTestId('test-card'));
+    expect(mockNavigate).toHaveBeenCalledWith('/details/Luke Skywalker');
+  });
+
+  it('navigates to the home page when clicked on the details page', () => {
+    const mockNavigate = vi.fn();
+    (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
+    (useLocation as jest.Mock).mockReturnValue({
+      pathname: '/details/Luke Skywalker',
+    });
+
+    render(
+      <MemoryRouter>
+        <Card person={mockPerson} />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getByTestId('test-card'));
+    expect(mockNavigate).toHaveBeenCalledWith('/');
+  });
+});

@@ -1,9 +1,9 @@
-import { Component } from 'react';
+import React from 'react';
 
 import './main.scss';
 
-import Person from '../../types/types';
 import CardList from '../card-list/Card-list';
+import { Person } from '../../types/types';
 
 interface MainProps {
   data: Person[];
@@ -11,19 +11,12 @@ interface MainProps {
   error: string | null;
 }
 
-type MainState = unknown;
-class Main extends Component<MainProps, MainState> {
-  render() {
-    return (
-      <main className="main-box">
-        <CardList
-          data={this.props.data}
-          loading={this.props.loading}
-          error={this.props.error}
-        />
-      </main>
-    );
-  }
-}
+const Main: React.FC<MainProps> = ({ data, loading, error }) => {
+  return (
+    <main className="main-box">
+      <CardList data={data} loading={loading} error={error} />
+    </main>
+  );
+};
 
 export default Main;

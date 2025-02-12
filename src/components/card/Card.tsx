@@ -1,29 +1,41 @@
-import { Component } from 'react';
+import React from 'react';
 import './card.scss';
-import Person from '../../types/types';
+import { Person } from '../../types/types';
+import { useNavigate, useLocation } from 'react-router';
 
-interface ChildProps {
+interface CardProps {
   person: Person;
 }
-class Card extends Component<ChildProps> {
-  render() {
-    return (
+
+const Card: React.FC<CardProps> = ({ person }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleClick = () => {
+    const isDetailsPage = location.pathname.includes('/details/');
+    if (isDetailsPage) {
+      navigate('/');
+    } else {
+      navigate(`/details/${person.name}`);
+    }
+  };
+
+  return (
+    <div
+      className="card-container"
+      onClick={handleClick}
+      data-testid="test-card"
+    >
       <div className="card-box">
         <div className="title">
-          <h4>{this.props.person.name}</h4>
+          <h4>{person.name}</h4>
         </div>
         <div className="description">
-          <h5>Height: {this.props.person.height}</h5>
-          <h5>Mass: {this.props.person.mass}</h5>
-          <h5>Hair Color: {this.props.person.hair_color}</h5>
-          <h5>Skin Color: {this.props.person.skin_color}</h5>
-          <h5>Eye Color: {this.props.person.eye_color}</h5>
-          <h5>Birth Year: {this.props.person.birth_year}</h5>
-          <h5>Gender: {this.props.person.gender}</h5>
+          <h5>Gender: {person.gender}</h5>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Card;

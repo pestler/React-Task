@@ -1,29 +1,38 @@
-class LocalStorageService {
-  public get<T>(key: string): T | null {
-    try {
-      const value: string | null = localStorage.getItem(key);
-      return !value ? null : JSON.parse(value);
-    } catch (e) {
-      console.error(e);
-      return null;
-    }
-  }
+import { useState } from 'react';
 
-  public set<T>(key: string, value: T): void {
+const useLocalStorage = <T>(
+  key: string,
+  initialValue: T
+): [T, (value: T) => void, () => void] => {
+  const [storedValue, setStoredValue] = useState<T>(() => {
     try {
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      console.error(error);
+      return initialValue;
+    }
+  });
+
+  const setValue = (value: T) => {
+    try {
+      setStoredValue(value);
       localStorage.setItem(key, JSON.stringify(value));
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
     }
-  }
+  };
 
-  public remove(key: string): void {
-    localStorage.removeItem(key);
-  }
+  const removeItem = () => {
+    try {
+      localStorage.removeItem(key);
+      setStoredValue(initialValue);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  public clear(): void {
-    localStorage.clear();
-  }
-}
+  return [storedValue, setValue, removeItem];
+};
 
-export const localStorageService = new LocalStorageService();
+export default useLocalStorage;
