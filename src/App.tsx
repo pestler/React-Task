@@ -13,7 +13,7 @@ const App: React.FC = () => {
       path: '/',
       element: <HomePage currentPage={currentPage} />,
       errorElement: <NotFoundPage />,
-      children: [{ path: 'details/:id/', element: <CardDetailsContainer /> }],
+      children: [{ path: 'details/:name/', element: <CardDetailsContainer /> }],
     },
     { path: '*', element: <NotFoundPage /> },
   ]);

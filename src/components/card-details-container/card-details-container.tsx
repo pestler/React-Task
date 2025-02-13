@@ -4,13 +4,13 @@ import { Person } from '../../types/types';
 import CardDetails from '../card-details/CardDetails';
 
 const CardDetailsContainer: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { name } = useParams<{ name: string }>();
   const [person, setPerson] = useState<Person | null>(null);
 
   useEffect(() => {
     const fetchPerson = async () => {
       const response = await fetch(
-        `https://swapi.dev/api/people/?search=${id}`
+        `https://swapi.dev/api/people/?search=${name}`
       );
       const data = await response.json();
       if (data.results.length > 0) {
@@ -19,7 +19,7 @@ const CardDetailsContainer: React.FC = () => {
     };
 
     fetchPerson();
-  }, [id]);
+  }, [name]);
 
   return (
     <div className="detailed-page">

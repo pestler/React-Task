@@ -5,9 +5,10 @@ import { useNavigate, useLocation } from 'react-router';
 
 interface CardProps {
   person: Person;
+  currentPage: number;
 }
 
-const Card: React.FC<CardProps> = ({ person }) => {
+const Card: React.FC<CardProps> = ({ person, currentPage }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -16,7 +17,7 @@ const Card: React.FC<CardProps> = ({ person }) => {
     if (isDetailsPage) {
       navigate('/');
     } else {
-      navigate(`/details/${person.name}`);
+      navigate(`/details/${person.name}?page=${currentPage}`);
     }
   };
 
