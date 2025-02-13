@@ -10,10 +10,7 @@ interface CoreProps {
   onPageChange: (page: number) => void;
 }
 
-const Core: React.FC<CoreProps> = ({
-  currentPage,
-  onPageChange,
-}) => {
+const Core: React.FC<CoreProps> = ({ currentPage, onPageChange }) => {
   const [people, setPeople] = useState<Person[]>([]);
   const [cachedPeople, setCachedPeople] = useState<{ [key: number]: Person[] }>(
     {}
