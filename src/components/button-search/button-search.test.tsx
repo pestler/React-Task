@@ -1,8 +1,7 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
-import Search from './Search';
+import Search from './Button-search';
 
 describe('Search Component', () => {
   const mockOnFormSubmit = vi.fn();

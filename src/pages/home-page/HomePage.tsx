@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import SearchAndPaginate from '../../components/SearchAndPaginate/SearchAndPaginate';
+import Core from '../../components/Core/Core';
 import './home-page.scss';
 import { Outlet, useLocation } from 'react-router';
 
@@ -21,10 +21,7 @@ const HomePage: React.FC<HomePageProps> = () => {
       <h1>Star Wars Characters</h1>
       <div className="container">
         <section className="search-and-paginate-container">
-          <SearchAndPaginate
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-          />
+          <Core currentPage={currentPage} onPageChange={handlePageChange} />
         </section>
         <section className="cards-detail-container">
           <Outlet />

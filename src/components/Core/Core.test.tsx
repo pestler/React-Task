@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
-import SearchAndPaginate from './SearchAndPaginate';
+import Core from './Core';
 import { Person, StarWarsAPIResponse } from '../../types/types';
 
 vi.mock('./pagination/Pagination', () => ({
@@ -83,7 +83,7 @@ const mockPeople: Person[] = [
   },
 ];
 
-describe('SearchAndPaginate Component', () => {
+describe('Core Component', () => {
   beforeEach(() => {
     global.fetch = vi.fn().mockResolvedValue({
       json: vi.fn().mockResolvedValue({
@@ -95,10 +95,8 @@ describe('SearchAndPaginate Component', () => {
 
   const mockOnPageChange = vi.fn();
 
-  it('renders SearchAndPaginate correctly', () => {
-    render(
-      <SearchAndPaginate currentPage={1} onPageChange={mockOnPageChange} />
-    );
+  it('renders Core correctly', () => {
+    render(<Core currentPage={1} onPageChange={mockOnPageChange} />);
 
     expect(screen.getByText('Mocked Pagination Component')).toBeInTheDocument();
     expect(screen.getByText('Mocked Search Component')).toBeInTheDocument();
@@ -106,9 +104,7 @@ describe('SearchAndPaginate Component', () => {
   });
 
   it('fetches and displays people data correctly', async () => {
-    render(
-      <SearchAndPaginate currentPage={1} onPageChange={mockOnPageChange} />
-    );
+    render(<Core currentPage={1} onPageChange={mockOnPageChange} />);
 
     await waitFor(() =>
       expect(screen.getByText('Luke Skywalker')).toBeInTheDocument()
@@ -116,9 +112,7 @@ describe('SearchAndPaginate Component', () => {
   });
 
   it('calls onPageChange and fetches new data when pagination is used', async () => {
-    render(
-      <SearchAndPaginate currentPage={1} onPageChange={mockOnPageChange} />
-    );
+    render(<Core currentPage={1} onPageChange={mockOnPageChange} />);
 
     fireEvent.click(screen.getByText('Next Page'));
     expect(mockOnPageChange).toHaveBeenCalledWith(2);
@@ -129,9 +123,7 @@ describe('SearchAndPaginate Component', () => {
   });
 
   it('updates query and fetches new data when search is used', async () => {
-    render(
-      <SearchAndPaginate currentPage={1} onPageChange={mockOnPageChange} />
-    );
+    render(<Core currentPage={1} onPageChange={mockOnPageChange} />);
 
     fireEvent.change(screen.getByPlaceholderText('Enter name'), {
       target: { value: 'Yoda' },

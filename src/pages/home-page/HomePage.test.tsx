@@ -17,7 +17,7 @@ vi.mock('react-router', async (importOriginal) => {
   };
 });
 
-vi.mock('../../components/SearchAndPaginate', () => ({
+vi.mock('../../components/Core', () => ({
   default: ({
     currentPage,
     onPageChange,
@@ -26,7 +26,7 @@ vi.mock('../../components/SearchAndPaginate', () => ({
     onPageChange: (page: number) => void;
   }) => (
     <div>
-      Mocked SearchAndPaginate Component
+      Mocked Core Component
       <button onClick={() => onPageChange(currentPage + 1)}>Next Page</button>
     </div>
   ),
@@ -43,9 +43,7 @@ describe('HomePage Component', () => {
     );
 
     expect(screen.getByText('Star Wars Characters')).toBeInTheDocument();
-    expect(
-      screen.getByText('Mocked SearchAndPaginate Component')
-    ).toBeInTheDocument();
+    expect(screen.getByText('Mocked Core Component')).toBeInTheDocument();
     expect(screen.getByText('Mocked Outlet')).toBeInTheDocument();
   });
 

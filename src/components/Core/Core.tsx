@@ -1,16 +1,16 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { Person, StarWarsAPIResponse } from '../../types/types';
 import Pagination from '../pagination/Pagination';
-import Search from '../search/Search';
+import ButtonSearch from '../button-search/Button-search';
 import Main from '../main/Main';
 import useLocalStorage from '../../service/localStorage.service';
 
-interface SearchAndPaginateProps {
+interface CoreProps {
   currentPage: number;
   onPageChange: (page: number) => void;
 }
 
-const SearchAndPaginate: React.FC<SearchAndPaginateProps> = ({
+const Core: React.FC<CoreProps> = ({
   currentPage,
   onPageChange,
 }) => {
@@ -102,7 +102,7 @@ const SearchAndPaginate: React.FC<SearchAndPaginateProps> = ({
       />
       <div className="container-search-main">
         <section>
-          <Search onFormSubmit={handleSubmit} value={query} />
+          <ButtonSearch onFormSubmit={handleSubmit} value={query} />
           <Main data={people} loading={loading} error={error} />
         </section>
         <section></section>
@@ -111,4 +111,4 @@ const SearchAndPaginate: React.FC<SearchAndPaginateProps> = ({
   );
 };
 
-export default SearchAndPaginate;
+export default Core;

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { Person } from '../../types/types';
-import DetailedCard from '../../components/card-details/CardDetails';
-const DetailedPage: React.FC = () => {
+import CardDetails from '../card-details/CardDetails';
+
+const CardDetailsContainer: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [person, setPerson] = useState<Person | null>(null);
 
@@ -22,9 +23,9 @@ const DetailedPage: React.FC = () => {
 
   return (
     <div className="detailed-page">
-      {person ? <DetailedCard person={person} /> : <p>Loading...</p>}
+      {person ? <CardDetails person={person} /> : <p>Loading...</p>}
     </div>
   );
 };
 
-export default DetailedPage;
+export default CardDetailsContainer;
