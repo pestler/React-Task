@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-
 import { Person } from '../../types/types';
 import DetailedCard from '../../components/card-details/CardDetails';
-
 const DetailedPage: React.FC = () => {
-  const { name } = useParams<{ name: string }>();
+  const { id } = useParams<{ id: string }>();
   const [person, setPerson] = useState<Person | null>(null);
 
   useEffect(() => {
     const fetchPerson = async () => {
       const response = await fetch(
-        `https://swapi.dev/api/people/?search=${name}`
+        `https://swapi.dev/api/people/?search=${id}`
       );
       const data = await response.json();
       if (data.results.length > 0) {
@@ -20,7 +18,7 @@ const DetailedPage: React.FC = () => {
     };
 
     fetchPerson();
-  }, [name]);
+  }, [id]);
 
   return (
     <div className="detailed-page">

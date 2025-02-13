@@ -6,18 +6,14 @@ import NotFoundPage from '../pages/NotFoundPage';
 import DetailedPage from '../pages/detailed-page/DetailedPage';
 
 const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const PageChange = (newPage: number) => {
-    setCurrentPage(newPage);
-  };
+  const [currentPage] = useState(1);
 
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <HomePage currentPage={currentPage} onPageChange={PageChange} />,
+      element: <HomePage currentPage={currentPage} />,
       errorElement: <NotFoundPage />,
-      children: [{ path: 'details/:name', element: <DetailedPage /> }],
+      children: [{ path: 'details/:id/', element: <DetailedPage /> }],
     },
     { path: '*', element: <NotFoundPage /> },
   ]);

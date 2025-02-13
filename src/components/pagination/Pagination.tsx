@@ -16,15 +16,11 @@ const Pagination: React.FC<PaginationProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const currentPageFromURL = parseInt(
-    searchParams.get('page') || currentPage.toString(),
-    10
-  );
 
   const handlePageChange = (page: number) => {
-    onPageChange(page);
     searchParams.set('page', page.toString());
     navigate(`${location.pathname}?${searchParams.toString()}`);
+    onPageChange(page);
   };
 
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
@@ -33,10 +29,9 @@ const Pagination: React.FC<PaginationProps> = ({
     <div className="pagination">
       {pages.map((page) => (
         <button
-          className="btn"
+          className={`btn ${page === currentPage ? 'active' : ''}`}
           key={page}
           onClick={() => handlePageChange(page)}
-          disabled={page === currentPageFromURL}
         >
           {page}
         </button>

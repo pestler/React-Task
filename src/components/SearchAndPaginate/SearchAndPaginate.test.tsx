@@ -3,7 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import SearchAndPaginate from './SearchAndPaginate';
-import { Person, StarWarsAPIResponse } from '../types/types';
+import { Person, StarWarsAPIResponse } from '../../types/types';
 
 vi.mock('./pagination/Pagination', () => ({
   default: ({

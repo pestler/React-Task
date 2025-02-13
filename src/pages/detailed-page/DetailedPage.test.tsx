@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import { MemoryRouter, Route, Routes } from 'react-router';
-import DetailedPage from './DetailedPage';
+import DetailedPage from './DetailedCard';
 import { Person } from '../../types/types';
 
 const mockPerson: Person = {

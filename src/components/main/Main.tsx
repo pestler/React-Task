@@ -12,6 +12,13 @@ interface MainProps {
 }
 
 const Main: React.FC<MainProps> = ({ data, loading, error }) => {
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
   return (
     <main className="main-box">
       <CardList data={data} loading={loading} error={error} />
