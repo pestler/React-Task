@@ -32,7 +32,15 @@ const Core: React.FC<CoreProps> = ({ currentPage, onPageChange }) => {
     event.preventDefault();
     setQuery(query);
     onPageChange(1);
-    navigate(`/?page=1`);
+    navigate(query === '' ? `/` : `/?page=1`);
+    if (query === '') {
+      setPeople([]);
+      setTotalPages(1);
+      setTotalResults(0);
+      setCachedPeople({});
+      setLoading(false);
+      setError(null);
+    }
   };
 
   const fetchPeople = useCallback(
