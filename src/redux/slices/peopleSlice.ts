@@ -28,23 +28,12 @@ const peopleSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(
-        fetchPeople.fulfilled,
-        (
-          state: {
-            loading: boolean;
-            people: Person[];
-            totalResults: number;
-            totalPages: number;
-          },
-          action: { payload: { results: Person[]; count: number } }
-        ) => {
-          state.loading = false;
-          state.people = action.payload.results;
-          state.totalResults = action.payload.count;
-          state.totalPages = Math.ceil(action.payload.count / 10);
-        }
-      )
+      .addCase(fetchPeople.fulfilled, (state, action) => {
+        state.loading = false;
+        state.people = action.payload?.results || [];
+        state.totalResults = action.payload?.count || 0;
+        state.totalPages = Math.ceil((action.payload?.count || 0) / 10);
+      })
       .addCase(fetchPeople.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'An unexpected error occurred';
