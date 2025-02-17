@@ -8,12 +8,12 @@ import Main from '../main/Main';
 import useLocalStorage from '../../service/localStorage.service';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  fetchPeople,
   selectError,
   selectLoading,
   selectPeople,
   selectTotalPages,
-} from '../../redux/slices/slices';
+} from '../../redux/slices/peopleSlice';
+import { fetchPeople } from '../../redux/services/peopleService';
 
 interface CoreProps {
   currentPage: number;
@@ -22,7 +22,7 @@ interface CoreProps {
 
 const Core: React.FC<CoreProps> = ({ currentPage, onPageChange }) => {
   const dispatch: AppDispatch = useDispatch();
-  const people = useSelector((state: RootState) => selectPeople(state));
+  const data = useSelector((state: RootState) => selectPeople(state));
   const totalPages = useSelector((state: RootState) => selectTotalPages(state));
   const loading = useSelector((state: RootState) => selectLoading(state));
   const error = useSelector((state: RootState) => selectError(state));
@@ -63,7 +63,7 @@ const Core: React.FC<CoreProps> = ({ currentPage, onPageChange }) => {
         <section>
           <ButtonSearch onFormSubmit={handleSubmit} value={query} />
           <Main
-            data={people}
+            data={data}
             loading={loading}
             error={error}
             currentPage={currentPage}

@@ -1,5 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { Person, StarWarsAPIResponse } from '../../types/types';
+import { createSlice } from '@reduxjs/toolkit';
+import { Person } from '../../types/types';
+import { fetchPeople } from '../services/peopleService';
 
 interface PeopleState {
   people: Person[];
@@ -17,23 +18,6 @@ const initialState: PeopleState = {
   error: null,
 };
 
-export const fetchPeople = createAsyncThunk(
-  'people/fetchPeople',
-  async ({ query, page }: { query: string; page: number }) => {
-    const url =
-      query === ''
-        ? `https://swapi.dev/api/people/?page=${page}`
-        : `https://swapi.dev/api/people/?search=${query}&page=${page}`;
-
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    const data: StarWarsAPIResponse = await response.json();
-    return { people: data.results, totalResults: data.count };
-  }
-);
-
 const peopleSlice = createSlice({
   name: 'people',
   initialState,
@@ -44,12 +28,23 @@ const peopleSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchPeople.fulfilled, (state, action) => {
-        state.loading = false;
-        state.people = action.payload.people;
-        state.totalResults = action.payload.totalResults;
-        state.totalPages = Math.ceil(action.payload.totalResults / 10);
-      })
+      .addCase(
+        fetchPeople.fulfilled,
+        (
+          state: {
+            loading: boolean;
+            people: Person[];
+            totalResults: number;
+            totalPages: number;
+          },
+          action: { payload: { results: Person[]; count: number } }
+        ) => {
+          state.loading = false;
+          state.people = action.payload.results;
+          state.totalResults = action.payload.count;
+          state.totalPages = Math.ceil(action.payload.count / 10);
+        }
+      )
       .addCase(fetchPeople.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'An unexpected error occurred';

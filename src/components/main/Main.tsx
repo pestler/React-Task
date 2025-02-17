@@ -10,13 +10,9 @@ interface MainProps {
   currentPage: number;
 }
 
-const Main: React.FC<MainProps> = ({ data, loading, error, currentPage }) => {
+const Main: React.FC<MainProps> = ({ data, loading }) => {
   if (loading) {
     return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="error-message">{error}</div>;
   }
 
   if (data.length === 0) {
@@ -25,12 +21,7 @@ const Main: React.FC<MainProps> = ({ data, loading, error, currentPage }) => {
 
   return (
     <main className="main-box">
-      <CardList
-        data={data}
-        loading={loading}
-        error={error}
-        currentPage={currentPage}
-      />
+      <CardList data={data} loading={false} error={null} currentPage={0} />
     </main>
   );
 };
