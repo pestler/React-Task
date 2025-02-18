@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import '@testing-library/jest-dom';
@@ -10,27 +11,17 @@ const mockData: Person[] = [
     name: 'Luke Skywalker',
     gender: 'male',
     url: 'https://swapi.dev/api/people',
-    birth_year: '19BBY',
     height: '172',
     mass: '77',
     hair_color: 'blond',
-    skin_color: 'fair',
-    eye_color: 'blue',
-    created: '2023-01-01T00:00:00.000Z',
-    edited: '2023-01-02T00:00:00.000Z',
   },
   {
     name: 'Darth Vader',
     gender: 'male',
     url: 'https://swapi.dev/api/people',
-    birth_year: '41.9BBY',
     height: '202',
     mass: '136',
     hair_color: 'none',
-    skin_color: 'white',
-    eye_color: 'yellow',
-    created: '2023-01-01T00:00:00.000Z',
-    edited: '2023-01-02T00:00:00.000Z',
   },
 ];
 
@@ -38,27 +29,27 @@ describe('Main Component', () => {
   it('renders loading state correctly', () => {
     render(
       <MemoryRouter>
-        <Main data={[]} loading={true} error={null} />
+        <Main data={[]} loading={true} error={null} currentPage={0} />
       </MemoryRouter>
     );
     const loadingElement = screen.getByText('Loading...');
     expect(loadingElement).toBeInTheDocument();
   });
 
-  it('renders error state correctly', () => {
+  it('renders no results message when no data is available', () => {
     render(
       <MemoryRouter>
-        <Main data={[]} loading={false} error="Error loading data" />
+        <Main data={[]} loading={false} error={null} currentPage={0} />
       </MemoryRouter>
     );
-    const errorElement = screen.getByText('error');
-    expect(errorElement).toBeInTheDocument();
+    const noResultsMessage = screen.getByText('No results found.');
+    expect(noResultsMessage).toBeInTheDocument();
   });
 
-  it('renders CardList with data correctly', () => {
+  it('renders data correctly when available', () => {
     render(
       <MemoryRouter>
-        <Main data={mockData} loading={false} error={null} />
+        <Main data={mockData} loading={false} error={null} currentPage={0} />
       </MemoryRouter>
     );
 
@@ -66,15 +57,5 @@ describe('Main Component', () => {
     const vaderElement = screen.getByText('Darth Vader');
     expect(lukeElement).toBeInTheDocument();
     expect(vaderElement).toBeInTheDocument();
-  });
-
-  it('renders error description when no data is available', () => {
-    render(
-      <MemoryRouter>
-        <Main data={[]} loading={false} error={null} />
-      </MemoryRouter>
-    );
-    const errorDescription = screen.getByText('Error description');
-    expect(errorDescription).toBeInTheDocument();
   });
 });

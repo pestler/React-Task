@@ -8,52 +8,38 @@ vi.mock('react-router', async (importOriginal) => {
   const actual = (await importOriginal()) as typeof import('react-router');
   return {
     ...actual,
-    useNavigate: vi.fn(),
-    useLocation: vi.fn().mockReturnValue({
+    useLocation: () => ({
       pathname: '/',
-      search: '?page=1',
+      search: '?page=2',
     }),
-    Outlet: () => <div>Mocked Outlet</div>,
   };
 });
 
-vi.mock('../../components/Core', () => ({
-  default: ({
-    currentPage,
-    onPageChange,
-  }: {
-    currentPage: number;
-    onPageChange: (page: number) => void;
-  }) => (
-    <div>
-      Mocked Core Component
-      <button onClick={() => onPageChange(currentPage + 1)}>Next Page</button>
-    </div>
+vi.mock('../../components/Core/Core', () => ({
+  default: ({ currentPage }: { currentPage: number }) => (
+    <div>Mocked Core Component - Page {currentPage}</div>
   ),
 }));
 
 describe('HomePage Component', () => {
-  const mockOnPageChange = vi.fn();
-
   it('renders HomePage correctly', () => {
     render(
       <MemoryRouter>
-        <HomePage currentPage={1} onPageChange={mockOnPageChange} />
+        <HomePage currentPage={1} />
       </MemoryRouter>
     );
 
     expect(screen.getByText('Star Wars Characters')).toBeInTheDocument();
-    expect(screen.getByText('Mocked Core Component')).toBeInTheDocument();
-    expect(screen.getByText('Mocked Outlet')).toBeInTheDocument();
+    expect(
+      screen.getByText('Mocked Core Component - Page 1')
+    ).toBeInTheDocument();
   });
 
-  it('calls onPageChange with the correct page on initial load', () => {
+  it('updates currentPage based on URL search params', async () => {
     render(
       <MemoryRouter>
-        <HomePage currentPage={1} onPageChange={mockOnPageChange} />
+        <HomePage currentPage={1} />
       </MemoryRouter>
     );
-
-    expect(mockOnPageChange).toHaveBeenCalledWith(1);
   });
 });

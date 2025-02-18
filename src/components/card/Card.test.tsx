@@ -20,21 +20,16 @@ const mockPerson: Person = {
   name: 'Luke Skywalker',
   gender: 'male',
   url: 'https://swapi.dev/api/people/1/',
-  birth_year: '19BBY',
   height: '172',
   mass: '77',
   hair_color: 'blond',
-  skin_color: 'fair',
-  eye_color: 'blue',
-  created: '2023-01-01T00:00:00.000Z',
-  edited: '2023-01-02T00:00:00.000Z',
 };
 
 describe('Card Component', () => {
   it('renders correctly with given person data', () => {
     render(
       <MemoryRouter>
-        <Card person={mockPerson} />
+        <Card person={mockPerson} currentPage={0} />
       </MemoryRouter>
     );
 
@@ -48,12 +43,12 @@ describe('Card Component', () => {
 
     render(
       <MemoryRouter>
-        <Card person={mockPerson} />
+        <Card person={mockPerson} currentPage={0} />
       </MemoryRouter>
     );
 
     fireEvent.click(screen.getByTestId('test-card'));
-    expect(mockNavigate).toHaveBeenCalledWith('/details/Luke Skywalker');
+    expect(mockNavigate).toHaveBeenCalledWith('/details/Luke Skywalker?page=0');
   });
 
   it('navigates to the home page when clicked on the details page', () => {
@@ -61,11 +56,12 @@ describe('Card Component', () => {
     (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
     (useLocation as jest.Mock).mockReturnValue({
       pathname: '/details/Luke Skywalker',
+      search: '?page=0',
     });
 
     render(
       <MemoryRouter>
-        <Card person={mockPerson} />
+        <Card person={mockPerson} currentPage={0} />
       </MemoryRouter>
     );
 

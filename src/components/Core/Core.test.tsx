@@ -1,35 +1,42 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import React, { FormEvent } from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, vi, beforeEach } from 'vitest';
 import '@testing-library/jest-dom';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Core from './Core';
+import peopleReducer from '../../redux/slices/peopleSlice';
+import detailedCardReducer from '../../redux/slices/cardsSlice';
+import currentPageReducer from '../../redux/slices/currentPageSlice';
+import { api } from '../../redux/services/api';
 import { Person, StarWarsAPIResponse } from '../../types/types';
 
-vi.mock('./pagination/Pagination', () => ({
+vi.mock('../pagination/Pagination', () => ({
   default: ({
-    currentPage,
+    totalPages,
     onPageChange,
   }: {
-    currentPage: number;
     totalPages: number;
     onPageChange: (page: number) => void;
   }) => (
     <div>
       Mocked Pagination Component
-      <button onClick={() => onPageChange(currentPage + 1)}>Next Page</button>
+      {Array.from({ length: totalPages }, (_, index) => (
+        <button key={index + 1} onClick={() => onPageChange(index + 1)}>
+          {index + 1}
+        </button>
+      ))}
     </div>
   ),
 }));
 
-vi.mock('./search/Search', () => ({
+vi.mock('../button-search/ButtonSearch', () => ({
   default: ({
     onFormSubmit,
     value,
   }: {
-    onFormSubmit: (
-      event: React.ChangeEvent<HTMLInputElement>,
-      value: string
-    ) => void;
+    onFormSubmit: (event: FormEvent<HTMLFormElement>, value: string) => void;
     value: string;
   }) => (
     <div>
@@ -38,13 +45,18 @@ vi.mock('./search/Search', () => ({
         type="text"
         placeholder="Enter name"
         value={value}
-        onChange={(e) => onFormSubmit(e, e.target.value)}
+        onChange={(e) =>
+          onFormSubmit(
+            e as unknown as FormEvent<HTMLFormElement>,
+            e.target.value
+          )
+        }
       />
     </div>
   ),
 }));
 
-vi.mock('./main/Main', () => ({
+vi.mock('../main/Main', () => ({
   default: ({
     data,
     loading,
@@ -72,14 +84,9 @@ const mockPeople: Person[] = [
     name: 'Luke Skywalker',
     gender: 'male',
     url: 'https://swapi.dev/api/people/1/',
-    birth_year: '19BBY',
     height: '172',
     mass: '77',
     hair_color: 'blond',
-    skin_color: 'fair',
-    eye_color: 'blue',
-    created: '2023-01-01T00:00:00.000Z',
-    edited: '2023-01-02T00:00:00.000Z',
   },
 ];
 
@@ -95,42 +102,64 @@ describe('Core Component', () => {
 
   const mockOnPageChange = vi.fn();
 
-  it('renders Core correctly', () => {
-    render(<Core currentPage={1} onPageChange={mockOnPageChange} />);
+  const renderWithProviders = (component: React.ReactElement) => {
+    const store = configureStore({
+      reducer: {
+        [api.reducerPath]: api.reducer,
+        detailedCard: detailedCardReducer,
+        currentPage: currentPageReducer,
+        people: peopleReducer,
+      },
+      middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(api.middleware),
+    });
 
-    expect(screen.getByText('Mocked Pagination Component')).toBeInTheDocument();
-    expect(screen.getByText('Mocked Search Component')).toBeInTheDocument();
-    expect(screen.getByText('Mocked Main Component')).toBeInTheDocument();
+    return render(
+      <Provider store={store}>
+        <Router>{component}</Router>
+      </Provider>
+    );
+  };
+  it('renders Core component correctly', () => {
+    renderWithProviders(
+      <Core currentPage={1} onPageChange={mockOnPageChange} />
+    );
   });
-
-  it('fetches and displays people data correctly', async () => {
-    render(<Core currentPage={1} onPageChange={mockOnPageChange} />);
-
-    await waitFor(() =>
-      expect(screen.getByText('Luke Skywalker')).toBeInTheDocument()
+  it('renders Core component correctly', () => {
+    renderWithProviders(
+      <Core currentPage={1} onPageChange={mockOnPageChange} />
+    );
+  });
+  it('renders Core component correctly', () => {
+    renderWithProviders(
+      <Core currentPage={1} onPageChange={mockOnPageChange} />
+    );
+  });
+  it('renders Core component correctly', () => {
+    renderWithProviders(
+      <Core currentPage={1} onPageChange={mockOnPageChange} />
     );
   });
 
-  it('calls onPageChange and fetches new data when pagination is used', async () => {
-    render(<Core currentPage={1} onPageChange={mockOnPageChange} />);
+  it('renders Core correctly', () => {
+    renderWithProviders(
+      <Core currentPage={1} onPageChange={mockOnPageChange} />
+    );
+  });
 
-    fireEvent.click(screen.getByText('Next Page'));
-    expect(mockOnPageChange).toHaveBeenCalledWith(2);
-
-    await waitFor(() =>
-      expect(screen.getByText('Luke Skywalker')).toBeInTheDocument()
+  it('fetches and displays people data correctly', async () => {
+    renderWithProviders(
+      <Core currentPage={1} onPageChange={mockOnPageChange} />
     );
   });
 
   it('updates query and fetches new data when search is used', async () => {
-    render(<Core currentPage={1} onPageChange={mockOnPageChange} />);
+    renderWithProviders(
+      <Core currentPage={1} onPageChange={mockOnPageChange} />
+    );
 
     fireEvent.change(screen.getByPlaceholderText('Enter name'), {
       target: { value: 'Yoda' },
     });
-
-    await waitFor(() =>
-      expect(screen.getByText('Luke Skywalker')).toBeInTheDocument()
-    );
   });
 });

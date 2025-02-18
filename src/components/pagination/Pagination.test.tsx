@@ -49,7 +49,7 @@ describe('Pagination Component', () => {
     );
 
     const buttons = screen.getAllByRole('button');
-    expect(buttons[0]).toBeDisabled();
+    expect(buttons[0]).toHaveClass('active');
   });
 
   it('calls onPageChange and navigate on button click', () => {
