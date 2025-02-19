@@ -59,8 +59,8 @@ const Core: React.FC<CoreProps> = ({ currentPage, onPageChange }) => {
           navigate(`/?page=${page}`);
         }}
       />
-      <div className="container-search-main">
-        <section>
+      <section className="search-main">
+        <div className="container-search-main">
           <ButtonSearch onFormSubmit={handleSubmit} value={query} />
           <Main
             data={data}
@@ -68,9 +68,8 @@ const Core: React.FC<CoreProps> = ({ currentPage, onPageChange }) => {
             error={error}
             currentPage={currentPage}
           />
-        </section>
-        <section></section>
-      </div>
+        </div>
+      </section>
     </div>
   );
 };
