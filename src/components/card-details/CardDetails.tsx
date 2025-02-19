@@ -10,7 +10,7 @@ interface CardDetailsProps {
 const CardDetails: React.FC<CardDetailsProps> = ({ person }) => {
   const navigate = useNavigate();
   const handleClose = () => {
-    navigate('/');
+    navigate(`/?page=${currentPage}`);
   };
   return (
     <div className="card-details">

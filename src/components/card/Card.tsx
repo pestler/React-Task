@@ -15,7 +15,7 @@ const Card: React.FC<CardProps> = ({ person, currentPage }) => {
   const handleClick = () => {
     const isDetailsPage = location.pathname.includes('/details/');
     if (isDetailsPage) {
-      navigate('/');
+      navigate(`/?page=${currentPage}`);
     } else {
       navigate(`/details/${person.name}?page=${currentPage}`);
     }

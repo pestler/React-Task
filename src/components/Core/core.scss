@@ -1,5 +1,17 @@
+.container-search-main {}
+
+.search-main {
+  height: 100vh;
+}
+
 .container-search-main {
+  height: 100%;
+}
+
+.search-and-paginate {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: flex-start;
 }

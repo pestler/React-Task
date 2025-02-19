@@ -1,6 +1,10 @@
 .main-box {
   gap: 50px;
   padding: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content:space-between;
 }
 
 .error-message {

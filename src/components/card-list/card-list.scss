@@ -13,3 +13,11 @@ h3 {
   text-align: center;
   padding: 5px 0;
 }
+
+.result-box-items {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 35px;
+  width: 700px;
+}

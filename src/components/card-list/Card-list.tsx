@@ -2,6 +2,7 @@ import React from 'react';
 import './card-list.scss';
 import Card from '../card/Card';
 import { Person } from '../../types/types';
+import { Outlet } from 'react-router-dom';
 
 interface CardProps {
   data: Person[];
@@ -40,6 +41,7 @@ const CardList: React.FC<CardProps> = ({
                 </div>
               ))}
             </div>
+            <Outlet />
           </div>
         ) : (
           <div className="result-error-description">
