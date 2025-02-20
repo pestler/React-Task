@@ -5,13 +5,21 @@ import { useNavigate } from 'react-router';
 
 interface CardDetailsProps {
   person: Person;
+  currentPage: number;
 }
 
-const CardDetails: React.FC<CardDetailsProps> = ({ person }) => {
+const CardDetails: React.FC<CardDetailsProps> = ({ person, currentPage }) => {
   const navigate = useNavigate();
+
   const handleClose = () => {
-    navigate(`/?page=${currentPage}`);
+    const isDetailsPage = location.pathname.includes('/details/');
+    if (isDetailsPage) {
+      navigate(`/?page=${currentPage}`);
+    } else {
+      navigate(`/details/${person.name}?page=${currentPage}`);
+    }
   };
+
   return (
     <div className="card-details">
       <button className="close-button btn" onClick={handleClose}>
