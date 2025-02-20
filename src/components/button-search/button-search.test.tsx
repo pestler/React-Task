@@ -33,7 +33,7 @@ describe('Search Component', () => {
       fireEvent.submit(formElement);
 
       expect(mockOnFormSubmit).toHaveBeenCalledWith(
-        expect.any(Object),
+        expect.objectContaining({ type: 'submit' }),
         'submitted value'
       );
     } else {

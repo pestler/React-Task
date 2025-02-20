@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import Core from '../../components/Core/Core';
 import './home-page.scss';
 import { useLocation } from 'react-router-dom';
+import { useTheme } from '../../components/theme-context/theme-context';
+import ThemeToggle from '../../components/theme-context/theme-toggle';
 
 interface HomePageProps {
   currentPage: number;
 }
 
 const HomePage: React.FC<HomePageProps> = () => {
+  const { theme } = useTheme();
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -24,12 +27,15 @@ const HomePage: React.FC<HomePageProps> = () => {
   };
 
   return (
-    <div className="home-page">
-      <h1>Star Wars Characters</h1>
-      <div className="container">
-        <section className="search-and-paginate-container">
-          <Core currentPage={currentPage} onPageChange={handlePageChange} />
-        </section>
+    <div style={{ background: theme.background, color: theme.color }}>
+      <div className="home-page">
+        <ThemeToggle />
+        <div className="container">
+          <h1>Star Wars Characters</h1>
+          <section className="search-and-paginate-container">
+            <Core currentPage={currentPage} onPageChange={handlePageChange} />
+          </section>
+        </div>
       </div>
     </div>
   );
