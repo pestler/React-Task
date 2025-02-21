@@ -4,6 +4,9 @@ import Card from '../card/Card';
 import { Person } from '../../types/types';
 import { Outlet } from 'react-router-dom';
 import { useTheme } from '../theme-context/theme-context';
+import Flyout from '../flyout/Flyout';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 interface CardProps {
   data: Person[];
@@ -19,6 +22,7 @@ const CardList: React.FC<CardProps> = ({
   currentPage,
 }) => {
   const { theme } = useTheme();
+  const favorite = useSelector((state: RootState) => state.favorite.items);
   return (
     <div className="card-list">
       <div className="title-box">
@@ -58,6 +62,7 @@ const CardList: React.FC<CardProps> = ({
           </div>
         )}
       </div>
+      <Flyout selectedItems={favorite} />
     </div>
   );
 };
