@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Core from '../../components/Core/Core';
-import './home-page.scss';
 import { useLocation } from 'react-router-dom';
 import { useTheme } from '../../components/theme-context/theme-context';
 import ThemeToggle from '../../components/theme-context/theme-toggle';
+import './home-page.scss';
 
 interface HomePageProps {
   currentPage: number;
@@ -27,10 +27,21 @@ const HomePage: React.FC<HomePageProps> = () => {
   };
 
   return (
-    <div style={{ background: theme.background, color: theme.color }}>
+    <div
+      style={{
+        background: theme.background,
+        color: theme.color,
+      }}
+      className="back"
+    >
       <div className="home-page">
         <ThemeToggle />
-        <div className="container">
+        <div
+          className="container"
+          style={{
+            backgroundColor: theme.backgroundColor,
+          }}
+        >
           <h1>Star Wars Characters</h1>
           <section className="search-and-paginate-container">
             <Core currentPage={currentPage} onPageChange={handlePageChange} />

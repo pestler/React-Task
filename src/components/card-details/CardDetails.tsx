@@ -2,6 +2,7 @@ import React from 'react';
 import { Person } from '../../types/types';
 import './card-details.scss';
 import { useNavigate } from 'react-router';
+import { useTheme } from '../theme-context/theme-context';
 
 interface CardDetailsProps {
   person: Person;
@@ -10,7 +11,7 @@ interface CardDetailsProps {
 
 const CardDetails: React.FC<CardDetailsProps> = ({ person, currentPage }) => {
   const navigate = useNavigate();
-
+  const { theme } = useTheme();
   const handleClose = () => {
     const isDetailsPage = location.pathname.includes('/details/');
     if (isDetailsPage) {
@@ -21,7 +22,13 @@ const CardDetails: React.FC<CardDetailsProps> = ({ person, currentPage }) => {
   };
 
   return (
-    <div className="card-details">
+    <div
+      className="card-details"
+      style={{
+        backgroundColor: theme.backgroundColor,
+        color: theme.color,
+      }}
+    >
       <button className="close-button btn" onClick={handleClose}>
         CLOSE
       </button>

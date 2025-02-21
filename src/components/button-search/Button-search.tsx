@@ -1,5 +1,6 @@
 import React, { FormEvent } from 'react';
 import './button-search.scss';
+import { useTheme } from '../theme-context/theme-context';
 
 interface Props {
   onFormSubmit: (event: FormEvent, value: string) => void;
@@ -7,6 +8,7 @@ interface Props {
 }
 
 const ButtonSearch: React.FC<Props> = ({ onFormSubmit, value }) => {
+  const { theme } = useTheme();
   const [inputValue, setInputValue] = React.useState<string>(value);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +23,14 @@ const ButtonSearch: React.FC<Props> = ({ onFormSubmit, value }) => {
   return (
     <>
       <header>
-        <h3>Top controls</h3>
+        <h3
+          style={{
+            backgroundColor: theme.backgroundColor,
+            color: theme.color,
+          }}
+        >
+          Top controls
+        </h3>
       </header>
       <div>
         <form onSubmit={handleSubmit} className="form">

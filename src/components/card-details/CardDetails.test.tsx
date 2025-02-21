@@ -29,7 +29,7 @@ describe('CardDetails Component', () => {
 
     render(
       <MemoryRouter>
-        <CardDetails person={mockedPerson} />
+        <CardDetails person={mockedPerson} currentPage={0} />
       </MemoryRouter>
     );
 

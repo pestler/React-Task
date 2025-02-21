@@ -3,6 +3,7 @@ import './card-list.scss';
 import Card from '../card/Card';
 import { Person } from '../../types/types';
 import { Outlet } from 'react-router-dom';
+import { useTheme } from '../theme-context/theme-context';
 
 interface CardProps {
   data: Person[];
@@ -17,6 +18,7 @@ const CardList: React.FC<CardProps> = ({
   error,
   currentPage,
 }) => {
+  const { theme } = useTheme();
   return (
     <div className="card-list">
       <div className="title-box">
@@ -27,7 +29,14 @@ const CardList: React.FC<CardProps> = ({
       {loading && <div>Loading...</div>}
       {error && <div>{error}</div>}
       <div className="result-box">
-        <h3>Results</h3>
+        <h3
+          style={{
+            backgroundColor: theme.backgroundColor,
+            color: theme.color,
+          }}
+        >
+          Results
+        </h3>
         {data.length > 0 ? (
           <div className="result-box-items">
             <div className="item-box">
