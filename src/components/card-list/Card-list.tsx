@@ -1,16 +1,28 @@
 import React from 'react';
 import './card-list.scss';
-
 import Card from '../card/Card';
 import { Person } from '../../types/types';
+import { Outlet } from 'react-router-dom';
+import { useTheme } from '../theme-context/theme-context';
+import Flyout from '../flyout/Flyout';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 interface CardProps {
   data: Person[];
   loading: boolean;
   error: string | null;
+  currentPage: number;
 }
 
-const CardList: React.FC<CardProps> = ({ data, loading, error }) => {
+const CardList: React.FC<CardProps> = ({
+  data,
+  loading,
+  error,
+  currentPage,
+}) => {
+  const { theme } = useTheme();
+  const favorite = useSelector((state: RootState) => state.favorite.items);
   return (
     <div className="card-list">
       <div className="title-box">
@@ -19,25 +31,38 @@ const CardList: React.FC<CardProps> = ({ data, loading, error }) => {
       </div>
 
       {loading && <div>Loading...</div>}
-      {error && <div>error</div>}
+      {error && <div>{error}</div>}
       <div className="result-box">
-        <h3>Results</h3>
+        <h3
+          style={{
+            backgroundColor: theme.backgroundColor,
+            color: theme.color,
+          }}
+        >
+          Results
+        </h3>
         {data.length > 0 ? (
           <div className="result-box-items">
             <div className="item-box">
               {data.map((person, index) => (
                 <div key={index}>
-                  <Card key={person.name} person={person} />
+                  <Card
+                    key={person.name}
+                    person={person}
+                    currentPage={currentPage}
+                  />
                 </div>
               ))}
             </div>
+            <Outlet />
           </div>
         ) : (
           <div className="result-error-description">
-            <h3>Error description</h3>
+            <h3>No results found.</h3>
           </div>
         )}
       </div>
+      <Flyout selectedItems={favorite} />
     </div>
   );
 };

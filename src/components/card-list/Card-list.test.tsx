@@ -11,27 +11,17 @@ const mockData: Person[] = [
     name: 'Luke Skywalker',
     gender: 'male',
     url: 'https://swapi.dev/api/people',
-    birth_year: '19BBY',
     height: '172',
     mass: '77',
     hair_color: 'blond',
-    skin_color: 'fair',
-    eye_color: 'blue',
-    created: '2023-01-01T00:00:00.000Z',
-    edited: '2023-01-02T00:00:00.000Z',
   },
   {
     name: 'Darth Vader',
     gender: 'male',
     url: 'https://swapi.dev/api/people',
-    birth_year: '41.9BBY',
     height: '202',
     mass: '136',
     hair_color: 'none',
-    skin_color: 'white',
-    eye_color: 'yellow',
-    created: '2023-01-01T00:00:00.000Z',
-    edited: '2023-01-02T00:00:00.000Z',
   },
 ];
 
@@ -39,7 +29,7 @@ describe('CardList Component', () => {
   it('renders loading state correctly', () => {
     render(
       <MemoryRouter>
-        <CardList data={[]} loading={true} error={null} />
+        <CardList data={[]} loading={true} error={null} currentPage={0} />
       </MemoryRouter>
     );
     const loadingElement = screen.getByText('Loading...');
@@ -49,17 +39,27 @@ describe('CardList Component', () => {
   it('renders error state correctly', () => {
     render(
       <MemoryRouter>
-        <CardList data={[]} loading={false} error="Error loading data" />
+        <CardList
+          data={[]}
+          loading={false}
+          error="Error loading data"
+          currentPage={0}
+        />
       </MemoryRouter>
     );
-    const errorElement = screen.getByText('error');
+    const errorElement = screen.getByText('Error loading data');
     expect(errorElement).toBeInTheDocument();
   });
 
   it('renders data correctly when available', () => {
     render(
       <MemoryRouter>
-        <CardList data={mockData} loading={false} error={null} />
+        <CardList
+          data={mockData}
+          loading={false}
+          error={null}
+          currentPage={0}
+        />
       </MemoryRouter>
     );
 
@@ -69,13 +69,13 @@ describe('CardList Component', () => {
     expect(vaderElement).toBeInTheDocument();
   });
 
-  it('renders error description when no data is available', () => {
+  it('renders no results message when no data is available', () => {
     render(
       <MemoryRouter>
-        <CardList data={[]} loading={false} error={null} />
+        <CardList data={[]} loading={false} error={null} currentPage={0} />
       </MemoryRouter>
     );
-    const errorDescription = screen.getByText('Error description');
-    expect(errorDescription).toBeInTheDocument();
+    const noResultsMessage = screen.getByText('No results found.');
+    expect(noResultsMessage).toBeInTheDocument();
   });
 });

@@ -1,9 +1,11 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { StrictMode } from 'react';
 import './index.scss';
 import ErrorBoundary from './components/error-boundary/Error-boundary';
-import App from './components/App';
+import App from './App';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+import { ThemeProvider } from './components/theme-context/theme-context';
 
 const rootElement = document.getElementById('root');
 
@@ -12,7 +14,11 @@ if (rootElement) {
   root.render(
     <StrictMode>
       <ErrorBoundary>
-        <App />
+        <Provider store={store}>
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
+        </Provider>
       </ErrorBoundary>
     </StrictMode>
   );

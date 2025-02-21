@@ -1,7 +1,12 @@
+.result-box {
+  padding: 10px;
+}
+
 .card-list {
   display: flex;
   flex-direction: column;
   padding: 10px;
+  width: 100%;
 }
 
 .title-box {
@@ -11,5 +16,19 @@
 
 h3 {
   text-align: center;
-  padding: 5px 0;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.result-box-items {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 30px;
 }
