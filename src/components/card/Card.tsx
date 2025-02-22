@@ -9,10 +9,6 @@ import { addFavorite, removeFavorite } from '../../redux/slices/favoriteSlice';
 interface CardProps {
   person: Person;
   currentPage: number;
-
-  /* handleSelectItem: (item: Person) => void;
-  handleDeselectItem: (item: Person) => void;
-  selectedItems: Person[]; */
 }
 
 const Card: React.FC<CardProps> = ({ person, currentPage }) => {

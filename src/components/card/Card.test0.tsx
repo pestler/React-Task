@@ -29,7 +29,7 @@ describe('Card Component', () => {
   it('renders correctly with given person data', () => {
     render(
       <MemoryRouter>
-        <Card person={mockPerson} currentPage={0} />
+        <Card person={mockPerson} currentPage={1} />
       </MemoryRouter>
     );
 
@@ -43,12 +43,12 @@ describe('Card Component', () => {
 
     render(
       <MemoryRouter>
-        <Card person={mockPerson} currentPage={0} />
+        <Card person={mockPerson} currentPage={1} />
       </MemoryRouter>
     );
 
     fireEvent.click(screen.getByTestId('test-card'));
-    expect(mockNavigate).toHaveBeenCalledWith('/details/Luke Skywalker?page=0');
+    expect(mockNavigate).toHaveBeenCalledWith('/details/Luke Skywalker?page=1');
   });
 
   it('navigates to the home page when clicked on the details page', () => {
@@ -56,12 +56,12 @@ describe('Card Component', () => {
     (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
     (useLocation as jest.Mock).mockReturnValue({
       pathname: '/details/Luke Skywalker',
-      search: '?page=0',
+      search: '?page=1',
     });
 
     render(
       <MemoryRouter>
-        <Card person={mockPerson} currentPage={0} />
+        <Card person={mockPerson} currentPage={1} />
       </MemoryRouter>
     );
 

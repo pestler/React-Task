@@ -14,11 +14,11 @@ if (rootElement) {
   root.render(
     <StrictMode>
       <ErrorBoundary>
-        <Provider store={store}>
-          <ThemeProvider>
+        <ThemeProvider>
+          <Provider store={store}>
             <App />
-          </ThemeProvider>
-        </Provider>
+          </Provider>
+        </ThemeProvider>
       </ErrorBoundary>
     </StrictMode>
   );

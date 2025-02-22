@@ -1,43 +1,63 @@
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import '@testing-library/jest-dom';
-import Search from './Button-search';
+import { ThemeProvider } from '../theme-context/ThemeProvider';
+import ButtonSearch from './Button-search';
 
-describe('Search Component', () => {
-  const mockOnFormSubmit = vi.fn();
+describe('ButtonSearch component', () => {
+  const onFormSubmit = vi.fn();
 
-  it('renders the search form with initial value', () => {
-    render(<Search onFormSubmit={mockOnFormSubmit} value="initial" />);
+  const renderWithProviders = (ui: React.ReactElement) => {
+    return render(<ThemeProvider>{ui}</ThemeProvider>);
+  };
 
-    const inputElement = screen.getByPlaceholderText('Enter name');
-    expect(inputElement).toBeInTheDocument();
-    expect(inputElement).toHaveValue('initial');
+  it('renders correctly with initial value', () => {
+    renderWithProviders(
+      <ButtonSearch onFormSubmit={onFormSubmit} value="initial value" />
+    );
+
+    const inputElement = screen.getByPlaceholderText(
+      'Enter name'
+    ) as HTMLInputElement;
+    expect(inputElement).not.toBeNull();
+    expect(inputElement.value).toBe('initial value');
   });
 
-  it('updates the input value on change', () => {
-    render(<Search onFormSubmit={mockOnFormSubmit} value="initial" />);
+  it('handles input change', () => {
+    renderWithProviders(<ButtonSearch onFormSubmit={onFormSubmit} value="" />);
 
-    const inputElement = screen.getByPlaceholderText('Enter name');
+    const inputElement = screen.getByPlaceholderText(
+      'Enter name'
+    ) as HTMLInputElement;
     fireEvent.change(inputElement, { target: { value: 'new value' } });
-    expect(inputElement).toHaveValue('new value');
+
+    expect(inputElement.value).toBe('new value');
   });
 
   it('calls onFormSubmit with the correct value when form is submitted', () => {
-    render(<Search onFormSubmit={mockOnFormSubmit} value="initial" />);
+    renderWithProviders(<ButtonSearch onFormSubmit={onFormSubmit} value="" />);
 
-    const inputElement = screen.getByPlaceholderText('Enter name');
-    const formElement = inputElement.closest('form');
+    const inputElement = screen.getByPlaceholderText(
+      'Enter name'
+    ) as HTMLInputElement;
+    fireEvent.change(inputElement, { target: { value: 'submitted value' } });
 
-    if (formElement) {
-      fireEvent.change(inputElement, { target: { value: 'submitted value' } });
-      fireEvent.submit(formElement);
+    const submitButton = screen.getByText('Search');
+    fireEvent.click(submitButton);
 
-      expect(mockOnFormSubmit).toHaveBeenCalledWith(
-        expect.objectContaining({ type: 'submit' }),
-        'submitted value'
-      );
-    } else {
-      throw new Error('Form element not found');
-    }
+    expect(onFormSubmit).toHaveBeenCalledTimes(1);
+    expect(onFormSubmit).toHaveBeenCalledWith(
+      expect.anything(),
+      'submitted value'
+    );
+  });
+
+  it('applies theme styles', () => {
+    renderWithProviders(<ButtonSearch onFormSubmit={onFormSubmit} value="" />);
+
+    const headerElement = screen.getByText('Top controls');
+    const computedStyle = window.getComputedStyle(headerElement);
+    expect(computedStyle.backgroundColor).not.toBe('');
+    expect(computedStyle.color).not.toBe('');
   });
 });
