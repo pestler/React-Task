@@ -3,10 +3,13 @@ import './Flyout.scss';
 
 interface FlyoutProps {
   selectedItems: string[];
+  clearSelectedItems: () => void;
 }
 
-const Flyout: React.FC<FlyoutProps> = ({ selectedItems }) => {
-  console.log(selectedItems);
+const Flyout: React.FC<FlyoutProps> = ({
+  selectedItems,
+  clearSelectedItems,
+}) => {
   if (selectedItems.length === 0) {
     return null;
   }
@@ -14,6 +17,7 @@ const Flyout: React.FC<FlyoutProps> = ({ selectedItems }) => {
   return (
     <div className="flyout">
       <p>Selected items: {selectedItems.length}</p>
+      <button onClick={clearSelectedItems}>Clear All</button>
     </div>
   );
 };
