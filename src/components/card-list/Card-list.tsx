@@ -5,9 +5,6 @@ import { Person } from '../../types/types';
 import { Outlet } from 'react-router-dom';
 import { useTheme } from '../theme-context/theme-context';
 import Flyout from '../flyout/Flyout';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { clearFavorites } from '../../redux/slices/favoriteSlice';
 
 interface CardProps {
   data: Person[];
@@ -23,12 +20,6 @@ const CardList: React.FC<CardProps> = ({
   currentPage,
 }) => {
   const { theme } = useTheme();
-  const dispatch = useDispatch();
-  const favorite = useSelector((state: RootState) => state.favorite.items);
-
-  const clearSelectedItems = () => {
-    dispatch(clearFavorites());
-  };
 
   return (
     <div className="card-list">
@@ -69,10 +60,7 @@ const CardList: React.FC<CardProps> = ({
           </div>
         )}
       </div>
-      <Flyout
-        selectedItems={favorite}
-        clearSelectedItems={clearSelectedItems}
-      />
+      <Flyout />
     </div>
   );
 };

@@ -13,7 +13,7 @@ import {
   selectLoading,
   selectPeople,
   selectTotalPages,
-} from '../../redux/slices/peopleSlice';
+} from '../../redux/slices/peoplesSlice';
 import { fetchPeople } from '../../redux/services/peopleService';
 
 interface CoreProps {

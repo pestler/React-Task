@@ -9,6 +9,10 @@ import { addFavorite, removeFavorite } from '../../redux/slices/favoriteSlice';
 interface CardProps {
   person: Person;
   currentPage: number;
+
+  /* handleSelectItem: (item: Person) => void;
+  handleDeselectItem: (item: Person) => void;
+  selectedItems: Person[]; */
 }
 
 const Card: React.FC<CardProps> = ({ person, currentPage }) => {
@@ -16,7 +20,7 @@ const Card: React.FC<CardProps> = ({ person, currentPage }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const favorite = useSelector((state: RootState) => state.favorite.items);
+  const favorite = useSelector((state: RootState) => state.favorite.peoples);
   const [checked, setChecked] = React.useState(false);
 
   const handleClick = () => {
@@ -29,21 +33,19 @@ const Card: React.FC<CardProps> = ({ person, currentPage }) => {
   };
 
   const favoriteClick = (name: string) => {
-    if (favorite.some((item) => item === name)) {
+    if (favorite.some((item) => item.name === name)) {
       dispatch(removeFavorite(name));
       setChecked(false);
-      console.log(checked);
     } else {
       if (name) {
-        dispatch(addFavorite(name));
+        dispatch(addFavorite(person));
         setChecked(true);
-        console.log(checked);
       }
     }
   };
 
   useEffect(() => {
-    setChecked(favorite.some((item) => item === name));
+    setChecked(favorite.some((item) => item.name === name));
   }, [favorite, checked, name]);
 
   return (

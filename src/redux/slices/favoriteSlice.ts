@@ -1,25 +1,28 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Person } from '../../types/types';
 
 interface FavoriteState {
-  items: string[];
+  peoples: Person[];
 }
 
 export const initialState: FavoriteState = {
-  items: [],
+  peoples: [],
 };
 
 const favoriteSlice = createSlice({
   name: 'favorite',
   initialState,
   reducers: {
-    addFavorite(state, action: PayloadAction<string>) {
-      state.items.push(action.payload);
+    addFavorite(state, action: PayloadAction<Person>) {
+      state.peoples.push(action.payload);
     },
     removeFavorite(state, action: PayloadAction<string>) {
-      state.items = state.items.filter((item) => item !== action.payload);
+      state.peoples = state.peoples.filter(
+        (item) => item.name !== action.payload
+      );
     },
     clearFavorites(state) {
-      state.items = [];
+      state.peoples = [];
     },
   },
 });

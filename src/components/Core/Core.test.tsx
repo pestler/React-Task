@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Core from './Core';
-import peopleReducer from '../../redux/slices/peopleSlice';
+import peopleReducer from '../../redux/slices/peoplesSlice';
 import detailedCardReducer from '../../redux/slices/cardsSlice';
 import currentPageReducer from '../../redux/slices/currentPageSlice';
 import { api } from '../../redux/services/api';
@@ -108,7 +108,7 @@ describe('Core Component', () => {
         [api.reducerPath]: api.reducer,
         detailedCard: detailedCardReducer,
         currentPage: currentPageReducer,
-        people: peopleReducer,
+        peoples: peopleReducer,
       },
       middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(api.middleware),

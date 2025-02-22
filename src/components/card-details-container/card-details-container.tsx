@@ -4,7 +4,7 @@ import CardDetails from '../card-details/CardDetails';
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { selectPeople } from '../../redux/slices/peopleSlice';
+import { selectPeople } from '../../redux/slices/peoplesSlice';
 
 const CardDetailsContainer: React.FC = () => {
   const { name } = useParams<{ name: string }>();

@@ -3,7 +3,7 @@ import { Person } from '../../types/types';
 import { fetchPeople } from '../services/peopleService';
 
 interface PeopleState {
-  people: Person[];
+  peoples: Person[];
   totalResults: number;
   totalPages: number;
   loading: boolean;
@@ -11,7 +11,7 @@ interface PeopleState {
 }
 
 const initialState: PeopleState = {
-  people: [],
+  peoples: [],
   totalResults: 0,
   totalPages: 1,
   loading: false,
@@ -19,7 +19,7 @@ const initialState: PeopleState = {
 };
 
 const peopleSlice = createSlice({
-  name: 'people',
+  name: 'peoples',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -30,7 +30,7 @@ const peopleSlice = createSlice({
       })
       .addCase(fetchPeople.fulfilled, (state, action) => {
         state.loading = false;
-        state.people = action.payload?.results || [];
+        state.peoples = action.payload?.results || [];
         state.totalResults = action.payload?.count || 0;
         state.totalPages = Math.ceil((action.payload?.count || 0) / 10);
       })
@@ -41,15 +41,15 @@ const peopleSlice = createSlice({
   },
 });
 
-export const selectPeople = (state: { people: PeopleState }) =>
-  state.people.people;
-export const selectTotalResults = (state: { people: PeopleState }) =>
-  state.people.totalResults;
-export const selectTotalPages = (state: { people: PeopleState }) =>
-  state.people.totalPages;
-export const selectLoading = (state: { people: PeopleState }) =>
-  state.people.loading;
-export const selectError = (state: { people: PeopleState }) =>
-  state.people.error;
+export const selectPeople = (state: { peoples: PeopleState }) =>
+  state.peoples.peoples;
+export const selectTotalResults = (state: { peoples: PeopleState }) =>
+  state.peoples.totalResults;
+export const selectTotalPages = (state: { peoples: PeopleState }) =>
+  state.peoples.totalPages;
+export const selectLoading = (state: { peoples: PeopleState }) =>
+  state.peoples.loading;
+export const selectError = (state: { peoples: PeopleState }) =>
+  state.peoples.error;
 
 export default peopleSlice.reducer;
