@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Core from '../../components/Core/Core';
 import { useLocation } from 'react-router-dom';
-import { useTheme } from '../../components/theme-context/theme-context';
 import ThemeToggle from '../../components/theme-context/theme-toggle';
 import './home-page.scss';
+import { useTheme } from '../../components/theme-context/useTheme';
 
 interface HomePageProps {
   currentPage: number;

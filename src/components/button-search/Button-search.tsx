@@ -1,6 +1,6 @@
 import React, { FormEvent } from 'react';
 import './button-search.scss';
-import { useTheme } from '../theme-context/theme-context';
+import { useTheme } from '../theme-context/useTheme';
 
 interface Props {
   onFormSubmit: (event: FormEvent, value: string) => void;

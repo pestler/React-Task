@@ -5,7 +5,7 @@ import ErrorBoundary from './components/error-boundary/Error-boundary';
 import App from './App';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
-import { ThemeProvider } from './components/theme-context/theme-context';
+import { ThemeProvider } from './components/theme-context/ThemeProvider';
 
 const rootElement = document.getElementById('root');
 

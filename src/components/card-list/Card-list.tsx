@@ -3,8 +3,8 @@ import './card-list.scss';
 import Card from '../card/Card';
 import { Person } from '../../types/types';
 import { Outlet } from 'react-router-dom';
-import { useTheme } from '../theme-context/theme-context';
 import Flyout from '../flyout/Flyout';
+import { useTheme } from '../theme-context/useTheme';
 
 interface CardProps {
   data: Person[];

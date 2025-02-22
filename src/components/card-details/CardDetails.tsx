@@ -2,7 +2,7 @@ import React from 'react';
 import { Person } from '../../types/types';
 import './card-details.scss';
 import { useNavigate } from 'react-router';
-import { useTheme } from '../theme-context/theme-context';
+import { useTheme } from '../theme-context/useTheme';
 
 interface CardDetailsProps {
   person: Person;

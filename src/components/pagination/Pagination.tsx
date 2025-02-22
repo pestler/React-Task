@@ -1,7 +1,7 @@
 import React from 'react';
 import './pagination.scss';
 import { useLocation, useNavigate } from 'react-router';
-import { useTheme } from '../theme-context/theme-context';
+import { useTheme } from '../theme-context/useTheme';
 
 interface PaginationProps {
   currentPage: number;
