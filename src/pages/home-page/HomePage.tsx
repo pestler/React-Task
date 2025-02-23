@@ -9,21 +9,21 @@ interface HomePageProps {
   currentPage: number;
 }
 
-const HomePage: React.FC<HomePageProps> = () => {
+const HomePage: React.FC<HomePageProps> = ({ currentPage }) => {
   const { theme } = useTheme();
   const location = useLocation();
-  const [currentPage, setCurrentPage] = useState(1);
+  const [page, setPage] = useState(currentPage);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-    const page = searchParams.get('page');
-    if (page) {
-      setCurrentPage(parseInt(page, 10));
+    const pageParam = searchParams.get('page');
+    if (pageParam) {
+      setPage(parseInt(pageParam, 10));
     }
   }, [location.search]);
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+    setPage(page);
   };
 
   return (
@@ -40,11 +40,12 @@ const HomePage: React.FC<HomePageProps> = () => {
           className="container"
           style={{
             backgroundColor: theme.backgroundColor,
+            color: theme.color,
           }}
         >
           <h1>Star Wars Characters</h1>
           <section className="search-and-paginate-container">
-            <Core currentPage={currentPage} onPageChange={handlePageChange} />
+            <Core currentPage={page} onPageChange={handlePageChange} />
           </section>
         </div>
       </div>

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import { useTheme } from '../theme-context/useTheme';
 
 interface CardDetailsProps {
-  person: Person;
+  person: Person | null;
   currentPage: number;
 }
 
@@ -17,9 +17,15 @@ const CardDetails: React.FC<CardDetailsProps> = ({ person, currentPage }) => {
     if (isDetailsPage) {
       navigate(`/?page=${currentPage}`);
     } else {
-      navigate(`/details/${person.name}?page=${currentPage}`);
+      if (person) {
+        navigate(`/details/${person.name}?page=${currentPage}`);
+      }
     }
   };
+
+  if (!person) {
+    return null;
+  }
 
   return (
     <div
@@ -40,5 +46,4 @@ const CardDetails: React.FC<CardDetailsProps> = ({ person, currentPage }) => {
     </div>
   );
 };
-
 export default CardDetails;

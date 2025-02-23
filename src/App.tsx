@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import './app.scss';
-import { createBrowserRouter, RouterProvider } from 'react-router';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+import { ThemeProvider } from './components/theme-context/ThemeProvider';
+import ErrorBoundary from './components/error-boundary/Error-boundary';
 import HomePage from './pages/home-page/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import CardDetailsContainer from './components/card-details-container/card-details-container';
@@ -18,7 +22,15 @@ const App: React.FC = () => {
     { path: '*', element: <NotFoundPage /> },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <ErrorBoundary>
+      <ThemeProvider>
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </ThemeProvider>
+    </ErrorBoundary>
+  );
 };
 
 export default App;

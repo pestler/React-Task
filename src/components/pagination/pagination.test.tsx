@@ -3,6 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import { MemoryRouter, useNavigate } from 'react-router';
 import Pagination from './Pagination';
+import { ThemeProvider } from '../theme-context/ThemeProvider';
 
 vi.mock('react-router', async (importOriginal) => {
   const actual = (await importOriginal()) as typeof import('react-router');
@@ -21,13 +22,15 @@ describe('Pagination Component', () => {
 
   it('renders pagination buttons correctly', () => {
     render(
-      <MemoryRouter>
-        <Pagination
-          currentPage={1}
-          totalPages={5}
-          onPageChange={mockOnPageChange}
-        />
-      </MemoryRouter>
+      <ThemeProvider>
+        <MemoryRouter>
+          <Pagination
+            currentPage={1}
+            totalPages={5}
+            onPageChange={mockOnPageChange}
+          />
+        </MemoryRouter>
+      </ThemeProvider>
     );
 
     const buttons = screen.getAllByRole('button');
@@ -39,13 +42,15 @@ describe('Pagination Component', () => {
 
   it('disables the button of the current page', () => {
     render(
-      <MemoryRouter>
-        <Pagination
-          currentPage={1}
-          totalPages={5}
-          onPageChange={mockOnPageChange}
-        />
-      </MemoryRouter>
+      <ThemeProvider>
+        <MemoryRouter>
+          <Pagination
+            currentPage={1}
+            totalPages={5}
+            onPageChange={mockOnPageChange}
+          />
+        </MemoryRouter>
+      </ThemeProvider>
     );
 
     const buttons = screen.getAllByRole('button');
@@ -57,13 +62,15 @@ describe('Pagination Component', () => {
     vi.mocked(useNavigate).mockReturnValue(mockNavigate);
 
     render(
-      <MemoryRouter>
-        <Pagination
-          currentPage={1}
-          totalPages={5}
-          onPageChange={mockOnPageChange}
-        />
-      </MemoryRouter>
+      <ThemeProvider>
+        <MemoryRouter>
+          <Pagination
+            currentPage={1}
+            totalPages={5}
+            onPageChange={mockOnPageChange}
+          />
+        </MemoryRouter>
+      </ThemeProvider>
     );
 
     const buttons = screen.getAllByRole('button');

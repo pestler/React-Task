@@ -1,10 +1,10 @@
 import React from 'react';
 import { useLocation, useParams } from 'react-router';
-import CardDetails from '../card-details/CardDetails';
-
 import { useSelector } from 'react-redux';
+import CardDetails from '../card-details/CardDetails';
 import { RootState } from '../../redux/store';
 import { selectPeople } from '../../redux/slices/peoplesSlice';
+import { ThemeProvider } from '../theme-context/ThemeProvider';
 
 const CardDetailsContainer: React.FC = () => {
   const { name } = useParams<{ name: string }>();
@@ -17,13 +17,15 @@ const CardDetailsContainer: React.FC = () => {
   const person = personAll.find((person) => person.name === query);
 
   return (
-    <div className="detailed-page">
-      {person ? (
-        <CardDetails person={person} currentPage={currentPage} />
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
+    <ThemeProvider>
+      <div className="detailed-page">
+        {person ? (
+          <CardDetails person={person} currentPage={currentPage} />
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
+    </ThemeProvider>
   );
 };
 

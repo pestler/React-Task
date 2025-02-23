@@ -2,7 +2,6 @@ import React, { useEffect, FormEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
 import './core.scss';
-
 import Pagination from '../pagination/Pagination';
 import ButtonSearch from '../button-search/Button-search';
 import Main from '../main/Main';

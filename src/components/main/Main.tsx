@@ -12,7 +12,7 @@ interface MainProps {
 
 const Main: React.FC<MainProps> = ({ data, loading, error, currentPage }) => {
   if (loading) {
-    return <div>Loading...</div>;
+    return <p>Loading...</p>;
   }
 
   if (data.length === 0) {
