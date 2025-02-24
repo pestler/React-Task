@@ -7,9 +7,9 @@ export interface StarWarsAPIResponse {
 
 export interface Person {
   name: string;
-  url: string;
-  mass: ReactNode;
-  hair_color: ReactNode;
   gender: string;
-  height: string;
+  url?: string;
+  mass?: ReactNode;
+  hair_color?: ReactNode;
+  height?: string;
 }

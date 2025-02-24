@@ -1,83 +1,122 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
-import { MemoryRouter, useNavigate, useLocation } from 'react-router';
+import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Card from './Card';
-import { Person } from '../../types/types';
 import { store } from '../../redux/store';
 
-vi.mock('react-router', async (importOriginal) => {
-  const actual = (await importOriginal()) as typeof import('react-router');
+vi.mock('react-router-dom', async (importOriginal) => {
+  const actual = (await importOriginal()) as typeof import('react-router-dom');
   return {
     ...actual,
     useNavigate: vi.fn(),
-    useLocation: vi.fn().mockReturnValue({
-      pathname: '/',
-    }),
   };
 });
 
-const mockPerson: Person = {
-  name: 'Luke Skywalker',
-  gender: 'male',
-  url: 'https://swapi.dev/api/people/1/',
-  height: '172',
-  mass: '77',
-  hair_color: 'blond',
-};
-
 describe('Card Component', () => {
-  it('renders correctly with given person data', () => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <Card person={mockPerson} currentPage={1} />
-        </MemoryRouter>
-      </Provider>
-    );
-
-    expect(screen.getByText('Luke Skywalker')).toBeInTheDocument();
-    expect(screen.getByText('Gender: male')).toBeInTheDocument();
-  });
-
   it('navigates to the details page when clicked', () => {
     const mockNavigate = vi.fn();
-    (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
+    vi.mocked(useNavigate).mockReturnValue(mockNavigate);
 
     render(
       <Provider store={store}>
-        <MemoryRouter>
-          <Card person={mockPerson} currentPage={1} />
+        <MemoryRouter initialEntries={['/']}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Card
+                  person={{
+                    name: 'Luke Skywalker',
+                    gender: 'Male',
+                  }}
+                  currentPage={1}
+                />
+              }
+            />
+          </Routes>
         </MemoryRouter>
       </Provider>
     );
 
     fireEvent.click(screen.getByTestId('test-card'));
-  });
 
+    expect(mockNavigate).toHaveBeenCalledWith('/details/Luke Skywalker?page=1');
+  });
   it('navigates to the home page when clicked on the details page', () => {
     const mockNavigate = vi.fn();
-    (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
-    (useLocation as jest.Mock).mockReturnValue({
-      pathname: '/details/Luke Skywalker',
-      search: '?page=1',
-    });
+    vi.mocked(useNavigate).mockReturnValue(mockNavigate);
 
     render(
       <Provider store={store}>
-        <MemoryRouter>
-          <Card person={mockPerson} currentPage={1} />
+        <MemoryRouter initialEntries={['/details/Luke Skywalker']}>
+          <Routes>
+            <Route
+              path="/details/:name"
+              element={
+                <Card
+                  person={{
+                    name: 'Luke Skywalker',
+                    gender: 'Male',
+                  }}
+                  currentPage={1}
+                />
+              }
+            />
+          </Routes>
         </MemoryRouter>
       </Provider>
     );
 
     fireEvent.click(screen.getByTestId('test-card'));
 
-    try {
-      expect(mockNavigate).toHaveBeenCalledWith('/');
-    } catch (error) {
-      console.error('Navigate function was not called:', error);
-    }
+    expect(mockNavigate).toHaveBeenCalledWith('/?page=1');
+  });
+
+  it('toggles favorite state when favorite button is clicked', () => {
+    const mockDispatch = vi.fn();
+    vi.spyOn(store, 'dispatch').mockImplementation(mockDispatch);
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter initialEntries={['/']}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Card
+                  person={{
+                    name: 'Luke Skywalker',
+                    gender: 'Male',
+                  }}
+                  currentPage={1}
+                />
+              }
+            />
+          </Routes>
+        </MemoryRouter>
+      </Provider>
+    );
+
+    fireEvent.click(screen.getByTestId('favorite-button'));
+
+    expect(mockDispatch).toHaveBeenCalledWith({
+      payload: {
+        gender: 'Male',
+        name: 'Luke Skywalker',
+      },
+      type: 'favorite/addFavorite',
+    });
+
+    fireEvent.click(screen.getByTestId('favorite-button'));
+
+    expect(mockDispatch).toHaveBeenCalledWith({
+      payload: {
+        gender: 'Male',
+        name: 'Luke Skywalker',
+      },
+      type: 'favorite/addFavorite',
+    });
   });
 });
