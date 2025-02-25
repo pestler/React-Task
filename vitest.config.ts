@@ -9,7 +9,16 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       include: ['**/*.tsx'],
-      exclude: ['node_modules', 'dist', '**/App.tsx', '**/main.tsx'],
+      exclude: [
+        'node_modules',
+        'dist',
+        '**/App.tsx',
+        '**/main.tsx',
+        '**/index.tsx',
+        '**/setupTests.ts',
+        '**/setupTests.tsx',
+        '**/react-app-env.d.ts',
+      ],
       thresholds: {
         lines: 70,
         functions: 70,

@@ -1,6 +1,7 @@
 import React from 'react';
 import './pagination.scss';
 import { useLocation, useNavigate } from 'react-router';
+import { useTheme } from '../theme-context/useTheme';
 
 interface PaginationProps {
   currentPage: number;
@@ -13,30 +14,35 @@ const Pagination: React.FC<PaginationProps> = ({
   totalPages,
   onPageChange,
 }) => {
+  const { theme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const currentPageFromURL = parseInt(
-    searchParams.get('page') || currentPage.toString(),
-    10
-  );
 
   const handlePageChange = (page: number) => {
-    onPageChange(page);
     searchParams.set('page', page.toString());
     navigate(`${location.pathname}?${searchParams.toString()}`);
+    onPageChange(page);
   };
 
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   return (
-    <div className="pagination">
+    <div
+      className="pagination"
+      style={{
+        backgroundColor: theme.backgroundColor,
+      }}
+    >
       {pages.map((page) => (
         <button
-          className="btn"
+          style={{
+            backgroundColor: theme.backgroundColor,
+            color: theme.color,
+          }}
+          className={`btn ${page === currentPage ? 'active' : ''}`}
           key={page}
           onClick={() => handlePageChange(page)}
-          disabled={page === currentPageFromURL}
         >
           {page}
         </button>

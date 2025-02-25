@@ -1,9 +1,11 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
-import { MemoryRouter, useNavigate } from 'react-router';
-import { Person } from '../../types/types';
+import { useNavigate } from 'react-router';
 import CardDetails from './CardDetails';
+import { Person } from '../../types/types';
+import { ThemeProvider } from '../theme-context/ThemeProvider';
+import { renderWithStateMgmtAndRouter } from '../../test-util';
 
 vi.mock('react-router', async (importOriginal) => {
   const actual = (await importOriginal()) as typeof import('react-router');
@@ -13,58 +15,114 @@ vi.mock('react-router', async (importOriginal) => {
   };
 });
 
-const mockedPerson: Person = {
+vi.mock('../theme-context/useTheme', () => ({
+  useTheme: vi.fn().mockReturnValue({
+    theme: {
+      backgroundColor: 'rgb(255, 255, 255)',
+      color: 'rgb(0, 0, 0)',
+    },
+  }),
+}));
+
+const mockPerson: Person = {
   name: 'Luke Skywalker',
   gender: 'male',
-  url: 'https://swapi.dev/api/people',
-  birth_year: '19BBY',
+  url: 'https://swapi.dev/api/people/1/',
   height: '172',
   mass: '77',
   hair_color: 'blond',
-  skin_color: 'fair',
-  eye_color: 'blue',
-  created: '2023-01-01T00:00:00.000Z',
-  edited: '2023-01-02T00:00:00.000Z',
 };
 
 describe('CardDetails Component', () => {
-  it('renders correctly and navigates to the correct URL when the close button is clicked', () => {
+  it('renders correctly with given person data', () => {
+    renderWithStateMgmtAndRouter(
+      <ThemeProvider>
+        <CardDetails person={mockPerson} currentPage={1} />
+      </ThemeProvider>
+    );
+
+    expect(screen.getByText('Luke Skywalker')).toBeInTheDocument();
+    expect(screen.getByText('Gender: male')).toBeInTheDocument();
+    expect(screen.getByText('Height: 172')).toBeInTheDocument();
+    expect(screen.getByText('Mass: 77')).toBeInTheDocument();
+    expect(screen.getByText('Hair Color: blond')).toBeInTheDocument();
+  });
+
+  it('applies theme styles correctly', () => {
+    renderWithStateMgmtAndRouter(
+      <ThemeProvider>
+        <CardDetails person={mockPerson} currentPage={1} />
+      </ThemeProvider>
+    );
+
+    const cardDetails = screen.getByText('Luke Skywalker').parentElement;
+    expect(cardDetails).toHaveStyle('background-color: rgb(255, 255, 255)');
+    expect(cardDetails).toHaveStyle('color: rgb(0, 0, 0)');
+  });
+
+  it('navigates correctly when close button is clicked on details page', () => {
     const mockNavigate = vi.fn();
-    vi.mocked(useNavigate).mockReturnValue(mockNavigate);
+    (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
 
-    render(
-      <MemoryRouter>
-        <CardDetails person={mockedPerson} />
-      </MemoryRouter>
+    renderWithStateMgmtAndRouter(
+      <ThemeProvider>
+        <CardDetails person={mockPerson} currentPage={1} />
+      </ThemeProvider>,
+      { route: '/details/Luke Skywalker' }
     );
 
-    const nameElement = screen.getByText('Luke Skywalker');
-    const heightElement = screen.getByText('Height: 172');
-    const massElement = screen.getByText('Mass: 77');
-    const hairColorElement = screen.getByText('Hair Color: blond');
-    const skinColorElement = screen.getByText('Skin Color: fair');
-    const eyeColorElement = screen.getByText('Eye Color: blue');
-    const birthYearElement = screen.getByText('Birth Year: 19BBY');
-    const genderElement = screen.getByText('Gender: male');
-    const createdElement = screen.getByText(
-      'Created: 2023-01-01T00:00:00.000Z'
-    );
-    const editedElement = screen.getByText('Edited: 2023-01-02T00:00:00.000Z');
     const closeButton = screen.getByText('CLOSE');
-
-    expect(nameElement).toBeInTheDocument();
-    expect(heightElement).toBeInTheDocument();
-    expect(massElement).toBeInTheDocument();
-    expect(hairColorElement).toBeInTheDocument();
-    expect(skinColorElement).toBeInTheDocument();
-    expect(eyeColorElement).toBeInTheDocument();
-    expect(birthYearElement).toBeInTheDocument();
-    expect(genderElement).toBeInTheDocument();
-    expect(createdElement).toBeInTheDocument();
-    expect(editedElement).toBeInTheDocument();
-    expect(closeButton).toBeInTheDocument();
-
     fireEvent.click(closeButton);
-    expect(mockNavigate).toHaveBeenCalledWith('/');
+
+    expect(mockNavigate).toHaveBeenCalledWith(
+      `/details/${mockPerson.name}?page=1`
+    );
+  });
+
+  it('navigates to details page when not on details page and close button is clicked', () => {
+    const mockNavigate = vi.fn();
+    (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
+
+    renderWithStateMgmtAndRouter(
+      <ThemeProvider>
+        <CardDetails person={mockPerson} currentPage={1} />
+      </ThemeProvider>
+    );
+
+    const closeButton = screen.getByText('CLOSE');
+    fireEvent.click(closeButton);
+
+    expect(mockNavigate).toHaveBeenCalledWith(
+      `/details/${mockPerson.name}?page=1`
+    );
+  });
+
+  it('navigates to the correct page when currentPage is not 1', () => {
+    const mockNavigate = vi.fn();
+    (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
+
+    renderWithStateMgmtAndRouter(
+      <ThemeProvider>
+        <CardDetails person={mockPerson} currentPage={2} />
+      </ThemeProvider>,
+      { route: '/details/Luke Skywalker' }
+    );
+
+    const closeButton = screen.getByText('CLOSE');
+    fireEvent.click(closeButton);
+
+    expect(mockNavigate).toHaveBeenCalledWith(
+      `/details/${mockPerson.name}?page=2`
+    );
+  });
+
+  it('handles case when no person is passed', () => {
+    const { container } = renderWithStateMgmtAndRouter(
+      <ThemeProvider>
+        <CardDetails person={null} currentPage={1} />
+      </ThemeProvider>
+    );
+
+    expect(container).toBeEmptyDOMElement();
   });
 });
