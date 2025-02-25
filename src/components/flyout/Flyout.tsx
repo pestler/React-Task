@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './Flyout.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
@@ -9,7 +9,8 @@ const Flyout: React.FC = () => {
     (state: RootState) => state.favorite.peoples
   );
   const dispatch = useDispatch();
-  const [, setCsvUrl] = useState<string | null>(null);
+  const [csvUrl, setCsvUrl] = useState<string | null>(null);
+  const downloadRef = useRef<HTMLAnchorElement>(null);
 
   if (selectedItems.length === 0) {
     return null;
@@ -38,15 +39,16 @@ const Flyout: React.FC = () => {
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
     const url = URL.createObjectURL(blob);
+
     setCsvUrl(url);
 
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${selectedItems.length}_items.csv`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    setTimeout(() => {
+      if (downloadRef.current) {
+        downloadRef.current.click();
+        URL.revokeObjectURL(url);
+        setCsvUrl(null);
+      }
+    }, 0);
   };
 
   const clearSelectedItems = () => {
@@ -58,6 +60,14 @@ const Flyout: React.FC = () => {
       <p>Selected items: {selectedItems.length}</p>
       <button onClick={clearSelectedItems}>Clear All</button>
       <button onClick={downloadCSV}>Download CSV</button>
+      <a
+        ref={downloadRef}
+        href={csvUrl || ''}
+        download={`${selectedItems.length}_items.csv`}
+        style={{ display: 'none' }}
+      >
+        Download
+      </a>
     </div>
   );
 };
