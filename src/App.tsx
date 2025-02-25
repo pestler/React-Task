@@ -12,20 +12,17 @@ import CardDetailsContainer from './components/card-details-container/card-detai
 const App: React.FC = () => {
   const [currentPage] = useState(1);
 
-  const router = createBrowserRouter(
-    [
-      {
-        path: '/',
-        element: <HomePage currentPage={currentPage} />,
-        errorElement: <NotFoundPage />,
-        children: [
-          { path: 'details/:name/', element: <CardDetailsContainer /> },
-        ],
-      },
-      { path: '*', element: <NotFoundPage /> },
-    ],
-    { basename: '/React-Task' }
-  );
+  const routes = [
+    {
+      path: '/',
+      element: <HomePage currentPage={currentPage} />,
+      errorElement: <NotFoundPage />,
+      children: [{ path: 'details/:name/', element: <CardDetailsContainer /> }],
+    },
+    { path: '*', element: <NotFoundPage /> },
+  ];
+
+  const router = createBrowserRouter(routes, { basename: '/React-Task' });
 
   return (
     <ErrorBoundary>
