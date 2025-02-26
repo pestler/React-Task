@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+/* import { createSlice } from '@reduxjs/toolkit';
 import { Person } from '../../types/types';
-import { fetchPeople } from '../services/peopleService';
+import { fetchPeople } from '../../../services/peopleService';
 
 interface PeopleState {
   peoples: Person[];
@@ -53,3 +53,4 @@ export const selectError = (state: { peoples: PeopleState }) =>
   state.peoples.error;
 
 export default peopleSlice.reducer;
+ */

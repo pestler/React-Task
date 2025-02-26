@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+/* import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Person } from '../../types/types';
 
 interface FavoriteState {
@@ -31,3 +31,4 @@ export const { addFavorite, removeFavorite, clearFavorites } =
   favoriteSlice.actions;
 
 export default favoriteSlice.reducer;
+ */

@@ -1,9 +1,9 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+/* import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import detailedCardReducer from './slices/cardsSlice';
 import currentPageReducer from './slices/currentPageSlice';
 import peopleReducer from './slices/peoplesSlice';
 import favoriteReducer from './slices/favoriteSlice';
-import { api } from './services/api';
+import { api } from '../../services/api';
 
 export const rootReducer = combineReducers({
   [api.reducerPath]: api.reducer,
@@ -26,3 +26,4 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+ */

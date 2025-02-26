@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+/* import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface CurrentPageState {
   currentPage: number;
@@ -19,3 +19,4 @@ const currentPageSlice = createSlice({
 });
 export const { setCurrentPage } = currentPageSlice.actions;
 export default currentPageSlice.reducer;
+ */

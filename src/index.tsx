@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom/client';
+/* import ReactDOM from 'react-dom/client';
 import { StrictMode } from 'react';
 import './index.scss';
 import ErrorBoundary from './components/error-boundary/Error-boundary';
@@ -25,3 +25,4 @@ if (rootElement) {
 } else {
   console.error('Element #root not found');
 }
+ */

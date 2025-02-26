@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+/* import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Person } from '../../types/types';
 
 interface DetailedCardState {
@@ -24,3 +24,4 @@ const DetailedCardSlice = createSlice({
 
 export const { setSelectedCard, clearSelectedCard } = DetailedCardSlice.actions;
 export default DetailedCardSlice.reducer;
+ */
