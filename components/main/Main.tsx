@@ -1,6 +1,6 @@
 //import './main.scss';
 import CardList from '../card-list/Card-list';
-import { Person } from '../../src/types/types';
+import { Person } from '../../types/types';
 
 interface MainProps {
   data?: Person[];
@@ -9,7 +9,7 @@ interface MainProps {
   currentPage: number;
 }
 
-const Main = ({ data, loading, error, currentPage }: MainProps) => {
+const Main = ({ loading, currentPage }: MainProps) => {
   if (loading) {
     return <p>Loading...</p>;
   }

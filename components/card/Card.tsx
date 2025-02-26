@@ -1,4 +1,3 @@
-
 //import './card.scss';
 import { Person } from '../../types/types';
 //import { useNavigate, useLocation } from 'react-router-dom';

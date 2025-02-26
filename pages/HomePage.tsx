@@ -1,6 +1,3 @@
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
-import Core from '../components/Core/Core';
 import ButtonSearch from '../components/button-search/Button-search';
 import Main from '../components/main/Main';
 

@@ -3,7 +3,7 @@ import React from 'react';
 //import './card-details.scss';
 import { useNavigate } from 'react-router';
 import { useTheme } from '../theme-context/useTheme';
-import { Person } from '../../src/types/types';
+import { Person } from '../../types/types';
 
 interface CardDetailsProps {
   person: Person | null;

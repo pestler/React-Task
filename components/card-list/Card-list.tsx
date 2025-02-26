@@ -1,11 +1,9 @@
 //import './card-list.scss';
-import Card from '../card/Card';
+//import Card from '../card/Card';
 
-import { Outlet } from 'react-router';
-//import Flyout from '../flyout/Flyout';
-import { useTheme } from '../theme-context/useTheme';
+//import { useTheme } from '../theme-context/useTheme';
 import { ThemeProvider } from '../theme-context/ThemeProvider';
-import { Person } from '../../src/types/types';
+import { Person } from '../../types/types';
 
 interface CardProps {
   data?: Person[];
@@ -14,8 +12,8 @@ interface CardProps {
   currentPage: number;
 }
 
-const CardList = ({ data, loading, error, currentPage }: CardProps) => {
- // const { theme } = useTheme();
+const CardList = ({ loading, error }: CardProps) => {
+  // const { theme } = useTheme();
 
   return (
     <ThemeProvider>
