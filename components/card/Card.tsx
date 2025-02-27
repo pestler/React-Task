@@ -1,67 +1,49 @@
 //import './card.scss';
-import { Person } from '../../types/types';
-//import { useNavigate, useLocation } from 'react-router-dom';
-//import { useDispatch, useSelector } from 'react-redux';
-//import { RootState } from '../../redux/store';
-//import { addFavorite, removeFavorite } from '../../redux/slices/favoriteSlice';
+import Link from 'next/link';
+import React from 'react';
 
 interface CardProps {
-  person: Person;
-  currentPage: number;
+  id: number;
+  name: string;
+  onClick: (id: number) => void;
 }
 
-const Card = ({ person, currentPage }: CardProps) => {
-  const { name, gender } = person;
+const Card = ({ id, name, onClick }: CardProps) => {
+  const [isFavorite, setIsFavorite] = React.useState(false);
 
-  const navigate = useNavigate();
-  const location = useLocation();
-  const dispatch = useDispatch();
-
-  const favorites = useSelector((state: RootState) => state.favorite.peoples);
-  const isFavorite = favorites.some((fav) => fav.name === name);
-
-  const handleCardClick = () => {
-    if (location.pathname.includes('/details/')) {
-      navigate(`/?page=${currentPage}`);
-    } else {
-      navigate(`/details/${name}?page=${currentPage}`);
-    }
-  };
+  React.useEffect(() => {
+    const storedFavorite = localStorage.getItem(`favorite_${name}`);
+    setIsFavorite(storedFavorite === 'true');
+  }, [name]);
 
   const handleFavoriteClick = () => {
-    if (isFavorite) {
-      dispatch(removeFavorite(name));
+    const newFavoriteState = !isFavorite;
+    setIsFavorite(newFavoriteState);
+    if (newFavoriteState) {
+      localStorage.setItem(`favorite_${name}`, 'true');
     } else {
-      dispatch(addFavorite(person));
+      localStorage.removeItem(`favorite_${name}`);
     }
   };
 
   return (
     <div className="card-container">
-      <div
-        data-testid="test-card"
-        className="card-box"
-        onClick={handleCardClick}
-        role="button"
-        tabIndex={0}
-      >
-        <div className="title">
-          <h4>{name}</h4>
-        </div>
-        <div className="description">
-          <h5>Gender: {gender}</h5>
-        </div>
+      <div className="card-box">
+        <h4>{name}</h4>
+        <Link href={`/?id=${id}`} as={`/details/${id}`}>
+          <div onClick={() => onClick(id)}>View Details</div>
+        </Link>
       </div>
-
       <div className="favorite-box">
         <button
           data-testid="favorite-button"
-          className={`favorite-button ${isFavorite ? 'active' : ''}`}
           onClick={handleFavoriteClick}
-        ></button>
+          className={isFavorite ? 'favorite' : ''}
+        >
+          {isFavorite ? '❤️' : '♡'}
+        </button>
       </div>
     </div>
   );
 };
-
 export default Card;

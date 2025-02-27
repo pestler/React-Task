@@ -1,5 +1,4 @@
 import React, { FormEvent } from 'react';
-//import './button-search.scss';
 
 interface Props {
   onFormSubmit: (event: FormEvent, value: string) => void;
@@ -44,4 +43,5 @@ const ButtonSearch = ({ onFormSubmit }: Props) => {
     </>
   );
 };
+
 export default ButtonSearch;

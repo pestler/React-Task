@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router';
+import { useRouter } from 'next/router';
 
-const NotFoundPage = () => {
-  const navigate = useNavigate();
+const Page404 = () => {
+  const router = useRouter();
 
   return (
     <div>
@@ -18,7 +18,7 @@ const NotFoundPage = () => {
       </h1>
       <button
         className="btn"
-        onClick={() => navigate(-1)}
+        onClick={() => router.back()}
         style={{
           display: 'block',
           margin: '20px auto',
@@ -27,10 +27,10 @@ const NotFoundPage = () => {
           cursor: 'pointer',
         }}
       >
-        Назад
+        Back
       </button>
     </div>
   );
 };
 
-export default NotFoundPage;
+export default Page404;

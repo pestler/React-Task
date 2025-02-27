@@ -9,7 +9,7 @@ export interface Person {
   name: string;
   gender: string;
   url?: string;
-  mass?: ReactNode;
-  hair_color?: ReactNode;
+  mass?: string;
+  hair_color?: string;
   height?: string;
 }

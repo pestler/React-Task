@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router';
 import { Person } from '../../types/types';
-import CardDetailsContainer from './card-details-container';
+import CardDetailsContainer from './detail';
 import { Provider } from 'react-redux';
 import { store } from '../../redux/store';
 

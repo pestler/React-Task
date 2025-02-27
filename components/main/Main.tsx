@@ -1,32 +1,101 @@
-//import './main.scss';
+import { useEffect, useState } from 'react';
+import { StarWarsAPIResponse, Person } from '../../types/types';
 import CardList from '../card-list/Card-list';
-import { Person } from '../../types/types';
 
 interface MainProps {
-  data?: Person[];
-  loading?: boolean;
-  error?: string | null;
-  currentPage: number;
+  searchQuery: string;
 }
 
-const Main = ({ loading, currentPage }: MainProps) => {
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+const Main = ({ searchQuery }: MainProps) => {
+  const [allPeople, setAllPeople] = useState<Person[]>([]);
+  const [filteredPeople, setFilteredPeople] = useState<Person[]>([]);
+  const [currentPagePeople, setCurrentPagePeople] = useState<Person[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
 
-  /*  if (data.length === 0) {
-    return <div className="no-results-message">No results found.</div>;
-  } */
+  const fetchPeople = async (): Promise<Person[]> => {
+    const baseUrl = 'https://swapi.dev/api/people/';
+    let results: Person[] = [];
+    let currentPage = 1;
+
+    while (true) {
+      const url = `${baseUrl}?page=${currentPage}`;
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data: StarWarsAPIResponse = await response.json();
+      results = results.concat(data.results);
+      if (!data.next) break;
+      currentPage++;
+    }
+    return results;
+  };
+
+  useEffect(() => {
+    const getAllPeople = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await fetchPeople();
+        setAllPeople(data);
+        setFilteredPeople(data);
+        setPage(1);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('An unexpected error occurred');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getAllPeople();
+  }, []);
+
+  useEffect(() => {
+    if (searchQuery) {
+      const filtered = allPeople.filter((person) =>
+        person.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredPeople(filtered);
+      setPage(1);
+    } else {
+      setFilteredPeople(allPeople);
+    }
+  }, [searchQuery, allPeople]);
+
+  useEffect(() => {
+    const start = (page - 1) * 10;
+    const end = page * 10;
+    setCurrentPagePeople(filteredPeople.slice(start, end));
+  }, [page, filteredPeople]);
+
+  const handleNextPage = () => setPage((prev) => prev + 1);
+  const handlePrevPage = () => setPage((prev) => (prev > 1 ? prev - 1 : 1));
 
   return (
-    <main className="main-box">
-      <CardList
-        /*  data={data}
-        loading={loading}
-        error={error} */
-        currentPage={currentPage}
-      />
-    </main>
+    <div>
+      {loading && <p>Loading...</p>}
+      {error && <p>Error: {error}</p>}
+      <button onClick={handlePrevPage} disabled={page === 1}>
+        Previous Page
+      </button>
+      <button
+        onClick={handleNextPage}
+        disabled={page * 10 >= filteredPeople.length}
+      >
+        Next Page
+      </button>
+      {currentPagePeople.length > 0 ? (
+        <CardList data={currentPagePeople} />
+      ) : (
+        <p>No data available</p>
+      )}
+    </div>
   );
 };
 
