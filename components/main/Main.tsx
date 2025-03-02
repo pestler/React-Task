@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { StarWarsAPIResponse, Person } from '../../types/types';
 import CardList from '../card-list/Card-list';
+//import styles from './Main.module.scss';
 
 interface MainProps {
   searchQuery: string;

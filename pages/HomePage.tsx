@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
 import ButtonSearch from '../components/button-search/ButtonSearch';
 import Main from '../components/main/Main';
-import styles from './HomePage.module.scss';
+import styles from './homePage.module.scss';
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
 

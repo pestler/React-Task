@@ -14,23 +14,24 @@ interface CardProps {
 
 const CardList = ({ data, page }: CardProps) => {
   const router = useRouter();
-  const { index } = router.query;
+  const { id } = router.query;
 
   const [selectedItem, setSelectedItem] = useState<Person | null>(null);
   const [selectedItems, setSelectedItems] = useState<Item[]>([]);
 
   useEffect(() => {
-    if (index !== undefined) {
-      const item = data[Number(index)];
+    if (id !== undefined) {
+      const itemIndex = Number(id);
+      const item = data.find((_, idx) => (page - 1) * 10 + idx === itemIndex);
       setSelectedItem(item || null);
     }
-  }, [data, index]);
+  }, [data, id, page]);
 
-  const handleCardClick = (id?: number) => {
-    if (id === undefined) {
+  const handleCardClick = (index?: number) => {
+    if (index === undefined) {
       setSelectedItem(null);
     } else {
-      const item = data[id];
+      const item = data[index];
       setSelectedItem(item || null);
     }
   };
