@@ -1,4 +1,4 @@
-.card-container {
+.cardContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,7 +15,7 @@
   }
 }
 
-.card-box {
+.cardBox {
   display: flex;
   text-align: left;
   gap: 20px;
@@ -31,14 +31,14 @@
   width: 150px;
 }
 
-.favorite-box {
+.favoriteBox {
   width: 100%;
   margin: 5px 0;
   display: flex;
   justify-content: flex-end;
 }
 
-.favorite-button {
+/* .favoriteButton {
   display: flex;
   background: url('../../assets/heart-icon.png') no-repeat center center;
   background-size: 20px;
@@ -50,9 +50,9 @@
   &:hover {
     transform: scale(1.15);
   }
-}
+} */
 
-.favorite-button.active {
+/* .favoriteButton.active {
   background: url('../../assets/heart-icon-favorite.png') no-repeat center
     center;
   background-size: 20px;
@@ -63,4 +63,8 @@
   &:hover {
     transform: scale(1.15);
   }
+} */
+
+.icon {
+  font-size: 24px;
 }

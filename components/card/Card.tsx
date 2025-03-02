@@ -1,4 +1,4 @@
-//import './card.scss';
+import styles from './card.module.scss';
 import Link from 'next/link';
 import React from 'react';
 
@@ -27,20 +27,20 @@ const Card = ({ id, name, onClick }: CardProps) => {
   };
 
   return (
-    <div className="card-container">
-      <div className="card-box">
+    <div className={styles.cardContainer}>
+      <div className={styles.cardBox}>
         <h4>{name}</h4>
         <Link href={`/?id=${id}`} as={`/details/${id}`}>
           <div onClick={() => onClick(id)}>View Details</div>
         </Link>
       </div>
-      <div className="favorite-box">
+      <div className={styles.favoriteBox}>
         <button
           data-testid="favorite-button"
           onClick={handleFavoriteClick}
           className={isFavorite ? 'favorite' : ''}
         >
-          {isFavorite ? '❤️' : '♡'}
+          <span className={styles.icon}>{isFavorite ? '❤️' : '♡'}</span>
         </button>
       </div>
     </div>

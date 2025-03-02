@@ -81,6 +81,11 @@ const Main = ({ searchQuery }: MainProps) => {
     <div>
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
+      {!loading && !error && (
+        <p>
+          Showing {page * 10 - 9}-{page * 10} of {filteredPeople.length}
+        </p>
+      )}
       <button onClick={handlePrevPage} disabled={page === 1}>
         Previous Page
       </button>

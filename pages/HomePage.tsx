@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
-import ButtonSearch from '../components/button-search/Button-search';
+import ButtonSearch from '../components/button-search/ButtonSearch';
 import Main from '../components/main/Main';
-
+import styles from './HomePage.module.scss';
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -11,15 +11,13 @@ const HomePage = () => {
   };
 
   return (
-    <div className="back">
-      <div className="home-page">
-        <div className="container">
-          <h1>Star Wars Characters</h1>
-          <div className="search-and-paginate">
-            <div className="container-search-main">
-              <ButtonSearch onFormSubmit={handleSubmit} />
-              <Main searchQuery={searchQuery} />{' '}
-            </div>
+    <div className={styles.homePage}>
+      <div className={styles.container}>
+        <h1>Star Wars Characters</h1>
+        <div className={styles.searchAndPaginate}>
+          <div className={styles.containerSearchMain}>
+            <ButtonSearch onFormSubmit={handleSubmit} />
+            <Main searchQuery={searchQuery} />
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-//import './card-list.scss';
+import styles from './card-list.module.scss';
 
 import { ThemeProvider } from '../theme-context/ThemeProvider';
 import { Person } from '../../types/types';
@@ -39,33 +39,31 @@ const CardList = ({ data }: CardProps) => {
 
   return (
     <ThemeProvider>
-      <div className="card-list">
-        <div className="title-box">
+      <div className={styles.cardList}>
+        <div className={styles.titleBox}>
           <h4>Item Name</h4>
           <h4>Item Description</h4>
         </div>
-        <div className="result-box">
-          <h3>Results</h3>
+        <div className={styles.resultBox}>
+          <h3 className={styles.title}>Results</h3>
           {data.length > 0 ? (
-            <div className="result-box-items">
-              <div className="app">
-                <div className="card-list">
-                  {data.map((item, index) => (
-                    <Card
-                      key={index}
-                      id={index}
-                      name={item.name}
-                      onClick={handleCardClick}
-                    />
-                  ))}
-                </div>
-                {selectedItem && (
-                  <Details item={selectedItem} onClose={handleCloseClick} />
-                )}
+            <div className={styles.resultBoxItems}>
+              <div className={styles.cardContainer}>
+                {data.map((item, index) => (
+                  <Card
+                    key={index}
+                    id={index}
+                    name={item.name}
+                    onClick={handleCardClick}
+                  />
+                ))}
               </div>
+              {selectedItem && (
+                <Details item={selectedItem} onClose={handleCloseClick} />
+              )}
             </div>
           ) : (
-            <div className="result-error-description">
+            <div className={styles.resultErrorDescription}>
               <h3>No results found.</h3>
             </div>
           )}

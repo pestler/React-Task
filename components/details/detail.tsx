@@ -1,4 +1,5 @@
 import { Person } from '../../types/types';
+import styles from './details.module.scss';
 
 interface DetailsProps {
   item: Person;
@@ -12,7 +13,7 @@ const Details = ({ item, onClose }: DetailsProps) => {
 
   return (
     //<ThemeProvider>
-    <div className="details">
+    <div className={styles.details}>
       <button onClick={onClose}>Close</button>
       <h2>{item.name}</h2>
       <p>Gender: {item.gender}</p>

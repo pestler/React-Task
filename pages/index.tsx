@@ -1,10 +1,11 @@
 import HomePage from './HomePage';
 
-const index = () => {
+const Index = () => {
   return (
     <div>
       <HomePage />
     </div>
   );
 };
-export default index;
+
+export default Index;

@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { ThemeProvider } from '../theme-context/ThemeProvider';
-import ButtonSearch from './Button-search';
+import ButtonSearch from './ButtonSearch';
 
 describe('ButtonSearch component', () => {
   const onFormSubmit = vi.fn();

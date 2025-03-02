@@ -1,0 +1,58 @@
+.resultBox {
+  padding: 10px;
+}
+
+.cardList {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 80%;
+}
+
+.titleBox {
+  display: flex;
+  gap: 100px;
+}
+
+.title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.resultBoxItems {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 10px;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 40%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  margin-bottom: 10px;
+}

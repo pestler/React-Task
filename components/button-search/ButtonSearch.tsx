@@ -1,4 +1,5 @@
 import React, { FormEvent } from 'react';
+import styles from './buttonSearch.module.scss';
 
 interface Props {
   onFormSubmit: (event: FormEvent, value: string) => void;
@@ -18,11 +19,11 @@ const ButtonSearch = ({ onFormSubmit }: Props) => {
 
   return (
     <>
-      <header>
+      <header className={styles.header}>
         <h3>Top controls</h3>
       </header>
       <div>
-        <form onSubmit={handleSubmit} className="form">
+        <form onSubmit={handleSubmit} className={styles.form}>
           <label>
             Name:
             <input
@@ -30,12 +31,12 @@ const ButtonSearch = ({ onFormSubmit }: Props) => {
               value={inputValue}
               onChange={handleInputChange}
               placeholder="Enter name"
-              className="input"
+              className={styles.input}
               autoFocus
               maxLength={20}
             />
           </label>
-          <button type="submit" className="btn">
+          <button type="submit" className={styles.btn}>
             Search
           </button>
         </form>
