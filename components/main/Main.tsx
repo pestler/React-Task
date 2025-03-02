@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { StarWarsAPIResponse, Person } from '../../types/types';
 import CardList from '../card-list/Card-list';
-//import styles from './Main.module.scss';
+import styles from './main.module.scss';
+import { useTheme } from '../theme-context/useTheme';
 
 interface MainProps {
   searchQuery: string;
@@ -77,9 +78,15 @@ const Main = ({ searchQuery }: MainProps) => {
 
   const handleNextPage = () => setPage((prev) => prev + 1);
   const handlePrevPage = () => setPage((prev) => (prev > 1 ? prev - 1 : 1));
-
+  const { theme } = useTheme();
   return (
-    <div>
+    <div
+      className={styles.mainBox}
+      style={{
+        backgroundColor: theme.backgroundColor,
+        color: theme.color,
+      }}
+    >
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
       {!loading && !error && (
@@ -87,12 +94,13 @@ const Main = ({ searchQuery }: MainProps) => {
           Showing {page * 10 - 9}-{page * 10} of {filteredPeople.length}
         </p>
       )}
-      <button onClick={handlePrevPage} disabled={page === 1}>
+      <button onClick={handlePrevPage} disabled={page === 1} className="btn">
         Previous Page
       </button>
       <button
         onClick={handleNextPage}
         disabled={page * 10 >= filteredPeople.length}
+        className="btn"
       >
         Next Page
       </button>

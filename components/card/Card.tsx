@@ -1,6 +1,7 @@
 import styles from './card.module.scss';
 import React from 'react';
 import { useRouter } from 'next/router';
+import { useTheme } from '../theme-context/useTheme';
 
 interface Item {
   id: number;
@@ -55,9 +56,16 @@ const Card = ({
       onClick(id);
     }
   };
+  const { theme } = useTheme();
 
   return (
-    <div className={styles.cardContainer}>
+    <div
+      className={styles.cardContainer}
+      style={{
+        backgroundColor: theme.backgroundColor,
+        color: theme.color,
+      }}
+    >
       <div className={styles.cardBox}>
         <h3>{name}</h3>
         <div className={styles.clickDetail} onClick={handleViewDetailsClick}>
@@ -69,7 +77,7 @@ const Card = ({
           data-testid="favorite-button"
           onClick={handleFavoriteClick}
           className={isFavorite ? 'favorite' : ''}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', border: 'none', background: 'none' }}
         >
           <span className={styles.icon}>{isFavorite ? '❤️' : '♡'}</span>
         </button>
