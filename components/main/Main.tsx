@@ -96,7 +96,7 @@ const Main = ({ searchQuery }: MainProps) => {
         Next Page
       </button>
       {currentPagePeople.length > 0 ? (
-        <CardList data={currentPagePeople} />
+        <CardList data={currentPagePeople} page={page} />
       ) : (
         <p>No data available</p>
       )}

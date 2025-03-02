@@ -1,23 +1,23 @@
 import styles from './card-list.module.scss';
-
 import { ThemeProvider } from '../theme-context/ThemeProvider';
-import { Person } from '../../types/types';
+import { Item, Person } from '../../types/types';
 import Card from '../card/Card';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Details from '../details/detail';
+import Flyout from '../flyout/Flyout';
 
 interface CardProps {
   data: Person[];
+  page: number;
 }
 
-const CardList = ({ data }: CardProps) => {
-  // const { theme } = useTheme();
-
+const CardList = ({ data, page }: CardProps) => {
   const router = useRouter();
   const { index } = router.query;
 
   const [selectedItem, setSelectedItem] = useState<Person | null>(null);
+  const [selectedItems, setSelectedItems] = useState<Item[]>([]);
 
   useEffect(() => {
     if (index !== undefined) {
@@ -26,10 +26,13 @@ const CardList = ({ data }: CardProps) => {
     }
   }, [data, index]);
 
-  const handleCardClick = (index: number) => {
-    const item = data[index];
-    setSelectedItem(item || null);
-    router.push(`/?index=${index}`, `/details/${index}`, { shallow: true });
+  const handleCardClick = (id?: number) => {
+    if (id === undefined) {
+      setSelectedItem(null);
+    } else {
+      const item = data[id];
+      setSelectedItem(item || null);
+    }
   };
 
   const handleCloseClick = () => {
@@ -52,9 +55,11 @@ const CardList = ({ data }: CardProps) => {
                 {data.map((item, index) => (
                   <Card
                     key={index}
-                    id={index}
+                    id={(page - 1) * 10 + index}
                     name={item.name}
                     onClick={handleCardClick}
+                    selectedItems={selectedItems}
+                    setSelectedItems={setSelectedItems}
                   />
                 ))}
               </div>
@@ -68,7 +73,10 @@ const CardList = ({ data }: CardProps) => {
             </div>
           )}
         </div>
-        {/* <Flyout /> */}
+        <Flyout
+          selectedItems={selectedItems}
+          setSelectedItems={setSelectedItems}
+        />
       </div>
     </ThemeProvider>
   );

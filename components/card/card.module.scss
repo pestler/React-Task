@@ -17,10 +17,14 @@
 
 .cardBox {
   display: flex;
+  flex-direction: column;
   text-align: left;
-  gap: 20px;
+}
+
+.clickDetail {
   cursor: pointer;
-  height: 50px;
+  padding: 20px 0 5px 0;
+  color: blue;
 
   &:hover {
     color: red;
@@ -37,33 +41,6 @@
   display: flex;
   justify-content: flex-end;
 }
-
-/* .favoriteButton {
-  display: flex;
-  background: url('../../assets/heart-icon.png') no-repeat center center;
-  background-size: 20px;
-  border: none;
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-
-  &:hover {
-    transform: scale(1.15);
-  }
-} */
-
-/* .favoriteButton.active {
-  background: url('../../assets/heart-icon-favorite.png') no-repeat center
-    center;
-  background-size: 20px;
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-
-  &:hover {
-    transform: scale(1.15);
-  }
-} */
 
 .icon {
   font-size: 24px;

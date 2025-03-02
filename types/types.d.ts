@@ -13,3 +13,9 @@ export interface Person {
   hair_color?: string;
   height?: string;
 }
+
+interface Item {
+  id: number;
+  name: string;
+  [key: string]: unknown;
+}

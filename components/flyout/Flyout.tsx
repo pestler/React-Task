@@ -1,14 +1,14 @@
-/* import React, { useRef, useState } from 'react';
-import './Flyout.scss';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { clearFavorites } from '../../redux/slices/favoriteSlice';
+import React, { useRef, useState } from 'react';
+import styles from './flyout.module.scss';
+import { Item } from '../../types/types';
 
-const Flyout = () => {
-  const selectedItems = useSelector(
-    (state: RootState) => state.favorite.peoples
-  );
-  const dispatch = useDispatch();
+const Flyout = ({
+  selectedItems,
+  setSelectedItems,
+}: {
+  selectedItems: Item[];
+  setSelectedItems: React.Dispatch<React.SetStateAction<Item[]>>;
+}) => {
   const [csvUrl, setCsvUrl] = useState<string | null>(null);
   const downloadRef = useRef<HTMLAnchorElement>(null);
 
@@ -52,11 +52,11 @@ const Flyout = () => {
   };
 
   const clearSelectedItems = () => {
-    dispatch(clearFavorites());
+    setSelectedItems([]);
   };
 
   return (
-    <div className="flyout">
+    <div className={styles.flyout}>
       <p>Selected items: {selectedItems.length}</p>
       <button onClick={clearSelectedItems}>Clear All</button>
       <button onClick={downloadCSV}>Download CSV</button>
@@ -73,4 +73,3 @@ const Flyout = () => {
 };
 
 export default Flyout;
- */
