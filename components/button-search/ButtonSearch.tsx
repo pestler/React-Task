@@ -5,10 +5,11 @@ import { useTheme } from '../theme-context/useTheme';
 
 interface Props {
   onFormSubmit: (event: FormEvent, value: string) => void;
+  initValue: string;
 }
 
-const ButtonSearch = ({ onFormSubmit }: Props) => {
-  const [inputValue, setInputValue] = React.useState<string>('');
+const ButtonSearch = ({ onFormSubmit, initValue }: Props) => {
+  const [inputValue, setInputValue] = React.useState<string>(initValue);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -30,11 +31,22 @@ const ButtonSearch = ({ onFormSubmit }: Props) => {
         }}
       >
         <header>
-          <h3>Top controls</h3>
+          <h3
+            style={{
+              fontSize: '20px',
+              fontWeight: 'bold',
+              marginBottom: '10px',
+              marginTop: '10px',
+              marginLeft: '100px',
+              alignItems: 'center',
+            }}
+          >
+            Top controls
+          </h3>
         </header>
         <div>
           <form onSubmit={handleSubmit} className={styles.form}>
-            <label>
+            <label style={{ marginLeft: '20px' }}>
               Name:
               <input
                 type="text"
@@ -55,5 +67,4 @@ const ButtonSearch = ({ onFormSubmit }: Props) => {
     </ThemeProvider>
   );
 };
-
 export default ButtonSearch;

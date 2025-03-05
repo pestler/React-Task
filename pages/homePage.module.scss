@@ -1,15 +1,17 @@
 .homePage {
   margin: 0 auto;
-  background-size: cover;
+  height: 100vh;
 }
 
 .container {
   width: 1280px;
   margin: 0 auto;
-  padding: 0 10px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
 .searchAndPaginateContainer {

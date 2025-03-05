@@ -50,9 +50,17 @@ const CardList = ({ data, page }: CardProps) => {
         color: theme.color,
       }}
     >
-      <div>
-        <h4>Item Name</h4>
-        <h4>Item Description</h4>
+      <div
+        style={{
+          display: 'flex',
+          paddingLeft: '100px',
+          paddingRight: '10px',
+          flexDirection: 'row',
+          gap: '10px',
+        }}
+      >
+        <h4 style={{ display: 'flex' }}>Item Name</h4>
+        <h4 style={{ display: 'flex' }}>Item Description</h4>
       </div>
       <div className={styles.resultBox}>
         <h3 className={styles.title}>Results</h3>
