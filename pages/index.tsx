@@ -1,13 +1,11 @@
-import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-
+import { getServerSideProps } from '../utils/fetchData';
 import HomePage from './HomePage';
-import { fetchPeople } from '@utils/utils';
+import { InferGetServerSidePropsType } from 'next';
 
-const Index = ({
+export default function Page({
   initialPeople,
   initialSearchQuery,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  console.log(initialPeople, 'initialPeople');
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div>
       <HomePage
@@ -16,18 +14,6 @@ const Index = ({
       />
     </div>
   );
-};
+}
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const initialSearchQuery = context.query.searchQuery || '';
-  const initialPeople = await fetchPeople();
-
-  return {
-    props: {
-      initialPeople,
-      initialSearchQuery,
-    },
-  };
-};
-
-export default Index;
+export { getServerSideProps };

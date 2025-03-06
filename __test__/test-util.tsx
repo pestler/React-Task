@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+/* import { configureStore } from '@reduxjs/toolkit';
 import { render } from '@testing-library/react';
 import * as React from 'react';
 import { Provider } from 'react-redux';
@@ -38,3 +38,4 @@ export const renderWithStateMgmtAndRouter = (
     history,
   };
 };
+ */
