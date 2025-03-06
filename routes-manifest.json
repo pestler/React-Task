@@ -2,8 +2,16 @@
   "version": 3,
   "pages404": true,
   "caseSensitive": false,
-  "basePath": "",
+  "basePath": "/React-Task",
   "redirects": [
+    {
+      "source": "/React-Task/",
+      "destination": "/React-Task",
+      "basePath": false,
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^/React-Task/$"
+    },
     {
       "source": "/:path+/",
       "destination": "/:path+",
@@ -37,7 +45,7 @@
   "dataRoutes": [
     {
       "page": "/",
-      "dataRouteRegex": "^/_next/data/IcrYjz3fFsXkSMkofMxnq/index\\.json$"
+      "dataRouteRegex": "^/_next/data/mBwkP\\-Zqch80W6Gk_qJZw/index\\.json$"
     }
   ],
   "rsc": {
@@ -56,5 +64,15 @@
     "pathHeader": "x-nextjs-rewritten-path",
     "queryHeader": "x-nextjs-rewritten-query"
   },
-  "rewrites": []
+  "rewrites": {
+    "beforeFiles": [
+      {
+        "source": "/React-Task//_next/:path+",
+        "destination": "/React-Task/_next/:path+",
+        "regex": "^/React-Task//_next(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))(?:/)?$"
+      }
+    ],
+    "afterFiles": [],
+    "fallback": []
+  }
 }

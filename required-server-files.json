@@ -12,16 +12,14 @@
     },
     "distDir": "dist",
     "cleanDistDir": true,
-    "assetPrefix": "",
+    "assetPrefix": "/React-Task/",
     "cacheMaxMemorySize": 52428800,
     "configOrigin": "next.config.ts",
     "useFileSystemPublicRoutes": true,
     "generateEtags": true,
     "pageExtensions": [
       "tsx",
-      "ts",
-      "jsx",
-      "js"
+      "ts"
     ],
     "poweredByHeader": true,
     "compress": true,
@@ -46,7 +44,7 @@
         256,
         384
       ],
-      "path": "/_next/image",
+      "path": "/React-Task/_next/image",
       "loader": "default",
       "loaderFile": "",
       "domains": [],
@@ -69,9 +67,9 @@
       "pagesBufferLength": 5
     },
     "amp": {
-      "canonicalBase": ""
+      "canonicalBase": "/React-Task"
     },
-    "basePath": "",
+    "basePath": "/React-Task",
     "sassOptions": {},
     "trailingSlash": false,
     "i18n": null,
@@ -80,7 +78,7 @@
     "serverRuntimeConfig": {},
     "publicRuntimeConfig": {},
     "reactProductionProfiling": false,
-    "reactStrictMode": null,
+    "reactStrictMode": true,
     "reactMaxHeadersLength": 6000,
     "httpAgentOptions": {
       "keepAlive": true
