@@ -1,6 +1,7 @@
 import { GetServerSideProps } from 'next';
-import { fetchPeople } from '@utils/utils';
+
 import { Person } from 'types/types';
+import { fetchPeople } from './utils';
 
 export type InitialProps = {
   initialPeople: Person[];

@@ -1,9 +1,7 @@
-import js from '@eslint/js';
 import globals from 'globals';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import react from 'eslint-plugin-react';
-import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -26,7 +24,7 @@ const reactCompiler = {
   },
 };
 
-export default [
+const eslintConfig = [
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
   {
     ignores: ['dist'],
@@ -51,6 +49,7 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+      /* 'react-refresh/only-export-components': 'off', */
     },
     settings: {
       react: {
@@ -59,3 +58,5 @@ export default [
     },
   },
 ];
+
+export default eslintConfig;

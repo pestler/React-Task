@@ -6,7 +6,7 @@ import { ThemeProvider } from '../components/theme-context/ThemeProvider';
 import { useTheme } from '../components/theme-context/useTheme';
 import ThemeToggle from '../components/theme-context/theme-toggle';
 import { Person } from 'types/types';
-import useLocalStorage from '@utils/localStorage.service';
+import useLocalStorage from '@/utils/localStorage.service';
 
 interface HomePageProps {
   initialPeople: Person[];

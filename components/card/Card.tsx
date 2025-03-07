@@ -24,11 +24,12 @@ const Card = ({
   selectedItems,
   setSelectedItems,
 }: CardProps) => {
-  const [isFavorite, setIsFavorite] = React.useState(() => {
-    return selectedItems.some((item) => item.id === id);
-  });
+  const [isFavorite, setIsFavorite] = React.useState(() =>
+    selectedItems.some((item) => item.id === id)
+  );
 
   const router = useRouter();
+  const { theme } = useTheme();
 
   React.useEffect(() => {
     setIsFavorite(selectedItems.some((item) => item.id === id));
@@ -38,25 +39,27 @@ const Card = ({
     const newFavoriteState = !isFavorite;
     setIsFavorite(newFavoriteState);
     if (newFavoriteState) {
-      setSelectedItems([...selectedItems, { id, name }]);
+      setSelectedItems((prevSelectedItems) => [
+        ...prevSelectedItems,
+        { id, name },
+      ]);
     } else {
-      setSelectedItems(selectedItems.filter((item) => item.id !== id));
+      setSelectedItems((prevSelectedItems) =>
+        prevSelectedItems.filter((item) => item.id !== id)
+      );
     }
   };
 
   const handleViewDetailsClick = () => {
-    const currentUrl = router.asPath;
-    const newUrl = `/details/${id}`;
-
-    if (currentUrl === newUrl) {
+    const isViewingCurrent = router.asPath.includes(`/details/${id}`);
+    if (isViewingCurrent) {
       router.push(`/`, undefined, { shallow: true });
       onClick(undefined);
     } else {
-      router.push(`/?id=${id}`, newUrl, { shallow: true });
+      router.push(`/?id=${id}`, `/details/${id}`, { shallow: true });
       onClick(id);
     }
   };
-  const { theme } = useTheme();
 
   return (
     <div
@@ -68,7 +71,13 @@ const Card = ({
     >
       <div className={styles.cardBox}>
         <h3>{name}</h3>
-        <div className={styles.clickDetail} onClick={handleViewDetailsClick}>
+        <div
+          className={styles.clickDetail}
+          onClick={handleViewDetailsClick}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === 'Enter' && handleViewDetailsClick()}
+        >
           View Details
         </div>
       </div>
@@ -76,8 +85,9 @@ const Card = ({
         <button
           data-testid="favorite-button"
           onClick={handleFavoriteClick}
-          className={isFavorite ? 'favorite' : ''}
-          style={{ cursor: 'pointer', border: 'none', background: 'none' }}
+          className={`${styles.favoriteButton} ${
+            isFavorite ? styles.favorite : ''
+          }`}
         >
           <span className={styles.icon}>{isFavorite ? '❤️' : '♡'}</span>
         </button>

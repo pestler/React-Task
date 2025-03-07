@@ -39,7 +39,7 @@ const Main = ({ searchQuery, initialPeople }: MainProps) => {
   useEffect(() => {
     const start = (page - 1) * 10;
     const end = page * 10;
-    if (filteredPeople.length > 0) {
+    if (filteredPeople) {
       setCurrentPagePeople(filteredPeople.slice(start, end));
     }
   }, [page, filteredPeople]);
@@ -47,6 +47,7 @@ const Main = ({ searchQuery, initialPeople }: MainProps) => {
   const handleNextPage = () => setPage((prev) => prev + 1);
   const handlePrevPage = () => setPage((prev) => (prev > 1 ? prev - 1 : 1));
   const { theme } = useTheme();
+  console.log(searchQuery, initialPeople);
 
   return (
     <div

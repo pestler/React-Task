@@ -1,15 +1,16 @@
 import React, { FormEvent } from 'react';
 import styles from './buttonSearch.module.scss';
-import { ThemeProvider } from '../theme-context/ThemeProvider';
 import { useTheme } from '../theme-context/useTheme';
 
 interface Props {
   onFormSubmit: (event: FormEvent, value: string) => void;
   initValue: string;
+  placeholder?: string; 
 }
 
-const ButtonSearch = ({ onFormSubmit, initValue }: Props) => {
+const ButtonSearch: React.FC<Props> = ({ onFormSubmit, initValue, placeholder = 'Enter name' }) => {
   const [inputValue, setInputValue] = React.useState<string>(initValue);
+  const { theme } = useTheme();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -19,52 +20,38 @@ const ButtonSearch = ({ onFormSubmit, initValue }: Props) => {
     event.preventDefault();
     onFormSubmit(event, inputValue);
   };
-  const { theme } = useTheme();
 
   return (
-    <ThemeProvider>
-      <div
-        className={styles.header}
-        style={{
-          backgroundColor: theme.backgroundColor,
-          color: theme.color,
-        }}
-      >
-        <header>
-          <h3
-            style={{
-              fontSize: '20px',
-              fontWeight: 'bold',
-              marginBottom: '10px',
-              marginTop: '10px',
-              marginLeft: '100px',
-              alignItems: 'center',
-            }}
-          >
-            Top controls
-          </h3>
-        </header>
-        <div>
-          <form onSubmit={handleSubmit} className={styles.form}>
-            <label style={{ marginLeft: '20px' }}>
-              Name:
-              <input
-                type="text"
-                value={inputValue}
-                onChange={handleInputChange}
-                placeholder="Enter name"
-                className={styles.input}
-                autoFocus
-                maxLength={20}
-              />
-            </label>
-            <button type="submit" className="btn">
-              Search
-            </button>
-          </form>
-        </div>
-      </div>
-    </ThemeProvider>
+    <div
+      className={styles.header}
+      style={{
+        backgroundColor: theme.backgroundColor,
+        color: theme.color,
+      }}
+    >
+      <header>
+        <h3 className={styles.title}>Top controls</h3>
+      </header>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <label htmlFor="search-input" className={styles.label}>
+          Name:
+        </label>
+        <input
+          id="search-input"
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          placeholder={placeholder}
+          className={styles.input}
+          autoFocus
+          maxLength={20}
+        />
+        <button type="submit" className={`${styles.button} btn`}>
+          Search
+        </button>
+      </form>
+    </div>
   );
 };
+
 export default ButtonSearch;

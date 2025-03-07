@@ -1,122 +1,97 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import '@testing-library/jest-dom';
-import { MemoryRouter, Route, Routes, useNavigate } from 'react-router-dom';
-import { Provider } from 'react-redux';
 import Card from './Card';
-import { store } from '../../redux/store';
+import { MemoryRouter } from 'react-router-dom';
 
-vi.mock('react-router-dom', async (importOriginal) => {
-  const actual = (await importOriginal()) as typeof import('react-router-dom');
-  return {
-    ...actual,
-    useNavigate: vi.fn(),
-  };
-});
+
+// Мокаем контекст темы
+vi.mock('../theme-context/useTheme', () => ({
+  useTheme: () => ({
+    theme: { backgroundColor: '#fff', color: '#000' },
+  }),
+}));
 
 describe('Card Component', () => {
-  it('navigates to the details page when clicked', () => {
-    const mockNavigate = vi.fn();
-    vi.mocked(useNavigate).mockReturnValue(mockNavigate);
+  const mockOnClick = vi.fn();
+  const mockSetSelectedItems = vi.fn();
 
+  const selectedItems = [{ id: 1, name: 'Luke Skywalker' }];
+
+  it('renders correctly with name and styles from theme', () => {
     render(
-      <Provider store={store}>
-        <MemoryRouter initialEntries={['/']}>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Card
-                  person={{
-                    name: 'Luke Skywalker',
-                    gender: 'Male',
-                  }}
-                  currentPage={1}
-                />
-              }
-            />
-          </Routes>
-        </MemoryRouter>
-      </Provider>
+      <MemoryRouter>
+        <Card
+          id={1}
+          name="Luke Skywalker"
+          onClick={mockOnClick}
+          selectedItems={[]}
+          setSelectedItems={mockSetSelectedItems}
+        />
+      </MemoryRouter>
     );
 
-    fireEvent.click(screen.getByTestId('test-card'));
-
-    expect(mockNavigate).toHaveBeenCalledWith('/details/Luke Skywalker?page=1');
+    const cardElement = screen.getByText('Luke Skywalker');
+    expect(cardElement).toBeInTheDocument();
+    expect(cardElement).toHaveStyle('color: #000');
   });
-  it('navigates to the home page when clicked on the details page', () => {
-    const mockNavigate = vi.fn();
-    vi.mocked(useNavigate).mockReturnValue(mockNavigate);
 
+  it('navigates to the details page when clicked', () => {
     render(
-      <Provider store={store}>
-        <MemoryRouter initialEntries={['/details/Luke Skywalker']}>
-          <Routes>
-            <Route
-              path="/details/:name"
-              element={
-                <Card
-                  person={{
-                    name: 'Luke Skywalker',
-                    gender: 'Male',
-                  }}
-                  currentPage={1}
-                />
-              }
-            />
-          </Routes>
-        </MemoryRouter>
-      </Provider>
+      <MemoryRouter>
+        <Card
+          id={1}
+          name="Luke Skywalker"
+          onClick={mockOnClick}
+          selectedItems={[]}
+          setSelectedItems={mockSetSelectedItems}
+        />
+      </MemoryRouter>
     );
 
-    fireEvent.click(screen.getByTestId('test-card'));
+    fireEvent.click(screen.getByText('View Details'));
 
-    expect(mockNavigate).toHaveBeenCalledWith('/?page=1');
+    expect(mockOnClick).toHaveBeenCalledWith(1);
   });
 
   it('toggles favorite state when favorite button is clicked', () => {
-    const mockDispatch = vi.fn();
-    vi.spyOn(store, 'dispatch').mockImplementation(mockDispatch);
-
     render(
-      <Provider store={store}>
-        <MemoryRouter initialEntries={['/']}>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Card
-                  person={{
-                    name: 'Luke Skywalker',
-                    gender: 'Male',
-                  }}
-                  currentPage={1}
-                />
-              }
-            />
-          </Routes>
-        </MemoryRouter>
-      </Provider>
+      <MemoryRouter>
+        <Card
+          id={1}
+          name="Luke Skywalker"
+          onClick={mockOnClick}
+          selectedItems={[]}
+          setSelectedItems={mockSetSelectedItems}
+        />
+      </MemoryRouter>
     );
 
-    fireEvent.click(screen.getByTestId('favorite-button'));
+    const favoriteButton = screen.getByTestId('favorite-button');
 
-    expect(mockDispatch).toHaveBeenCalledWith({
-      payload: {
-        gender: 'Male',
-        name: 'Luke Skywalker',
-      },
-      type: 'favorite/addFavorite',
-    });
+    // Состояние "неизбранное"
+    fireEvent.click(favoriteButton);
+    expect(mockSetSelectedItems).toHaveBeenCalledWith([{ id: 1, name: 'Luke Skywalker' }]);
 
-    fireEvent.click(screen.getByTestId('favorite-button'));
+    // Состояние "избранное"
+    fireEvent.click(favoriteButton);
+    expect(mockSetSelectedItems).toHaveBeenCalledWith([]);
+  });
 
-    expect(mockDispatch).toHaveBeenCalledWith({
-      payload: {
-        gender: 'Male',
-        name: 'Luke Skywalker',
-      },
-      type: 'favorite/addFavorite',
-    });
+  it('applies theme styles', () => {
+    render(
+      <MemoryRouter>
+        <Card
+          id={2}
+          name="Darth Vader"
+          onClick={mockOnClick}
+          selectedItems={selectedItems}
+          setSelectedItems={mockSetSelectedItems}
+        />
+      </MemoryRouter>
+    );
+
+    const cardContainer = screen.getByText('Darth Vader').closest('div');
+    expect(cardContainer).toHaveStyle('background-color: #fff');
+    expect(cardContainer).toHaveStyle('color: #000');
   });
 });
