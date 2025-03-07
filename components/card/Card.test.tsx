@@ -3,7 +3,6 @@ import { describe, it, expect, vi } from 'vitest';
 import Card from './Card';
 import { MemoryRouter } from 'react-router-dom';
 
-
 // Мокаем контекст темы
 vi.mock('../theme-context/useTheme', () => ({
   useTheme: () => ({
@@ -70,7 +69,9 @@ describe('Card Component', () => {
 
     // Состояние "неизбранное"
     fireEvent.click(favoriteButton);
-    expect(mockSetSelectedItems).toHaveBeenCalledWith([{ id: 1, name: 'Luke Skywalker' }]);
+    expect(mockSetSelectedItems).toHaveBeenCalledWith([
+      { id: 1, name: 'Luke Skywalker' },
+    ]);
 
     // Состояние "избранное"
     fireEvent.click(favoriteButton);

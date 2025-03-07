@@ -24,9 +24,10 @@ describe('ButtonSearch component', () => {
     expect(inputElement.value).toBe(initialValue);
   });
 
-
   it('handles input change', () => {
-    renderWithProviders(<ButtonSearch onFormSubmit={onFormSubmit} initValue = '' />);
+    renderWithProviders(
+      <ButtonSearch onFormSubmit={onFormSubmit} initValue="" />
+    );
 
     const inputElement = screen.getByPlaceholderText(
       'Enter name'
@@ -37,7 +38,9 @@ describe('ButtonSearch component', () => {
   });
 
   it('calls onFormSubmit with the correct value when form is submitted', () => {
-    renderWithProviders(<ButtonSearch onFormSubmit={onFormSubmit} initValue = '' />);
+    renderWithProviders(
+      <ButtonSearch onFormSubmit={onFormSubmit} initValue="" />
+    );
 
     const inputElement = screen.getByPlaceholderText(
       'Enter name'
@@ -55,7 +58,9 @@ describe('ButtonSearch component', () => {
   });
 
   it('applies theme styles', () => {
-    renderWithProviders(<ButtonSearch onFormSubmit={onFormSubmit} initValue = '' />);
+    renderWithProviders(
+      <ButtonSearch onFormSubmit={onFormSubmit} initValue="" />
+    );
 
     const headerElement = screen.getByText('Top controls');
     const computedStyle = window.getComputedStyle(headerElement);

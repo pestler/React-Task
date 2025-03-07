@@ -5,10 +5,14 @@ import { useTheme } from '../theme-context/useTheme';
 interface Props {
   onFormSubmit: (event: FormEvent, value: string) => void;
   initValue: string;
-  placeholder?: string; 
+  placeholder?: string;
 }
 
-const ButtonSearch: React.FC<Props> = ({ onFormSubmit, initValue, placeholder = 'Enter name' }) => {
+const ButtonSearch: React.FC<Props> = ({
+  onFormSubmit,
+  initValue,
+  placeholder = 'Enter name',
+}) => {
   const [inputValue, setInputValue] = React.useState<string>(initValue);
   const { theme } = useTheme();
 
