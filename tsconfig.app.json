@@ -6,19 +6,39 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-
     "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
-
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "composite": true
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "__test__",
+    "pages",
+    "styles",
+    "components",
+    "hooks",
+    "utils",
+    "types",
+    "services",
+    "constants",
+    "config",
+    "__mocks__",
+    "next-env.d.ts",
+    "next.config.js",
+    "next-i18next.config.js",
+    "tsconfig.json",
+    "services",
+    "service",
+    "tests",
+    "types"
+  ]
 }
