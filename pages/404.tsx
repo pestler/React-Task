@@ -1,36 +1,25 @@
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 
-const Page404 = () => {
-  const router = useRouter();
-
+const Custom404 = () => {
   return (
-    <div>
-      <h1
-        style={{
-          color: 'red',
-          fontSize: '44px',
-          fontWeight: 'bold',
-          textAlign: 'center',
-          marginTop: '50px',
-        }}
-      >
-        404 - Page Not Found
-      </h1>
-      <button
-        className="btn"
-        onClick={() => router.back()}
-        style={{
-          display: 'block',
-          margin: '20px auto',
-          padding: '10px 20px',
-          fontSize: '16px',
-          cursor: 'pointer',
-        }}
-      >
-        Back
-      </button>
+    <div style={{ textAlign: 'center', padding: '50px' }}>
+      <h1 style={{ fontSize: '3rem', color: 'red' }}>404 - Page Not Found</h1>
+      <p style={{ fontSize: '1.2rem' }}>
+        Oops! The page you are looking for does not exist.
+      </p>
+      <Link legacyBehavior href="/">
+        <a
+          style={{
+            fontSize: '1.5rem',
+            color: 'blue',
+            textDecoration: 'underline',
+          }}
+        >
+          Go back to Home
+        </a>
+      </Link>
     </div>
   );
 };
 
-export default Page404;
+export default Custom404;

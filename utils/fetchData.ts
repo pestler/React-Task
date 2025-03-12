@@ -1,20 +1,21 @@
-import { GetServerSideProps } from 'next';
+import { ApiResponse } from '../types/types';
 
-import { Person } from 'types/types';
-import { fetchPeople } from './utils';
+// Функция для загрузки данных через fetch
+export const fetchPeople = async (
+  page: number,
+  searchQuery: string = ''
+): Promise<ApiResponse> => {
+  const baseURL = `https://swapi.dev/api/people/`;
+  const url = searchQuery
+    ? `${baseURL}?search=${searchQuery}&page=${page}`
+    : `${baseURL}?page=${page}`;
 
-export type InitialProps = {
-  initialPeople: Person[];
-  initialSearchQuery: string;
-};
+  const response = await fetch(url);
 
-export const getServerSideProps: GetServerSideProps<
-  InitialProps
-> = async () => {
-  const initialPeople = await fetchPeople();
-  const initialSearchQuery = '';
+  if (!response.ok) {
+    throw new Error('Failed to fetch data'); // Ошибка, если статус ответа не 200
+  }
 
-  return {
-    props: { initialPeople, initialSearchQuery },
-  };
+  const data: ApiResponse = await response.json(); // Парсинг JSON-ответа
+  return data;
 };

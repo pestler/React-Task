@@ -1,14 +1,13 @@
 import React, { useRef, useState } from 'react';
 import styles from './flyout.module.scss';
-import { Item } from '../../types/types';
+import { Person } from '../types/types';
 
-const Flyout = ({
-  selectedItems,
-  setSelectedItems,
-}: {
-  selectedItems: Item[];
-  setSelectedItems: React.Dispatch<React.SetStateAction<Item[]>>;
-}) => {
+interface FlyoutProps {
+  selectedItems: Person[];
+  setSelectedItems: React.Dispatch<React.SetStateAction<Person[]>>;
+}
+
+const Flyout: React.FC<FlyoutProps> = ({ selectedItems, setSelectedItems }) => {
   const [csvUrl, setCsvUrl] = useState<string | null>(null);
   const downloadRef = useRef<HTMLAnchorElement>(null);
 
@@ -21,6 +20,7 @@ const Flyout = ({
 
     const titleKeys = Object.keys(selectedItems[0]);
     const refinedData = [titleKeys];
+
     selectedItems.forEach((item) => {
       refinedData.push(
         Object.values(item).map((value) => {
@@ -34,7 +34,7 @@ const Flyout = ({
 
     let csvContent = '';
     refinedData.forEach((row) => {
-      csvContent += row.join(';') + '\n';
+      csvContent += row.join(',') + '\n';
     });
 
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
@@ -57,17 +57,24 @@ const Flyout = ({
 
   return (
     <div className={styles.flyout}>
+      <h3>Favorites</h3>
       <p>Selected items: {selectedItems.length}</p>
-      <button onClick={clearSelectedItems}>Clear All</button>
-      <button onClick={downloadCSV}>Download CSV</button>
-      <a
-        ref={downloadRef}
-        href={csvUrl || ''}
-        download={`${selectedItems.length}_items.csv`}
-        style={{ display: 'none' }}
-      >
-        Download
-      </a>
+      <div className={styles.actions}>
+        <button onClick={clearSelectedItems} className={styles.clearButton}>
+          Clear All
+        </button>
+        <button onClick={downloadCSV} className={styles.downloadButton}>
+          Download CSV
+        </button>
+        <a
+          ref={downloadRef}
+          href={csvUrl || ''}
+          download={`favorites_${selectedItems.length}.csv`}
+          style={{ display: 'none' }}
+        >
+          Download
+        </a>
+      </div>
     </div>
   );
 };
