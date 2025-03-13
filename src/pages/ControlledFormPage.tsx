@@ -1,51 +1,53 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useState } from 'react';
+import { useForm, SubmitHandler, Resolver } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import validationSchema from '../components/validation';
+import { IFormData } from '../types/type';
 import { useDispatch } from 'react-redux';
-import { addControlledData } from '../redux/formSlice';
 import { useNavigate } from 'react-router-dom';
+import { addControlledData } from '../redux/formSlice';
+import { ECountriesList } from '../types/country';
 
-const schema = yup.object().shape({
-  name: yup
-    .string()
-    .matches(/^[A-Z]/, 'Name must start with an uppercase letter')
-    .required(),
-  age: yup.number().positive().integer().required('Age is required'),
-  email: yup.string().email('Invalid email').required('Email is required'),
-  password: yup
-    .string()
-    .min(8, 'Password must be at least 8 characters long')
-    .matches(/[A-Z]/, 'At least one uppercase letter required')
-    .matches(/[a-z]/, 'At least one lowercase letter required')
-    .matches(/\d/, 'At least one number required')
-    .matches(/[@$!%*?&#]/, 'At least one special character required')
-    .required('Password is required'),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref('password')], 'Passwords must match')
-    .required('Confirm Password is required'),
-  gender: yup.string().required('Gender is required'),
-  termsAccepted: yup
-    .boolean()
-    .oneOf([true], 'You must accept the Terms and Conditions'),
-});
+const ControlledFormPage: React.FC = () => {
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const countries = Object.values(ECountriesList);
 
-const ControlledFormPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
+  } = useForm<IFormData>({
+    resolver: yupResolver(validationSchema) as Resolver<IFormData>,
   });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onSubmit = (data: any) => {
-    dispatch(addControlledData(data));
-    navigate('/');
+  const onSubmit: SubmitHandler<IFormData> = (data) => {
+    if (data.picture && data.picture[0]) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        data.picture = base64String as unknown as FileList;
+        dispatch(addControlledData(data));
+        navigate('/');
+      };
+      reader.readAsDataURL(data.picture[0]);
+    } else {
+      dispatch(addControlledData(data));
+      navigate('/');
+    }
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -85,9 +87,40 @@ const ControlledFormPage = () => {
           <option value="">Select</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
-          <option value="other">Other</option>
         </select>
         <p>{errors.gender?.message}</p>
+      </div>
+      <div>
+        <label htmlFor="picture">Picture:</label>
+        <input
+          id="picture"
+          type="file"
+          accept="image/png, image/jpeg"
+          {...register('picture')}
+          onChange={handleImageChange}
+        />
+        {previewImage && (
+          <div>
+            <img
+              src={previewImage}
+              alt="Preview"
+              style={{ maxWidth: '30px', marginTop: '10px' }}
+            />
+          </div>
+        )}
+        <p>{errors.picture?.message}</p>
+      </div>
+      <div>
+        <label htmlFor="country">Country:</label>
+        <select id="country" {...register('country')}>
+          <option value="">Select</option>
+          {countries.map((country) => (
+            <option key={country} value={country}>
+              {country}
+            </option>
+          ))}
+        </select>
+        <p>{errors.country?.message}</p>
       </div>
       <div>
         <input id="terms" type="checkbox" {...register('termsAccepted')} />

@@ -1,15 +1,4 @@
-export interface IData {
-  name: string;
-  age: number;
-  email: string;
-  password: string;
-  gender: string;
-  acceptTerms: boolean;
-  image: string;
-  country: string;
-}
-
-export enum ECountries {
+export enum ECountriesList {
   AF = 'Afghanistan',
   AX = 'Aland Islands',
   AL = 'Albania',
@@ -260,5 +249,3 @@ export enum ECountries {
   ZM = 'Zambia',
   ZW = 'Zimbabwe',
 }
-
-//export const countryNames: string[] = Object.values(ECountries);

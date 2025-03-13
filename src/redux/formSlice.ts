@@ -1,17 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IFormData } from '../types/type';
 
-interface FormData {
-  name: string;
-  age: number;
-  email: string;
-  password: string;
-  gender: string;
-  termsAccepted: boolean;
-  picture: string;
-  country: string;
-}
-
-const initialState: { uncontrolled: FormData[]; controlled: FormData[] } = {
+const initialState: { uncontrolled: IFormData[]; controlled: IFormData[] } = {
   uncontrolled: [],
   controlled: [],
 };
@@ -20,10 +10,10 @@ const formSlice = createSlice({
   name: 'form',
   initialState,
   reducers: {
-    addUncontrolledData: (state, action: PayloadAction<FormData>) => {
+    addUncontrolledData: (state, action: PayloadAction<IFormData>) => {
       state.uncontrolled.push(action.payload);
     },
-    addControlledData: (state, action: PayloadAction<FormData>) => {
+    addControlledData: (state, action: PayloadAction<IFormData>) => {
       state.controlled.push(action.payload);
     },
   },
