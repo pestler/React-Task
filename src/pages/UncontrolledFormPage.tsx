@@ -27,7 +27,7 @@ const UncontrolledFormPage = () => {
     e.preventDefault();
     const file = pictureRef.current?.files?.[0];
 
-    const IFormData: IFormData = {
+    const formData: IFormData = {
       name: nameRef.current?.value || '',
       age: Number(ageRef.current?.value),
       email: emailRef.current?.value || '',
@@ -35,35 +35,38 @@ const UncontrolledFormPage = () => {
       confirmPassword: confirmPasswordRef.current?.value || '',
       gender: genderRef.current?.value || '',
       termsAccepted: termsRef.current?.checked || false,
-      picture: file ? URL.createObjectURL(file) : null,
+      picture: pictureRef.current?.files || null,
       country: countryRef.current?.value || '',
     };
 
     try {
-      validationSchema.validate(IFormData, { abortEarly: false });
+      validationSchema.validate(formData, { abortEarly: false });
       setErrors({});
       if (file) {
         const reader = new FileReader();
         reader.onloadend = () => {
           const base64String = reader.result as string;
-          IFormData.picture = base64String;
-          dispatch(addUncontrolledData(IFormData));
+          formData.picture = base64String as unknown as FileList;
+          dispatch(addUncontrolledData(formData));
           navigate('/');
         };
         reader.readAsDataURL(file);
       } else {
-        dispatch(addUncontrolledData(IFormData));
+        dispatch(addUncontrolledData(formData));
         navigate('/');
       }
-    } catch (validationError: any) {
+    } catch (validationError: unknown) {
       const formattedErrors: Record<string, string> = {};
-      validationError.inner.forEach((error: any) => {
-        formattedErrors[error.path] = error.message;
-      });
+      if (validationError instanceof Error && 'inner' in validationError) {
+        (
+          validationError.inner as Array<{ path: string; message: string }>
+        ).forEach((error) => {
+          formattedErrors[error.path] = error.message;
+        });
+      }
       setErrors(formattedErrors);
     }
   };
-
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
