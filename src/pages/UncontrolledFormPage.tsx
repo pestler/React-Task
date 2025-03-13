@@ -27,7 +27,7 @@ const UncontrolledFormPage = () => {
     e.preventDefault();
     const file = pictureRef.current?.files?.[0];
 
-    const IFormData = {
+    const IFormData: IFormData = {
       name: nameRef.current?.value || '',
       age: Number(ageRef.current?.value),
       email: emailRef.current?.value || '',
@@ -62,97 +62,95 @@ const UncontrolledFormPage = () => {
       });
       setErrors(formattedErrors);
     }
-
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setPreviewImage(reader.result as string);
-        };
-        reader.readAsDataURL(file);
-      }
-    };
-    return (
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input id="name" type="text" ref={nameRef} />
-          <p>{errors.name}</p>
-        </div>
-        <div>
-          <label htmlFor="age">Age:</label>
-          <input id="age" type="number" ref={ageRef} />
-          <p>{errors.age}</p>
-        </div>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input id="email" type="email" ref={emailRef} />
-          <p>{errors.email}</p>
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input id="password" type="password" ref={passwordRef} />
-          <p>{errors.password}</p>
-        </div>
-        <div>
-          <label htmlFor="confirmPassword">Confirm Password:</label>
-          <input
-            id="confirmPassword"
-            type="password"
-            ref={confirmPasswordRef}
-          />
-          <p>{errors.confirmPassword}</p>
-        </div>
-        <div>
-          <label htmlFor="gender">Gender:</label>
-          <select id="gender" ref={genderRef}>
-            <option value="">Select</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-          <p>{errors.gender}</p>
-        </div>
-        <div>
-          <label htmlFor="picture">Picture:</label>
-          <input
-            id="picture"
-            type="file"
-            accept="image/png, image/jpeg"
-            ref={pictureRef}
-            onChange={handleImageChange}
-          />
-          {previewImage && (
-            <div>
-              <img
-                src={previewImage}
-                alt="Preview"
-                style={{ maxWidth: '30px', marginTop: '10px' }}
-              />
-            </div>
-          )}
-          <p>{errors.picture}</p>
-        </div>
-        <div>
-          <label htmlFor="country">Country:</label>
-          <select id="country" ref={countryRef}>
-            <option value="">Select</option>
-            {Object.values(ECountriesList).map((country) => (
-              <option key={country} value={country}>
-                {country}
-              </option>
-            ))}
-          </select>
-          <p>{errors.country}</p>
-        </div>
-        <div>
-          <input id="terms" type="checkbox" ref={termsRef} />
-          <label htmlFor="terms">Accept Terms and Conditions</label>
-          <p>{errors.termsAccepted}</p>
-        </div>
-        <button type="submit">Submit</button>
-      </form>
-    );
   };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="name">Name:</label>
+        <input id="name" type="text" ref={nameRef} />
+        <p>{errors.name}</p>
+      </div>
+      <div>
+        <label htmlFor="age">Age:</label>
+        <input id="age" type="number" ref={ageRef} />
+        <p>{errors.age}</p>
+      </div>
+      <div>
+        <label htmlFor="email">Email:</label>
+        <input id="email" type="email" ref={emailRef} />
+        <p>{errors.email}</p>
+      </div>
+      <div>
+        <label htmlFor="password">Password:</label>
+        <input id="password" type="password" ref={passwordRef} />
+        <p>{errors.password}</p>
+      </div>
+      <div>
+        <label htmlFor="confirmPassword">Confirm Password:</label>
+        <input id="confirmPassword" type="password" ref={confirmPasswordRef} />
+        <p>{errors.confirmPassword}</p>
+      </div>
+      <div>
+        <label htmlFor="gender">Gender:</label>
+        <select id="gender" ref={genderRef}>
+          <option value="">Select</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+        <p>{errors.gender}</p>
+      </div>
+      <div>
+        <label htmlFor="picture">Picture:</label>
+        <input
+          id="picture"
+          type="file"
+          accept="image/png, image/jpeg"
+          ref={pictureRef}
+          onChange={handleImageChange}
+        />
+        {previewImage && (
+          <div>
+            <img
+              src={previewImage}
+              alt="Preview"
+              style={{ maxWidth: '30px', marginTop: '10px' }}
+            />
+          </div>
+        )}
+        <p>{errors.picture}</p>
+      </div>
+      <div>
+        <label htmlFor="country">Country:</label>
+        <select id="country" ref={countryRef}>
+          <option value="">Select</option>
+          {Object.values(ECountriesList).map((country) => (
+            <option key={country} value={country}>
+              {country}
+            </option>
+          ))}
+        </select>
+        <p>{errors.country}</p>
+      </div>
+      <div>
+        <input id="terms" type="checkbox" ref={termsRef} />
+        <label htmlFor="terms">Accept Terms and Conditions</label>
+        <p>{errors.termsAccepted}</p>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  );
 };
+
 export default UncontrolledFormPage;
