@@ -10,14 +10,12 @@ import { ECountriesList } from '../types/country';
 
 const ControlledFormPage: React.FC = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [nameSuggestions, setNameSuggestions] = useState<string[]>([]);
   const countries = Object.values(ECountriesList);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
   } = useForm<IFormData>({
     resolver: yupResolver(validationSchema) as Resolver<IFormData>,
   });
@@ -52,91 +50,27 @@ const ControlledFormPage: React.FC = () => {
     }
   };
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setValue('name', value, { shouldValidate: true });
-    setNameSuggestions(
-      value.length > 0
-        ? ['John', 'Johnny', 'Jonathan', 'Joanna', 'Jolie'].filter((s) =>
-            s.toLowerCase().startsWith(value.toLowerCase())
-          )
-        : []
-    );
-  };
-
-  const handleNameSuggestionClick = (suggestion: string) => {
-    setValue('name', suggestion, { shouldValidate: true });
-    setNameSuggestions([]);
-  };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <label htmlFor="name">Name:</label>
-        <input
-          id="name"
-          type="text"
-          {...register('name')}
-          placeholder="Enter your name"
-          onChange={handleNameChange}
-          autoComplete="name"
-        />
-        {nameSuggestions.length > 0 && (
-          <ul
-            style={{
-              border: '1px solid #ccc',
-              padding: '5px',
-              marginTop: '5px',
-              listStyle: 'none',
-            }}
-          >
-            {nameSuggestions.map((suggestion, index) => (
-              <li
-                key={index}
-                style={{
-                  cursor: 'pointer',
-                  padding: '3px 0',
-                }}
-                onClick={() => handleNameSuggestionClick(suggestion)}
-              >
-                {suggestion}
-              </li>
-            ))}
-          </ul>
-        )}
-        <p style={{ color: 'red' }}>{errors.name?.message}</p>
+        <input id="name" type="text" {...register('name')} />
+        <p>{errors.name?.message}</p>
       </div>
       <div>
         <label htmlFor="age">Age:</label>
-        <input
-          id="age"
-          type="number"
-          {...register('age')}
-          placeholder="Enter your age"
-        />
-        <p style={{ color: 'red' }}>{errors.age?.message}</p>
+        <input id="age" type="number" {...register('age')} />
+        <p>{errors.age?.message}</p>
       </div>
       <div>
         <label htmlFor="email">Email:</label>
-        <input
-          id="email"
-          type="email"
-          {...register('email')}
-          placeholder="Enter your email"
-          autoComplete="email"
-        />
-        <p style={{ color: 'red' }}>{errors.email?.message}</p>
+        <input id="email" type="email" {...register('email')} />
+        <p>{errors.email?.message}</p>
       </div>
       <div>
         <label htmlFor="password">Password:</label>
-        <input
-          id="password"
-          type="password"
-          {...register('password')}
-          placeholder="Enter your password"
-          autoComplete="new-password"
-        />
-        <p style={{ color: 'red' }}>{errors.password?.message}</p>
+        <input id="password" type="password" {...register('password')} />
+        <p>{errors.password?.message}</p>
       </div>
       <div>
         <label htmlFor="confirmPassword">Confirm Password:</label>
@@ -144,9 +78,8 @@ const ControlledFormPage: React.FC = () => {
           id="confirmPassword"
           type="password"
           {...register('confirmPassword')}
-          placeholder="Confirm your password"
         />
-        <p style={{ color: 'red' }}>{errors.confirmPassword?.message}</p>
+        <p>{errors.confirmPassword?.message}</p>
       </div>
       <div>
         <label htmlFor="gender">Gender:</label>
@@ -155,7 +88,7 @@ const ControlledFormPage: React.FC = () => {
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
-        <p style={{ color: 'red' }}>{errors.gender?.message}</p>
+        <p>{errors.gender?.message}</p>
       </div>
       <div>
         <label htmlFor="picture">Picture:</label>
@@ -175,7 +108,7 @@ const ControlledFormPage: React.FC = () => {
             />
           </div>
         )}
-        <p style={{ color: 'red' }}>{errors.picture?.message}</p>
+        <p>{errors.picture?.message}</p>
       </div>
       <div>
         <label htmlFor="country">Country:</label>
@@ -187,12 +120,12 @@ const ControlledFormPage: React.FC = () => {
             </option>
           ))}
         </select>
-        <p style={{ color: 'red' }}>{errors.country?.message}</p>
+        <p>{errors.country?.message}</p>
       </div>
       <div>
         <input id="terms" type="checkbox" {...register('termsAccepted')} />
         <label htmlFor="terms">Accept Terms and Conditions</label>
-        <p style={{ color: 'red' }}>{errors.termsAccepted?.message}</p>
+        <p>{errors.termsAccepted?.message}</p>
       </div>
       <button type="submit" disabled={Object.keys(errors).length > 0}>
         Submit

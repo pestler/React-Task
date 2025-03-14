@@ -1,43 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../redux/store';
+import { setHighlightWithTimeout } from '../redux/formSlice';
 import Tile from '../components/Tile';
 
 const Main = () => {
-  const { uncontrolled, controlled } = useSelector(
+  const dispatch: AppDispatch = useDispatch();
+  const { uncontrolled, controlled, highlightedIndex } = useSelector(
     (state: RootState) => state.form
   );
 
-  const highLightLastTitle = (
-    lenght: number,
-    setHighLight: React.Dispatch<React.SetStateAction<number | null>>
-  ) => {
-    if (lenght > 0) {
-      setHighLight(lenght - 1);
-      const timer = setTimeout(() => {
-        setHighLight(null);
-      }, 3000);
-      return () => clearTimeout(timer);
+  useEffect(() => {
+    if (highlightedIndex.uncontrolled !== null) {
+      dispatch(setHighlightWithTimeout('uncontrolled', 3000));
     }
-  };
-
-  const [lastUncontrolledHighlighted, setLastUncontrolledHighlighted] =
-    useState<number | null>(null);
-
-  const [lastControlledHighlighted, setLastControlledHighlighted] = useState<
-    number | null
-  >(null);
+  }, [highlightedIndex.uncontrolled, dispatch]);
 
   useEffect(() => {
-    return highLightLastTitle(
-      uncontrolled.length,
-      setLastUncontrolledHighlighted
-    );
-  }, [uncontrolled]);
-
-  useEffect(() => {
-    return highLightLastTitle(controlled.length, setLastControlledHighlighted);
-  }, [controlled]);
+    if (highlightedIndex.controlled !== null) {
+      dispatch(setHighlightWithTimeout('controlled', 3000));
+    }
+  }, [highlightedIndex.controlled, dispatch]);
 
   return (
     <div>
@@ -53,7 +36,7 @@ const Main = () => {
               key={index}
               style={{
                 border:
-                  lastUncontrolledHighlighted === index
+                  highlightedIndex.uncontrolled === index
                     ? '3px solid green'
                     : '1px solid blue',
                 margin: '10px',
@@ -82,7 +65,7 @@ const Main = () => {
               key={index}
               style={{
                 border:
-                  lastControlledHighlighted === index
+                  highlightedIndex.controlled === index
                     ? '3px solid green'
                     : '1px solid red',
                 margin: '10px',

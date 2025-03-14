@@ -20,8 +20,14 @@ const validationSchema = yup.object().shape({
   password: yup
     .string()
     .min(8, 'Password must be at least 8 characters long')
-    .matches(/[A-Z]/, 'Password must contain an uppercase letter')
-    .matches(/[a-z]/, 'Password must contain a lowercase letter')
+    .matches(
+      /[A-ZА-Я]/,
+      'Password must contain an uppercase letter (English or Russian)'
+    )
+    .matches(
+      /[a-zа-я]/,
+      'Password must contain a lowercase letter (English or Russian)'
+    )
     .matches(/\d/, 'Password must contain a number')
     .matches(/[@$!%*?&#]/, 'Password must contain a special character')
     .required('Password is required'),
