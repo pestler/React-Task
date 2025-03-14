@@ -161,6 +161,8 @@ const UncontrolledFormPage = () => {
           ref={ageRef}
           placeholder="Enter your age"
           autoComplete="bday"
+          min={0}
+          step={1}
         />
         <p style={{ color: 'red' }}>{errors.age}</p>
       </div>

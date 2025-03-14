@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useForm, SubmitHandler, Resolver } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import validationSchema from '../components/validation';
@@ -23,54 +23,68 @@ const ControlledFormPage: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<IFormData> = (data) => {
-    if (data.picture && data.picture[0]) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        data.picture = base64String as unknown as FileList;
+  const renderError = useCallback(
+    (error: string | undefined) =>
+      error ? <p style={{ color: 'red' }}>{error}</p> : null,
+    []
+  );
+
+  const onSubmit: SubmitHandler<IFormData> = useCallback(
+    (data) => {
+      if (data.picture && data.picture[0]) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result as string;
+          data.picture = base64String as unknown as FileList;
+          dispatch(addControlledData(data));
+          navigate('/');
+        };
+        reader.readAsDataURL(data.picture[0]);
+      } else {
         dispatch(addControlledData(data));
         navigate('/');
-      };
-      reader.readAsDataURL(data.picture[0]);
-    } else {
-      dispatch(addControlledData(data));
-      navigate('/');
-    }
-  };
+      }
+    },
+    [dispatch, navigate]
+  );
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  const handleImageChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreviewImage(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert('Please upload a valid image (JPEG or PNG)');
+      }
+    },
+    []
+  );
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <label htmlFor="name">Name:</label>
         <input id="name" type="text" {...register('name')} />
-        <p>{errors.name?.message}</p>
+        {renderError(errors.name?.message)}
       </div>
       <div>
         <label htmlFor="age">Age:</label>
-        <input id="age" type="number" {...register('age')} />
-        <p>{errors.age?.message}</p>
+        <input id="age" type="number" {...register('age')} min={0} step={1} />
+        {renderError(errors.age?.message)}
       </div>
       <div>
         <label htmlFor="email">Email:</label>
         <input id="email" type="email" {...register('email')} />
-        <p>{errors.email?.message}</p>
+        {renderError(errors.email?.message)}
       </div>
       <div>
         <label htmlFor="password">Password:</label>
         <input id="password" type="password" {...register('password')} />
-        <p>{errors.password?.message}</p>
+        {renderError(errors.password?.message)}
       </div>
       <div>
         <label htmlFor="confirmPassword">Confirm Password:</label>
@@ -79,7 +93,7 @@ const ControlledFormPage: React.FC = () => {
           type="password"
           {...register('confirmPassword')}
         />
-        <p>{errors.confirmPassword?.message}</p>
+        {renderError(errors.confirmPassword?.message)}
       </div>
       <div>
         <label htmlFor="gender">Gender:</label>
@@ -88,7 +102,7 @@ const ControlledFormPage: React.FC = () => {
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
-        <p>{errors.gender?.message}</p>
+        {renderError(errors.gender?.message)}
       </div>
       <div>
         <label htmlFor="picture">Picture:</label>
@@ -104,11 +118,11 @@ const ControlledFormPage: React.FC = () => {
             <img
               src={previewImage}
               alt="Preview"
-              style={{ maxWidth: '30px', marginTop: '10px' }}
+              style={{ maxWidth: '100px', marginTop: '10px' }}
             />
           </div>
         )}
-        <p>{errors.picture?.message}</p>
+        {renderError(errors.picture?.message)}
       </div>
       <div>
         <label htmlFor="country">Country:</label>
@@ -120,12 +134,12 @@ const ControlledFormPage: React.FC = () => {
             </option>
           ))}
         </select>
-        <p>{errors.country?.message}</p>
+        {renderError(errors.country?.message)}
       </div>
       <div>
         <input id="terms" type="checkbox" {...register('termsAccepted')} />
         <label htmlFor="terms">Accept Terms and Conditions</label>
-        <p>{errors.termsAccepted?.message}</p>
+        {renderError(errors.termsAccepted?.message)}
       </div>
       <button type="submit" disabled={Object.keys(errors).length > 0}>
         Submit

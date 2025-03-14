@@ -10,9 +10,10 @@ const validationSchema = yup.object().shape({
     .required('Name is required'),
   age: yup
     .number()
-    .positive('Age must be a positive number')
-    .integer('Age must be an integer')
-    .required('Age is required'),
+    .typeError('Age must be a number')
+    .required('Age is required')
+    .transform((value) => (value === '' ? undefined : value))
+    .min(0, 'Age must be greater than or equal to 0'),
   email: yup
     .string()
     .email('Invalid email format')
