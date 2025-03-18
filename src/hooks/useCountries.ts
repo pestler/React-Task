@@ -24,8 +24,35 @@ export const useCountries = () => {
     fetchCountries();
   }, []);
 
+  const filteredAndSortedCountries = (): Country[] => {
+    let filtered = countries;
+
+    if (filterRegion) {
+      filtered = filtered.filter((country) => country.region === filterRegion);
+    }
+
+    if (searchQuery) {
+      filtered = filtered.filter((country) =>
+        country.name.common.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    return filtered.sort((a, b) => {
+      if (sortKey === 'name') {
+        return sortOrder
+          ? a.name.common.localeCompare(b.name.common)
+          : b.name.common.localeCompare(a.name.common);
+      } else if (sortKey === 'population') {
+        return sortOrder
+          ? a.population - b.population
+          : b.population - a.population;
+      }
+      return 0;
+    });
+  };
+
   return {
-    countries,
+    countries: filteredAndSortedCountries(),
     isLoading,
     filterRegion,
     setFilterRegion,
