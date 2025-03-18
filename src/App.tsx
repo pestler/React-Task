@@ -1,26 +1,45 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+import React from 'react';
+import Header from './components/Layout/Header';
+import MainContainer from './components/Layout/MainContainer';
+import { useCountries } from './hooks/useCountries';
+import SortOptions from './components/Filters/SortOptions';
+import SearchBar from './components/Filters/SearchBar';
+import FilterDropdown from './components/Filters/FilterDropdown';
+import CountryList from './components/CountryList';
 
-const Main = lazy(() => import('./pages/Main'));
+const App: React.FC = () => {
+  const {
+    countries,
+    isLoading,
+    filterRegion,
+    setFilterRegion,
+    searchQuery,
+    setSearchQuery,
+    sortKey,
+    setSortKey,
+    sortOrder,
+    setSortOrder,
+  } = useCountries();
 
-const Navigation = () => {
   return (
-    <nav style={{ marginBottom: '20px' }}>
-      <Link to="/">Main</Link>
-    </nav>
-  );
-};
-
-const App = () => {
-  return (
-    <Router>
-      <Navigation />
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          <Route path="/" element={<Main />} />
-        </Routes>
-      </Suspense>
-    </Router>
+    <div>
+      <Header />
+      {isLoading ? <p>Loading...</p> : null}
+      <MainContainer>
+        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <FilterDropdown
+          filterRegion={filterRegion}
+          setFilterRegion={setFilterRegion}
+        />
+        <SortOptions
+          sortKey={sortKey}
+          sortOrder={sortOrder}
+          onSortKeyChange={setSortKey}
+          onSortOrderToggle={() => setSortOrder(!sortOrder)}
+        />
+        <CountryList countries={countries} />
+      </MainContainer>
+    </div>
   );
 };
 
