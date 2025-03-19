@@ -23,7 +23,7 @@ const SortOptions: React.FC<SortOptionsProps> = ({
         <option value="population">Sort by Population</option>
       </select>
       <button onClick={onSortOrderToggle}>
-        Order: {sortOrder ? 'Sort Ascending' : 'Sort Descending'}
+        Sort: {sortOrder ? 'Ascending' : 'Descending'}
       </button>
     </div>
   );
