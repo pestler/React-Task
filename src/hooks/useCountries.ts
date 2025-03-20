@@ -1,22 +1,26 @@
 import { useState, useEffect } from 'react';
-import { Country } from '../types/type';
+import { Country, SortKey } from '../types/type';
 
 export const useCountries = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [visitedCountries, setVisitedCountries] = useState<string[]>([]);
   const [countries, setCountries] = useState<Country[]>([]);
   const [filterRegion, setFilterRegion] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [sortKey, setSortKey] = useState<string>('name');
+  const [sortKey, setSortKey] = useState<SortKey>('name');
   const [sortOrder, setSortOrder] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchCountries = async () => {
+    const fetchCountries = async (): Promise<void> => {
       setIsLoading(true);
       try {
-        const response = await fetch('https://restcountries.com/v3.1/all');
-        const data = await response.json();
+        const response: Response = await fetch(
+          'https://restcountries.com/v3.1/all'
+        );
+        const data: Country[] = await response.json();
         setCountries(data);
+      } catch (error: unknown) {
+        console.error('Error fetching countries:', error);
       } finally {
         setIsLoading(false);
       }
@@ -51,8 +55,19 @@ export const useCountries = () => {
     });
   };
 
+  const handleCountryVisited = (countryName: string): void => {
+    if (visitedCountries.includes(countryName)) {
+      setVisitedCountries(
+        visitedCountries.filter((name) => name !== countryName)
+      );
+    } else {
+      setVisitedCountries([...visitedCountries, countryName]);
+    }
+  };
+
   return {
     countries: filteredAndSortedCountries(),
+    visitedCountries,
     isLoading,
     filterRegion,
     setFilterRegion,
@@ -62,7 +77,6 @@ export const useCountries = () => {
     setSortKey,
     sortOrder,
     setSortOrder,
-    visitedCountries,
-    setVisitedCountries,
+    handleCountryVisited,
   };
 };

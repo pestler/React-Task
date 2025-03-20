@@ -6,6 +6,7 @@ import SortOptions from './components/Filters/SortOptions';
 import SearchBar from './components/Filters/SearchBar';
 import FilterDropdown from './components/Filters/FilterDropdown';
 import CountryList from './components/CountryList';
+import { SortKey } from './types/type';
 
 const App: React.FC = () => {
   const {
@@ -19,6 +20,8 @@ const App: React.FC = () => {
     setSortKey,
     sortOrder,
     setSortOrder,
+    visitedCountries,
+    handleCountryVisited,
   } = useCountries();
 
   return (
@@ -34,13 +37,16 @@ const App: React.FC = () => {
         <SortOptions
           sortKey={sortKey}
           sortOrder={sortOrder}
-          onSortKeyChange={setSortKey}
+          onSortKeyChange={(value: SortKey) => setSortKey(value)}
           onSortOrderToggle={() => setSortOrder(!sortOrder)}
         />
-        <CountryList countries={countries} />
+        <CountryList
+          countries={countries}
+          visitedCountries={visitedCountries}
+          handleCountryVisited={handleCountryVisited}
+        />
       </MainContainer>
     </div>
   );
 };
-
 export default App;

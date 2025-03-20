@@ -5,3 +5,5 @@ export interface Country {
   flags: { png: string };
   visited?: boolean;
 }
+
+export type SortKey = 'name' | 'population';
