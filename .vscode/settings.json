@@ -28,5 +28,6 @@
   "workbench.iconTheme": "vscode-icons",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
-  } // Иконки для файлов
+  },
+  "compile-hero.disable-compile-files-on-did-save-code": false // Иконки для файлов
 }

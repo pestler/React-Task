@@ -10,17 +10,26 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
   setFilterRegion,
 }) => {
   return (
-    <select
-      value={filterRegion || ' '}
-      onChange={(e) => setFilterRegion(e.target.value)}
+    <div
+      style={{
+        width: '100%',
+      }}
     >
-      <option value="">All Regions</option>
-      <option value="Africa">Africa</option>
-      <option value="Americas">Americas</option>
-      <option value="Asia">Asia</option>
-      <option value="Europe">Europe</option>
-      <option value="Oceania">Oceania</option>
-    </select>
+      <select
+        value={filterRegion || ' '}
+        onChange={(e) => setFilterRegion(e.target.value)}
+        style={{
+          width: '160px',
+        }}
+      >
+        <option value="">All Regions</option>
+        <option value="Africa">Africa</option>
+        <option value="Americas">Americas</option>
+        <option value="Asia">Asia</option>
+        <option value="Europe">Europe</option>
+        <option value="Oceania">Oceania</option>
+      </select>
+    </div>
   );
 };
 

@@ -10,12 +10,23 @@ const SearchBar: React.FC<SearchBarProps> = ({
   setSearchQuery,
 }) => {
   return (
-    <input
-      type="text"
-      placeholder="Search by country name"
-      value={searchQuery}
-      onChange={(e) => setSearchQuery(e.target.value)}
-    />
+    <div
+      style={{
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
+      <input
+        type="text"
+        placeholder="Search by country name"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        style={{
+          width: '150px',
+        }}
+      />
+    </div>
   );
 };
 
