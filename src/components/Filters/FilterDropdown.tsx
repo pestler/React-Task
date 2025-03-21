@@ -16,7 +16,8 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
       }}
     >
       <select
-        value={filterRegion || ' '}
+        id="region-select"
+        value={filterRegion ?? ''}
         onChange={(e) => setFilterRegion(e.target.value)}
         style={{
           width: '160px',

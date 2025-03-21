@@ -19,6 +19,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     >
       <input
         type="text"
+        name="search"
         placeholder="Search by country name"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
