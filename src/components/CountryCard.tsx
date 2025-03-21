@@ -1,6 +1,7 @@
 import React from 'react';
 import { Country } from '../types/type';
 import style from './CountryCard.module.scss';
+
 interface CountryCardProps {
   country: Country;
   visitedCountries: boolean;

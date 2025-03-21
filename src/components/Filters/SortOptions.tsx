@@ -20,7 +20,12 @@ const SortOptions: React.FC<SortOptionsProps> = ({
         id="sort-select"
         name="sort"
         value={sortKey ?? ''}
-        onChange={(e) => onSortKeyChange(e.target.value as SortKey)}
+        onChange={(e) => {
+          const value = e.target.value as SortKey;
+          if (value === 'name' || value === 'population') {
+            onSortKeyChange(value);
+          }
+        }}
       >
         <option value="name">Sort by Name</option>
         <option value="population">Sort by Population</option>
