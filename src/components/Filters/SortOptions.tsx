@@ -36,4 +36,4 @@ const SortOptions: React.FC<SortOptionsProps> = ({
     </div>
   );
 };
-export default SortOptions;
+export default React.memo(SortOptions);

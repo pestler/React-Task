@@ -28,4 +28,4 @@ const CountryList: React.FC<CountryListProps> = ({
     })}
   </div>
 );
-export default CountryList;
+export default React.memo(CountryList);

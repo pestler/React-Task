@@ -18,6 +18,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
       }}
     >
       <input
+        name="search"
         type="text"
         placeholder="Search by country name"
         value={searchQuery}
@@ -30,4 +31,4 @@ const SearchBar: React.FC<SearchBarProps> = ({
   );
 };
 
-export default SearchBar;
+export default React.memo(SearchBar);

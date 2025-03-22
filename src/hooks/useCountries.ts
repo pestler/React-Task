@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { Country, SortKey } from '../types/type';
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import { Country, SortKey, UseCountriesReturn } from '../types/type';
 
-export const useCountries = () => {
+export const useCountries = (): UseCountriesReturn => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [visitedCountries, setVisitedCountries] = useState<string[]>([]);
   const [countries, setCountries] = useState<Country[]>([]);
@@ -28,7 +28,8 @@ export const useCountries = () => {
     fetchCountries();
   }, []);
 
-  const filteredAndSortedCountries = (): Country[] => {
+  const filteredAndSortedCountries = useMemo((): Country[] => {
+    // Фильтрация стран
     let filtered = countries;
 
     if (filterRegion) {
@@ -41,6 +42,7 @@ export const useCountries = () => {
       );
     }
 
+    // Сортировка стран
     return filtered.sort((a, b) => {
       if (sortKey === 'name') {
         return sortOrder
@@ -53,20 +55,23 @@ export const useCountries = () => {
       }
       return 0;
     });
-  };
+  }, [countries, filterRegion, searchQuery, sortKey, sortOrder]);
 
-  const handleCountryVisited = (countryName: string): void => {
-    if (visitedCountries.includes(countryName)) {
-      setVisitedCountries(
-        visitedCountries.filter((name) => name !== countryName)
-      );
-    } else {
-      setVisitedCountries([...visitedCountries, countryName]);
-    }
-  };
+  const handleCountryVisited = useCallback(
+    (countryName: string): void => {
+      if (visitedCountries.includes(countryName)) {
+        setVisitedCountries((prev) =>
+          prev.filter((name) => name !== countryName)
+        );
+      } else {
+        setVisitedCountries((prev) => [...prev, countryName]);
+      }
+    },
+    [visitedCountries]
+  );
 
   return {
-    countries: filteredAndSortedCountries(),
+    countries: filteredAndSortedCountries,
     visitedCountries,
     isLoading,
     filterRegion,

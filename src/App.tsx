@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Header from './components/Layout/Header';
 import MainContainer from './components/Layout/MainContainer';
 import { useCountries } from './hooks/useCountries';
@@ -24,6 +24,15 @@ const App: React.FC = () => {
     handleCountryVisited,
   } = useCountries();
 
+  const handleSortKeyChange = useCallback(
+    (value: SortKey) => setSortKey(value),
+    [setSortKey]
+  );
+  const handleSortOrderToggle = useCallback(
+    () => setSortOrder(!sortOrder),
+    [setSortOrder, sortOrder]
+  );
+
   return (
     <div>
       <Header />
@@ -37,8 +46,8 @@ const App: React.FC = () => {
         <SortOptions
           sortKey={sortKey}
           sortOrder={sortOrder}
-          onSortKeyChange={(value: SortKey) => setSortKey(value)}
-          onSortOrderToggle={() => setSortOrder(!sortOrder)}
+          onSortKeyChange={handleSortKeyChange}
+          onSortOrderToggle={handleSortOrderToggle}
         />
         <CountryList
           countries={countries}

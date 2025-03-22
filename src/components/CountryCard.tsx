@@ -30,4 +30,4 @@ const CountryCard: React.FC<CountryCardProps> = ({
   </li>
 );
 
-export default CountryCard;
+export default React.memo(CountryCard);
