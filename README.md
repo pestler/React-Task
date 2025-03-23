@@ -1,31 +1,19 @@
-### Steps
-
-1. Refresh the page.
-2. Find the country **G**
-3. Choose sorting by **Europe**
-4. Sort by **population** → **name**.
-5. Perform sorting **Descending**
-6. Visit the first 3 countries / highlight them.
-
----
-
-### Updated Performance Analysis
-
 - **Commit Duration (before/after):** X ms → Y ms
-- **Render Duration (before/after):** A ms → B ms
 
-  ![standart-sort](screen/standart-sort.png)
-  ![standart-sort](screen/standart-sort1.png)
+  ![reload before](screen/reload1.png)
+  ![reload after](screen/standart-sort1.png)
 
-- **Flame Graph:** Components now take less time to render.
-- **Interactions:** The number of unnecessary updates has decreased.
-  Длительность фиксации: время, необходимое React для рендеринга зафиксированных обновлений.
-  Длительность рендеринга: время, необходимое для рендеринга отдельных компонентов.
-  Взаимодействия: взаимодействия пользователя, которые запускают рендеринг.
-  График Flame: визуальное представление времени рендеринга компонентов.
-  Ранжированная диаграмма: отсортированный список компонентов по длительности рендеринга.
+  ![all-filter before](screen/all-filter1.png)
+  ![all-filter after](screen/all-filter2.png)
 
-добавил React.memo() в компонент SearchBar
-до
+  ![all-filter before](screen/all-filter1-1.png)
+  ![all-filter after](screen/all-filter2-2.png)
 
-после
+  ![reload before](screen/rsearch-germ-1.png)
+  ![reload after](screen/search-germ-2.png)
+
+  ![reload before](screen/sorting1.png)
+  ![reload after](screen/sorting2.png)
+
+  ![reload before](screen/visitied-country1.png)
+  ![reload after](screen/visitied-country2.png)
