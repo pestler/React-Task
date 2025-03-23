@@ -2,7 +2,7 @@ import React from 'react';
 import { SortKey } from '../../types/type';
 
 interface SortOptionsProps {
-  sortKey: string | null;
+  sortKey: string;
   sortOrder: boolean;
   onSortKeyChange: (value: SortKey) => void;
   onSortOrderToggle: () => void;

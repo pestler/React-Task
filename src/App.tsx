@@ -32,16 +32,32 @@ const App: React.FC = () => {
     () => setSortOrder(!sortOrder),
     [setSortOrder, sortOrder]
   );
-
+  const handleSearchQueryChange = useCallback(
+    (value: string) => setSearchQuery(value),
+    [setSearchQuery]
+  );
+  const handleCountryVisitedCallback = useCallback(
+    (countryName: string) => {
+      handleCountryVisited(countryName);
+    },
+    [handleCountryVisited]
+  );
+  const handleFilterRegionChange = useCallback(
+    (value: string) => setFilterRegion(value),
+    [setFilterRegion]
+  );
   return (
     <div>
       <Header />
       {isLoading ? <p>Loading...</p> : null}
       <MainContainer>
-        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <SearchBar
+          searchQuery={searchQuery}
+          setSearchQuery={handleSearchQueryChange}
+        />
         <FilterDropdown
           filterRegion={filterRegion}
-          setFilterRegion={setFilterRegion}
+          setFilterRegion={handleFilterRegionChange}
         />
         <SortOptions
           sortKey={sortKey}
@@ -49,11 +65,15 @@ const App: React.FC = () => {
           onSortKeyChange={handleSortKeyChange}
           onSortOrderToggle={handleSortOrderToggle}
         />
-        <CountryList
-          countries={countries}
-          visitedCountries={visitedCountries}
-          handleCountryVisited={handleCountryVisited}
-        />
+        {countries.length === 0 ? (
+          <p>No countries found</p>
+        ) : (
+          <CountryList
+            countries={countries}
+            visitedCountries={visitedCountries}
+            handleCountryVisited={handleCountryVisitedCallback}
+          />
+        )}
       </MainContainer>
     </div>
   );
