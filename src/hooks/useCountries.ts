@@ -29,11 +29,16 @@ export const useCountries = (): UseCountriesReturn => {
   }, []);
 
   const filteredAndSortedCountries = useMemo((): Country[] => {
-    // Фильтрация стран
+    console.log(countries);
     let filtered = countries;
 
-    if (filterRegion) {
+    /*  if (filterRegion) {
       filtered = filtered.filter((country) => country.region === filterRegion);
+    } */
+    if (filterRegion) {
+      filtered = filtered.filter(
+        (country) => country && country.region === filterRegion
+      );
     }
 
     if (searchQuery) {
@@ -42,7 +47,6 @@ export const useCountries = (): UseCountriesReturn => {
       );
     }
 
-    // Сортировка стран
     return filtered.sort((a, b) => {
       if (sortKey === 'name') {
         return sortOrder
